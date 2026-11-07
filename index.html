@@ -7,16 +7,15 @@
   <meta name="description" content="Find your MilkShake Factory in Khammam, Telangana. Discover both local outlets, explore our 3D showcase, meet the leadership team, and enjoy a little more milkshake in your day." />
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Three.js for 3D Sliding Milkshake Stage -->
+  <!-- Three.js & GLTFLoader for 3D Milkshake & Cake Stage -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <style>
     /* ==========================================================================
-       MERGED DESIGN TOKENS:
-       1) Next.js 16 Bundle Editorial Tokens (--milk, --cream, --cocoa, --caramel)
-       2) Coca-Cola 3D Webflow Design System Tokens (--color-primary-500, --color-accent-500)
+       DESIGN TOKENS: WARM EDITORIAL + 3D STAGE TOKENS
        ========================================================================== */
     :root {
       color-scheme: light;
@@ -27,18 +26,6 @@
       --caramel: #d47732;
       --cinnamon: #8a4b2a;
       --muted-copy: #78675b;
-
-      /* Coca-Cola 3D Webflow Design System Tokens */
-      --color-primary-400: #e95744;
-      --color-primary-500: #e4321b;
-      --color-primary-600: #c02a17;
-      --color-accent-400: #f9d444;
-      --color-accent-500: #f1c40f;
-      --color-success: #07bc0c;
-      --shadow-md: rgba(255, 255, 255, 0.2) 0px 1px 1px 0px inset,
-                   rgba(255, 255, 255, 0.12) 0px 6px 12px 0px inset,
-                   rgba(8, 8, 8, 0.2) 0px 1px 2px 0px,
-                   rgba(8, 8, 8, 0.08) 0px 4px 4px 0px;
     }
 
     * {
@@ -101,13 +88,13 @@
     }
 
     .header-inner {
-      width: min(1360px, calc(100% - 48px));
+      width: min(1360px, calc(100% - 40px));
       min-height: 82px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 16px;
     }
 
     .brand-lockup {
@@ -165,7 +152,7 @@
     .main-nav {
       display: flex;
       align-items: center;
-      gap: clamp(16px, 2.2vw, 34px);
+      gap: clamp(14px, 2vw, 30px);
     }
 
     .main-nav a {
@@ -247,10 +234,10 @@
     .hero-cinema-content {
       position: relative;
       z-index: 10;
-      width: min(1360px, calc(100% - 48px));
+      width: min(1360px, calc(100% - 40px));
       margin: 0 auto;
-      padding-top: 112px;
-      padding-bottom: 28px;
+      padding-top: 108px;
+      padding-bottom: 24px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -258,7 +245,6 @@
       transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
-    /* Rotating Sticker Badge from Next.js Bundle */
     @keyframes floatSticker {
       0%, 100% { transform: rotate(9deg) translateY(0px); }
       50% { transform: rotate(13deg) translateY(-6px); }
@@ -302,7 +288,7 @@
     }
 
     /* ==========================================================================
-       HERO MODE 2: NEXT.JS BUNDLE SPLIT EDITORIAL HERO
+       HERO MODE 2: SPLIT EDITORIAL HERO
        ========================================================================== */
     .hero-split-section {
       position: relative;
@@ -310,7 +296,7 @@
       grid-template-columns: minmax(0, 0.91fr) minmax(0, 1.09fr);
       align-items: stretch;
       min-height: 700px;
-      padding: 120px max(36px, calc((100vw - 1320px) / 2)) 76px;
+      padding: 120px max(32px, calc((100vw - 1320px) / 2)) 76px;
       gap: 5.4%;
       background: var(--milk);
     }
@@ -352,7 +338,7 @@
     .editorial-h1 {
       margin: 0;
       font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(58px, 7.2vw, 102px);
+      font-size: clamp(54px, 7vw, 98px);
       font-weight: 400;
       letter-spacing: -0.075em;
       line-height: 0.88;
@@ -360,15 +346,13 @@
 
     .editorial-h1 em,
     .section-heading h2 em,
-    .story-copy h2 em,
-    .leadership-intro h2 em,
-    .owner-dialog h2 em {
+    .story-copy h2 em {
       color: var(--caramel);
       font-weight: 400;
     }
 
     .hero-description {
-      max-width: 420px;
+      max-width: 430px;
       margin: 26px 0 24px;
       color: var(--muted-copy);
       font-size: 15px;
@@ -379,7 +363,7 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      gap: 18px;
+      gap: 16px;
     }
 
     .button {
@@ -387,10 +371,10 @@
       min-height: 50px;
       align-items: center;
       justify-content: center;
-      gap: 13px;
+      gap: 12px;
       padding: 0 22px;
       border: 0;
-      border-radius: 3px;
+      border-radius: 6px;
       text-decoration: none;
       font-size: 11px;
       font-weight: 800;
@@ -439,6 +423,8 @@
       max-height: 590px;
       background: #21130e;
       box-shadow: 18px 18px 0 #e8dfd1;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .hero-video {
@@ -470,8 +456,7 @@
       color: rgba(255, 255, 255, 0.72);
     }
 
-    .caption-dot,
-    .outlet-status > span {
+    .caption-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
@@ -479,17 +464,12 @@
     }
 
     /* ==========================================================================
-       EXACT NEXT.JS BUNDLE SECTIONS + 3D PERSPECTIVE TILT ENHANCEMENTS
+       SECTIONS & 3D PERSPECTIVE TILT ENHANCEMENTS
        ========================================================================== */
     .section-wrap {
-      width: min(1180px, calc(100% - 72px));
+      width: min(1220px, calc(100% - 48px));
       margin-right: auto;
       margin-left: auto;
-    }
-
-    .location-section {
-      padding-top: 115px;
-      padding-bottom: 115px;
     }
 
     .section-heading {
@@ -497,231 +477,25 @@
       align-items: flex-end;
       justify-content: space-between;
       gap: 35px;
+      flex-wrap: wrap;
     }
 
     .section-heading h2,
-    .story-copy h2,
-    .leadership-intro h2 {
+    .story-copy h2 {
       margin: 0;
       font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(46px, 5.2vw, 68px);
+      font-size: clamp(42px, 5vw, 66px);
       font-weight: 400;
       letter-spacing: -0.065em;
       line-height: 0.98;
     }
 
     .section-heading > p {
-      max-width: 310px;
+      max-width: 340px;
       margin: 0 10px 6px 0;
       color: var(--muted-copy);
       font-size: 13px;
       line-height: 1.8;
-    }
-
-    .outlet-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 46px;
-    }
-
-    .outlet-card {
-      min-height: 230px;
-      padding: 27px 28px 24px;
-      border: 1px solid #ded5c9;
-      background: rgba(255, 250, 240, 0.65);
-      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-      transform-style: preserve-3d;
-    }
-
-    .outlet-card:hover {
-      transform: translateY(-4px);
-      background: #fffaf0;
-      box-shadow: 0 20px 40px rgba(43, 25, 18, 0.08);
-    }
-
-    .outlet-card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-    }
-
-    .outlet-number {
-      color: #c38b5a;
-      font: italic 19px Georgia, 'Times New Roman', serif;
-    }
-
-    .outlet-status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #887568;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .outlet-status > span {
-      background: #78956c;
-    }
-
-    .outlet-card h3 {
-      margin: 25px 0 10px;
-      font: 30px/1.03 Georgia, 'Times New Roman', serif;
-      letter-spacing: -0.045em;
-    }
-
-    .outlet-address {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      max-width: 440px;
-      margin: 0;
-      color: #78675b;
-      font-size: 12px;
-      line-height: 1.65;
-    }
-
-    .outlet-card-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 26px;
-      padding-top: 17px;
-      border-top: 1px solid #e8dfd5;
-    }
-
-    .text-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--cocoa);
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 800;
-      transition: color 0.2s ease;
-    }
-
-    .text-link:hover {
-      color: var(--caramel);
-    }
-
-    .round-action {
-      display: grid;
-      width: 36px;
-      height: 36px;
-      place-items: center;
-      border: 1px solid #dacfc1;
-      border-radius: 50%;
-      transition: all 0.2s ease;
-    }
-
-    .round-action:hover {
-      background: var(--cocoa);
-      color: var(--cream);
-      border-color: var(--cocoa);
-    }
-
-    .local-store-feature {
-      display: grid;
-      grid-template-columns: 155px 1fr;
-      align-items: center;
-      gap: 24px;
-      margin-top: 24px;
-      padding: 16px;
-      background: #eee5d8;
-      border: 1px solid #dfd3c3;
-    }
-
-    .local-store-feature img {
-      width: 155px;
-      height: 136px;
-      object-fit: cover;
-    }
-
-    .local-store-feature > div > span {
-      color: #94603a;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 0.17em;
-    }
-
-    .local-store-feature h3 {
-      margin: 8px 0;
-      font: 25px/0.98 Georgia, 'Times New Roman', serif;
-      letter-spacing: -0.04em;
-    }
-
-    .local-store-feature p {
-      margin: 0;
-      color: #78675b;
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .outlet-editor-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 22px;
-      margin-top: 12px;
-      padding: 17px 21px;
-      background: #eee5d8;
-      border: 1px solid #dfd3c3;
-    }
-
-    .outlet-editor-bar > div {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .editor-avatar {
-      display: grid;
-      width: 38px;
-      height: 38px;
-      place-items: center;
-      border-radius: 50%;
-      background: #dfcbb5;
-      color: #70472a;
-    }
-
-    .outlet-editor-bar p {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin: 0;
-    }
-
-    .outlet-editor-bar p strong {
-      font: 17px Georgia, 'Times New Roman', serif;
-    }
-
-    .outlet-editor-bar p small {
-      color: #877567;
-      font-size: 11px;
-    }
-
-    .edit-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border: 1px solid rgba(93, 59, 36, 0.25);
-      border-radius: 999px;
-      background: #fffaf0;
-      color: #5d3b24;
-      font-size: 10px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .edit-button:hover {
-      background: var(--cocoa);
-      color: var(--cream);
     }
 
     /* Brand Story Section */
@@ -763,19 +537,34 @@
     }
 
     .story-copy {
-      padding: 55px clamp(40px, 8vw, 120px);
+      padding: 55px clamp(32px, 7vw, 110px);
     }
 
     .story-copy h2 {
-      font-size: clamp(50px, 5.8vw, 76px);
+      font-size: clamp(46px, 5.5vw, 74px);
     }
 
     .story-copy > p {
-      max-width: 360px;
+      max-width: 380px;
       margin: 24px 0 22px;
       color: #766658;
       font-size: 13px;
       line-height: 1.85;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cocoa);
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      transition: color 0.2s ease;
+    }
+
+    .text-link:hover {
+      color: var(--caramel);
     }
 
     .story-link {
@@ -785,8 +574,8 @@
 
     /* Sweet Moments Gallery */
     .sweet-moments {
-      padding-top: 108px;
-      padding-bottom: 120px;
+      padding-top: 96px;
+      padding-bottom: 108px;
     }
 
     .moments-heading {
@@ -814,6 +603,7 @@
       height: 360px;
       margin: 0;
       overflow: hidden;
+      border-radius: 12px;
       background: #251710;
       box-shadow: 0 18px 38px rgba(37, 23, 16, 0.12);
     }
@@ -872,177 +662,14 @@
     }
 
     /* 3D Perspective Tilt Cards */
-    .card-3d-wrapper {
-      perspective: 1100px;
-    }
     .card-3d {
       transform-style: preserve-3d;
-      transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease;
+      transition: transform 0.28s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.28s ease;
     }
 
-    /* Leadership Section */
-    .leadership-section {
-      padding: 105px 36px;
-      background: #2a1912;
-      color: #fff8ee;
-    }
-
-    .leadership-inner {
-      display: grid;
-      grid-template-columns: 1fr 0.82fr;
-      gap: 12%;
-      width: min(1120px, 100%);
-      margin: 0 auto;
-    }
-
-    .leadership-intro .section-eyebrow {
-      color: #d79a60;
-    }
-
-    .leadership-intro h2 {
-      font-size: clamp(50px, 6vw, 78px);
-    }
-
-    .leadership-intro h2 em {
-      color: #e5a466;
-    }
-
-    .leadership-intro > p {
-      max-width: 420px;
-      margin: 23px 0 30px;
-      color: #c9b7a6;
-      font-size: 13px;
-      line-height: 1.8;
-    }
-
-    .hq-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 13px;
-      max-width: 420px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .hq-card div {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .hq-card span {
-      color: #d29a65;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 0.17em;
-    }
-
-    .hq-card strong {
-      color: #fff8ee;
-      font: 17px Georgia, 'Times New Roman', serif;
-    }
-
-    .hq-card small {
-      color: #b9a697;
-      font-size: 11px;
-    }
-
-    .leadership-list {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .leader-card {
-      padding: 20px 0 22px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    }
-
-    .leader-card:first-child {
-      padding-top: 0;
-    }
-
-    .leader-index {
-      color: #d6a36e;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 0.17em;
-    }
-
-    .leader-card h3 {
-      margin: 14px 0 6px;
-      font: 26px/1 Georgia, 'Times New Roman', serif;
-      letter-spacing: -0.03em;
-    }
-
-    .leader-card p {
-      margin: 0;
-      color: #e3c4a4;
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .leader-location {
-      display: block;
-      margin-top: 10px;
-      color: #b9a697;
-      font-size: 10px;
-    }
-
-    .global-note {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding-top: 22px;
-    }
-
-    .global-note > span {
-      color: #d39c61;
-      font-size: 29px;
-    }
-
-    .global-note p {
-      margin: 0;
-      color: #c9b7a6;
-      font: italic 13px/1.55 Georgia, 'Times New Roman', serif;
-    }
-
-    .global-note strong {
-      color: #fff8ee;
-      font-style: normal;
-    }
-
-    /* Visit CTA & Footer */
-    .visit-cta {
-      background: #d17837;
-      color: #fff8ee;
-    }
-
-    .cta-inner {
-      display: flex;
-      width: min(1120px, calc(100% - 72px));
-      min-height: 250px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
-      margin: 0 auto;
-    }
-
-    .visit-cta .section-eyebrow {
-      color: #f8d8ae;
-    }
-
-    .visit-cta .section-eyebrow > span {
-      background: #f3c78e;
-    }
-
-    .visit-cta h2 {
-      margin: 0;
-      font: clamp(38px, 4.4vw, 58px)/0.98 Georgia, 'Times New Roman', serif;
-      letter-spacing: -0.06em;
-    }
-
+    /* Footer */
     .site-footer {
-      padding: 38px max(36px, calc((100vw - 1320px) / 2)) 0;
+      padding: 40px max(32px, calc((100vw - 1320px) / 2)) 0;
       background: #21130e;
       color: #fff6e9;
     }
@@ -1052,8 +679,9 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      min-height: 95px;
-      padding-bottom: 28px;
+      min-height: 92px;
+      padding-bottom: 26px;
+      flex-wrap: wrap;
     }
 
     .footer-brand .brand-name {
@@ -1076,204 +704,36 @@
       gap: 9px;
       color: #f4d5b2;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
     }
 
     .footer-bottom {
       display: flex;
-      min-height: 70px;
+      min-height: 76px;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
       border-top: 1px solid rgba(255, 255, 255, 0.14);
       color: #a89686;
-      font-size: 10px;
-      flex-wrap: wrap;
-    }
-
-    .footer-bottom > a {
-      color: #d6c2ae;
-      text-decoration: none;
-    }
-
-    .developer-credit {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .developer-credit img {
-      width: 34px;
-      height: 34px;
-      object-fit: contain;
-      border-radius: 50%;
-      background: #1b140f;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .developer-credit span {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .developer-credit small {
-      color: #b2885e;
-      font-size: 7px;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-    }
-
-    .developer-credit strong {
-      color: #ead9c8;
-      font-size: 10px;
-      font-weight: 600;
-    }
-
-    /* Native Dialog Modal from Next.js Bundle */
-    .owner-dialog {
-      width: min(580px, calc(100% - 28px));
-      max-height: min(92vh, 840px);
-      padding: 0;
-      overflow: auto;
-      border: 1px solid #dfd2c2;
-      background: #fbf6ed;
-      color: var(--cocoa);
-      box-shadow: 0 24px 90px rgba(19, 11, 7, 0.45);
-    }
-
-    .owner-dialog::backdrop {
-      background: rgba(29, 17, 11, 0.68);
-      backdrop-filter: blur(4px);
-    }
-
-    .dialog-topline {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 23px 27px 0;
-    }
-
-    .dialog-topline > span {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #96603a;
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 0.17em;
-    }
-
-    .dialog-close {
-      display: grid;
-      width: 34px;
-      height: 34px;
-      place-items: center;
-      border: 1px solid #ded3c7;
-      border-radius: 50%;
-      background: transparent;
-      color: #5c4636;
-      cursor: pointer;
-    }
-
-    .owner-dialog h2 {
-      margin: 17px 27px 0;
-      font: 43px/0.98 Georgia, 'Times New Roman', serif;
-      letter-spacing: -0.06em;
-    }
-
-    .dialog-description {
-      margin: 13px 27px 20px;
-      color: #79695c;
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .owner-form {
-      padding: 0 27px 25px;
-    }
-
-    .owner-form fieldset {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 13px 14px;
-      margin: 0 0 20px;
-      padding: 0;
-      border: 0;
-    }
-
-    .owner-form legend {
-      grid-column: 1 / -1;
-      width: 100%;
-      margin-bottom: 12px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #e5dbcf;
-      color: #8f5832;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .form-field {
-      display: flex;
-      min-width: 0;
-      flex-direction: column;
-      gap: 7px;
-      color: #59483a;
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .form-field:last-child:nth-child(odd) {
-      grid-column: 1 / -1;
-    }
-
-    .form-field input {
-      width: 100%;
-      min-height: 41px;
-      box-sizing: border-box;
-      padding: 0 11px;
-      border: 1px solid #ded3c6;
-      border-radius: 2px;
-      outline: none;
-      background: #fffdf8;
-      color: var(--cocoa);
       font-size: 11px;
-    }
-
-    .form-field input:focus-visible {
-      border-color: #b36e38;
-      box-shadow: 0 0 0 3px rgba(179, 110, 56, 0.16);
+      flex-wrap: wrap;
     }
 
     @media (max-width: 900px) {
       .hero-split-section {
         grid-template-columns: 1fr;
-        padding: 100px 24px 60px;
+        padding: 100px 20px 60px;
       }
-      .outlet-grid,
       .brand-story,
-      .moment-grid,
-      .leadership-inner {
+      .moment-grid {
         grid-template-columns: 1fr;
       }
       .main-nav {
         display: none;
       }
       .section-wrap {
-        width: calc(100% - 44px);
-      }
-      .cta-inner {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        padding: 44px 0;
-      }
-      .footer-main {
-        flex-direction: column;
-        align-items: flex-start;
+        width: calc(100% - 32px);
       }
     }
   </style>
@@ -1281,7 +741,7 @@
 <body>
 
   <!-- ==========================================================================
-       HEADER BAR (Supports Full-Screen Cinema Mode, Split Editorial Mode & Next.js Code Export)
+       HEADER BAR (Clean, Zero Code Modals, Locked to 080967 87676)
        ========================================================================== -->
   <header class="site-header" id="top-header">
     <div class="header-inner">
@@ -1291,17 +751,16 @@
         </span>
         <span class="brand-name">
           MilkShake <strong>Factory</strong>
-          <small>KHAMMAM, INDIA</small>
+          <small>MAMATA ROAD · KHAMMAM</small>
         </span>
       </a>
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#home">Opening Video</a>
-        <a href="#coca-3d-stage">3D Showcase</a>
-        <a href="#orbit-pillars">4-Pillar Orbit</a>
-        <a href="#locations">Our locations</a>
-        <a href="#story">The experience</a>
-        <a href="#leadership">Our people</a>
+        <a href="#coca-3d-stage">3D Models</a>
+        <a href="#complete-menu">Full Menu Card</a>
+        <a href="#locations">Mamata Road Store</a>
+        <a href="#instant-review">5★ Google Review</a>
       </nav>
 
       <div class="flex items-center gap-2.5">
@@ -1311,34 +770,22 @@
           onclick="toggleHeroLayoutMode()"
           id="hero-layout-btn"
           class="px-3.5 py-2 rounded-full text-[11px] font-extrabold border border-[#d47732] bg-[#d47732]/20 text-[#ffdfb8] hover:bg-[#d47732] hover:text-white transition flex items-center gap-1.5 cursor-pointer"
-          title="Switch between 100vw x 100vh Full-Screen Video and Next.js Split Editorial Layout"
+          title="Switch between 100vw x 100vh Full-Screen Video and Split Editorial Layout"
         >
           <i class="fa-solid fa-table-columns"></i>
           <span id="hero-layout-label" class="hidden sm:inline">Split Editorial View</span>
         </button>
 
-        <!-- Next.js 16 Fixed Bundle Modal Trigger -->
-        <button
-          type="button"
-          onclick="openNextJsCodeModal()"
-          class="px-3.5 py-2 rounded-full text-[11px] font-extrabold bg-[#2b1912] text-[#fffaf0] border border-white/20 hover:bg-[#d47732] transition flex items-center gap-1.5 cursor-pointer"
-          title="View & Copy Fixed Next.js 16 / React 19 Source Bundle"
-        >
-          <i class="fa-solid fa-code text-[#f1c40f]"></i>
-          <span class="hidden md:inline">Next.js 16 Code</span>
-        </button>
-
-        <a class="header-call" id="header-phone-link" href="tel:+918096787676">
+        <a class="header-call" href="tel:08096787676">
           <i class="fa-solid fa-phone text-xs"></i>
-          <span id="header-phone-label">Call Khammam</span>
+          <span>080967 87676</span>
         </a>
       </div>
     </div>
   </header>
 
   <!-- ==========================================================================
-       ALWAYS-VISIBLE PURE VIDEO TOGGLE BUTTON (TOP-RIGHT FLOATING PILL)
-       Lets anyone view the 100vw x 100vh chocolate milkshake video 100% unobstructed
+       ALWAYS-VISIBLE PURE VIDEO TOGGLE BUTTON (BOTTOM-LEFT FLOATING PILL)
        ========================================================================== -->
   <div class="fixed bottom-6 left-6 z-50 flex items-center gap-2">
     <button
@@ -1356,7 +803,6 @@
 
     <!-- ========================================================================
          HERO MODE A (DEFAULT ON OPEN): 100VW × 100VH FULL-SCALE OPENING VIDEO
-         Uses exact hosted MP4: Making_chocolate_milkshake_e75771e8_1080p-wbBZMeZ2xrKJOFKicLZFhYmt005nAt.mp4
          ======================================================================== -->
     <section class="hero-cinema-stage" aria-label="Full-screen chocolate milkshake video hero">
       <video
@@ -1390,11 +836,11 @@
           </div>
         </div>
 
-        <!-- Center Editorial Typography from Next.js Bundle -->
+        <!-- Center Editorial Typography -->
         <div class="max-w-2xl my-auto py-6">
           <p class="section-eyebrow !text-[#f3c78e] !mb-4">
             <span aria-hidden="true" class="!bg-[#d47732]"></span>
-            HAND-SPUN HAPPINESS, NOW IN KHAMMAM
+            HAND-SPUN HAPPINESS · MAMATA ROAD, KHAMMAM
           </p>
           <h1 class="editorial-h1 text-[#fffaf0] drop-shadow-[0_10px_30px_rgba(0,0,0,0.65)]">
             A little more<br />
@@ -1402,26 +848,21 @@
             your day.
           </h1>
           <p class="text-sm sm:text-base text-[#f0e4d4] max-w-md mt-6 mb-7 leading-relaxed drop-shadow">
-            Big chocolate energy. Old-fashioned goodness. Find your new favorite at MilkShake Factory, right here in Khammam.
+            Big chocolate energy. Old-fashioned goodness. Hosted by <strong>Rajesh Bhai</strong> on Mamata Road, Dwaraka Nagar, Jalagam Nagar, Khammam.
           </p>
 
           <div class="hero-actions">
-            <a class="button button-caramel" href="#locations">
-              Find your nearest outlet
-              <i class="fa-solid fa-arrow-right text-xs"></i>
+            <a class="button button-caramel" href="#complete-menu">
+              Explore Full Menu Card
+              <i class="fa-solid fa-utensils text-xs"></i>
             </a>
-            <a class="button button-cream" href="#orbit-pillars">
-              Explore Shakes, Cakes, Pizza & More
+            <a class="button button-cream" href="#locations">
+              Visit Mamata Road Store
             </a>
-            <a class="inline-flex items-center gap-2 text-xs font-extrabold text-[#ffdfb8] hover:text-white px-3 py-2" id="cinema-phone-link" href="tel:+918096787676">
+            <a class="inline-flex items-center gap-2 text-xs font-extrabold text-[#ffdfb8] hover:text-white px-3 py-2" href="tel:08096787676">
               <i class="fa-solid fa-phone text-[#d47732]"></i>
-              <span class="dynamic-phone-text">+91 80967 87676</span>
+              <span>080967 87676</span>
             </a>
-          </div>
-
-          <div class="flex items-center gap-3 mt-8 text-[#e5cdb3] italic serif-display text-xs">
-            <i class="fa-solid fa-wand-magic-sparkles text-[#d47732]"></i>
-            <span>Made with a little nostalgia and a lot of chocolate.</span>
           </div>
         </div>
 
@@ -1452,35 +893,30 @@
           </div>
 
           <div class="flex items-center justify-between text-[9px] font-extrabold tracking-[0.18em] text-[#d8c7b8] uppercase">
-            <span>GOOD THINGS ARE SPINNING</span>
-            <span>17° 14' N &nbsp;·&nbsp; KHAMMAM, TELANGANA</span>
+            <span>MILKSHAKE FACTORY · OWNER: RAJESH BHAI</span>
+            <span>MAMATA ROAD, DWARAKA NAGAR, JALAGAM NAGAR, KHAMMAM 507002</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         HERO MODE B: EXACT SPLIT EDITORIAL LAYOUT FROM NEXT.JS 16 BUNDLE
-         (Activated anytime via "Split Editorial View" button in the top bar)
+         HERO MODE B: SPLIT EDITORIAL LAYOUT
          ======================================================================== -->
     <section class="hero-split-section" aria-labelledby="hero-split-title">
       <div class="hero-copy">
         <p class="section-eyebrow"><span aria-hidden="true"></span>Hand-spun happiness, now in Khammam</p>
         <h2 id="hero-split-title" class="editorial-h1">A little more<br /> <em>milkshake</em> in<br />your day.</h2>
-        <p class="hero-description">Big chocolate energy. Old-fashioned goodness. Find your new favorite at MilkShake Factory, right here in Khammam.</p>
+        <p class="hero-description">Big chocolate energy. Old-fashioned goodness. Visit <strong>Rajesh Bhai</strong> at MilkShake Factory on Mamata Road, Dwaraka Nagar, Jalagam Nagar, Khammam.</p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#locations">
-            Find your nearest outlet
+          <a class="button button-dark" href="#complete-menu">
+            Explore Full Menu Card
             <i class="fa-solid fa-arrow-right text-xs"></i>
           </a>
-          <a class="inline-flex items-center gap-2 text-xs font-bold text-[#664a37]" id="split-phone-link" href="tel:+918096787676">
+          <a class="inline-flex items-center gap-2 text-xs font-bold text-[#664a37]" href="tel:08096787676">
             <i class="fa-solid fa-phone text-[#d47732]"></i>
-            <span class="dynamic-phone-text">+91 80967 87676</span>
+            <span>080967 87676</span>
           </a>
-        </div>
-        <div class="flex items-center gap-3 mt-12 text-[#8b7564] italic serif-display text-xs">
-          <i class="fa-solid fa-wand-magic-sparkles text-[#d47732]"></i>
-          <span>Made with a little nostalgia<br />and a lot of chocolate.</span>
         </div>
       </div>
 
@@ -1499,19 +935,14 @@
           <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Making_chocolate_milkshake_e75771e8_1080p-wbBZMeZ2xrKJOFKicLZFhYmt005nAt.mp4" type="video/mp4" />
         </video>
         <div class="video-caption">
-          <span class="caption-dot"></span> THE CHOCOLATE POUR <span>01 / 03</span>
-        </div>
-        <div class="hero-sticker !absolute !top-7 !-right-6" aria-hidden="true">
-          <span>MADE FOR</span>
-          <strong>the<br />moment</strong>
-          <i>✳</i>
+          <span class="caption-dot"></span> THE CHOCOLATE POUR <span>MAMATA ROAD · KHAMMAM</span>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         SECTION 2: 3D COCA-COLA WEBFLOW-STYLE SLIDING SHOWCASE STAGE
-         Interactive Three.js 3D models sliding smoothly with warm cocoa/caramel lighting
+         SECTION 2: INTERACTIVE 3D STAGE FEATURING THE UPLOADED MILKSHAKE & CAKE
+         3D DESIGNS (GLB LOADER + EXACT BOUNDING-BOX PROCEDURAL 3D MESHES)
          ======================================================================== -->
     <section id="coca-3d-stage" class="py-24 px-4 sm:px-8 transition-colors duration-700" style="background: radial-gradient(circle at 50% 45%, #3d2116 0%, #1d100b 90%); color: #fff8ee;">
       <div class="max-w-6xl mx-auto">
@@ -1519,18 +950,25 @@
           <div>
             <p class="section-eyebrow !text-[#e5a466] !mb-3">
               <span aria-hidden="true" class="!bg-[#d47732]"></span>
-              INTERACTIVE 3D WEBGL SHOWCASE
+              INTERACTIVE 3D GLTF / WEBGL STAGE
             </p>
             <h2 class="serif-display text-4xl sm:text-6xl tracking-tight leading-none">
-              Spun in <em>3D motion.</em>
+              Milkshake &amp; Cake in <em>3D motion.</em>
             </h2>
           </div>
 
-          <div class="flex items-center gap-3">
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Optional Custom GLB Loader Input for Local .glb Files -->
+            <label class="px-3.5 py-2.5 rounded-full border border-[#d47732]/60 bg-black/30 hover:bg-[#d47732] text-[#fff8ee] text-[11px] font-extrabold tracking-wider uppercase cursor-pointer transition flex items-center gap-2">
+              <i class="fa-solid fa-cube text-[#f1c40f]"></i>
+              <span>Load .GLB Model</span>
+              <input type="file" accept=".glb,.gltf" class="hidden" onchange="handleCustomGLBUpload(event)" />
+            </label>
+
             <button type="button" onclick="slide3DStage(-1)" class="w-12 h-12 rounded-full border border-white/25 bg-white/10 hover:bg-[#d47732] text-white flex items-center justify-center transition cursor-pointer" aria-label="Previous 3D item">
               <i class="fa-solid fa-arrow-left"></i>
             </button>
-            <span id="stage-3d-counter" class="serif-display italic text-lg px-3 text-[#f3c78e]">01 / 05</span>
+            <span id="stage-3d-counter" class="serif-display italic text-lg px-2 text-[#f3c78e]">01 / 05</span>
             <button type="button" onclick="slide3DStage(1)" class="w-12 h-12 rounded-full bg-[#d47732] hover:bg-[#e4321b] text-white flex items-center justify-center transition cursor-pointer shadow-lg" aria-label="Next 3D item">
               <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -1538,38 +976,59 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <!-- Three.js 3D Stage Canvas -->
-          <div class="lg:col-span-7 h-[360px] sm:h-[430px] rounded-2xl bg-black/35 border border-white/15 relative overflow-hidden shadow-2xl">
+          <!-- Three.js 3D Stage Canvas (Supports Drag Rotate + Drag & Drop .glb) -->
+          <div
+            id="stage-canvas-dropzone"
+            class="lg:col-span-7 h-[390px] sm:h-[460px] rounded-2xl bg-black/35 border border-white/15 relative overflow-hidden shadow-2xl"
+          >
             <canvas id="coca-slider-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+            <div class="absolute top-3 left-4 right-4 flex items-center justify-between text-[10px] font-extrabold tracking-widest uppercase text-[#f3c78e] pointer-events-none">
+              <span id="glb-spec-badge" class="px-2.5 py-1 rounded bg-black/55 border border-white/10">
+                GLTF BOUNDS: [-0.155, -0.500, -0.217] → [0.150, 0.500, 0.217]
+              </span>
+              <span class="px-2.5 py-1 rounded bg-black/55 border border-white/10 hidden sm:inline">
+                PBR METALLIC-ROUGHNESS
+              </span>
+            </div>
             <div class="absolute bottom-3 left-4 text-[10px] font-bold tracking-widest uppercase text-[#e5cdb3] pointer-events-none">
-              <i class="fa-solid fa-hand-pointer text-[#d47732] mr-1"></i> Drag to rotate 3D model • Click arrows to slide
+              <i class="fa-solid fa-hand-pointer text-[#d47732] mr-1"></i> Drag to rotate 3D mesh • Drop any .glb file onto canvas
             </div>
           </div>
 
-          <!-- Active 3D Slide Editorial Description (Price-Free Showcase) -->
+          <!-- Active 3D Slide Editorial Description (Strictly Price-Free) -->
           <div class="lg:col-span-5 bg-[#2a1810]/90 border border-white/15 p-7 sm:p-9 rounded-2xl space-y-5 shadow-2xl">
             <span id="slide-3d-eyebrow" class="text-[10px] font-extrabold tracking-[0.18em] uppercase text-[#e5a466] block">
-              01 / HAND-SPUN SIGNATURE SHAKE
+              01 / TALL CHOCOLATE MILKSHAKE 3D MODEL
             </span>
             <h3 id="slide-3d-title" class="serif-display text-3xl sm:text-4xl text-[#fff8ee] leading-tight">
-              The Chocolate Pour Shake
+              The Chocolate Pour Thickshake
             </h3>
             <p id="slide-3d-desc" class="text-xs sm:text-sm text-[#d5c3b3] leading-relaxed">
-              Inspired by our opening video: three scoops of rich chocolate ice cream spun with fresh milk, poured into a tall glass and crowned with whipped cream and dark chocolate shavings.
+              Sculpted to the exact tall aspect ratio of our 3D milkshake design: fluted pedestal parlor glass filled with rich cocoa thickshake, chocolate drizzle ribbons, high-swirl whipped cream peak, dark chocolate shavings, and striped straw.
             </p>
+
+            <!-- Quick Slide Selector Pills -->
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <button type="button" onclick="jumpTo3DSlide(0)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-[#d47732] text-white cursor-pointer">01. Milkshake 3D</button>
+              <button type="button" onclick="jumpTo3DSlide(1)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">02. Cake 3D</button>
+              <button type="button" onclick="jumpTo3DSlide(2)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">03. Pizza 3D</button>
+              <button type="button" onclick="jumpTo3DSlide(3)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">04. Burger 3D</button>
+              <button type="button" onclick="jumpTo3DSlide(4)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">05. Noodles 3D</button>
+            </div>
+
             <div class="pt-2 flex flex-wrap items-center gap-3">
               <a
                 id="slide-3d-wa-link"
-                href="https://wa.me/918096787676?text=Hi%20MilkShake%20Factory%20Khammam!%20I%20would%20like%20to%20inquire%20about%20The%20Chocolate%20Pour%20Shake."
+                href="https://wa.me/918096787676?text=Hi%20Rajesh%20Bhai%20at%20MilkShake%20Factory%20Khammam!%20I%20would%20like%20to%20inquire%20about%20The%20Chocolate%20Pour%20Thickshake."
                 target="_blank"
                 rel="noreferrer"
                 class="button button-caramel"
               >
-                Inquire via WhatsApp
+                Inquire on WhatsApp
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
-              <a href="#locations" class="button button-cream">
-                Visit Khammam Outlet
+              <a href="#complete-menu" class="button button-cream">
+                See Full Menu
               </a>
             </div>
           </div>
@@ -1578,217 +1037,228 @@
     </section>
 
     <!-- ========================================================================
-         SECTION 3: CIRCULAR 4-PILLAR ORBITING HUB + HAND-SPUN SHAKES SHOWCASE
-         Strictly price-free showcase cards with 3D perspective tilt
+         SECTION 3: EXTRACTED COMPLETE MENU CARD (STRICTLY NO PRICE LISTING ANYWHERE)
+         Includes every item extracted from the uploaded physical menu sheets
          ======================================================================== -->
-    <section id="orbit-pillars" class="py-24 px-4 sm:px-8 bg-[#f2eadf] border-b border-[#ded5c9]">
+    <section id="complete-menu" class="py-24 px-4 sm:px-8 bg-[#f2eadf] border-b border-[#ded5c9]">
       <div class="section-wrap">
-        <div class="section-heading mb-14">
+        <div class="section-heading mb-12">
           <div>
-            <p class="section-eyebrow"><span aria-hidden="true"></span>Hand-spun shakes & four kitchen pillars</p>
-            <h2>Every craving,<br /><em>around one table.</em></h2>
+            <p class="section-eyebrow"><span aria-hidden="true"></span>Complete Khammam Kitchen &amp; Shake Bar</p>
+            <h2>Every craving,<br /><em>on one menu card.</em></h2>
           </div>
-          <p>Alongside our signature chocolate and fruit thickshakes, our Khammam kitchen serves freshly baked celebration cakes, wood-fired pizzas, gourmet burgers, and sizzling Indo-Chinese favorites.</p>
+          <p>Browse our full range of hand-spun thickshakes, crispy veg starters, wok-tossed noodles, Belgian waffles, sizzling brownies, grilled sandwiches, wraps, and burgers—crafted fresh on Mamata Road.</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
-          <!-- Left: Circular Orbiting 4-Pillar Hub -->
-          <div class="lg:col-span-6 flex items-center justify-center py-6">
-            <div class="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] flex items-center justify-center">
+        <!-- Circular 4-Pillar Orbiting Visual Hub + Search & Category Filter -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-14 bg-[#ece2d4] p-6 sm:p-8 rounded-2xl border border-[#dfd3c3]">
+          <div class="lg:col-span-5 flex items-center justify-center py-4">
+            <div class="relative w-[270px] h-[270px] sm:w-[320px] sm:h-[320px] flex items-center justify-center">
               <div class="absolute inset-0 rounded-full border border-dashed border-[#8a4b2a]/40"></div>
-              <div class="absolute inset-10 rounded-full border border-[#d47732]/35 bg-[#ece2d4]/60"></div>
+              <div class="absolute inset-8 rounded-full border border-[#d47732]/35 bg-[#f7f2e9]/70"></div>
 
-              <!-- Center MilkShake Factory Official Logo Badge -->
               <button
                 type="button"
-                onclick="filterShowcaseCategory('all')"
-                class="relative z-20 w-36 h-36 sm:w-44 sm:h-44 rounded-full bg-[#2b1912] text-[#fffaf0] border-4 border-[#d47732] shadow-2xl flex flex-col items-center justify-center p-3 cursor-pointer hover:scale-105 transition"
+                onclick="selectMenuCategory('All')"
+                class="relative z-20 w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-[#2b1912] text-[#fffaf0] border-4 border-[#d47732] shadow-2xl flex flex-col items-center justify-center p-3 cursor-pointer hover:scale-105 transition"
               >
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-11-02%20at%208.23.22%20PM-qDkSsojUOi4SaxcY8uj8RvqSLbHpou.jpeg"
                   alt="MilkShake Factory Khammam"
-                  class="w-14 h-14 rounded-full object-cover border border-[#f3c78e] mb-1.5"
+                  class="w-12 h-12 rounded-full object-cover border border-[#f3c78e] mb-1"
                 />
-                <span class="serif-display text-sm font-bold leading-none">MilkShake Factory</span>
-                <span class="text-[8px] tracking-[0.18em] uppercase text-[#e5a466] font-extrabold mt-1">Click for All</span>
+                <span class="serif-display text-xs font-bold leading-none">Full Menu</span>
+                <span class="text-[8px] tracking-[0.16em] uppercase text-[#e5a466] font-extrabold mt-1">74 Specialties</span>
               </button>
 
               <!-- Revolving 4 Pillars -->
               <div class="orbit-ring absolute inset-0 pointer-events-none">
-                <!-- TOP: CAKES -->
-                <div class="absolute -top-6 left-1/2 -translate-x-1/2 pointer-events-auto">
-                  <button type="button" onclick="filterShowcaseCategory('Cakes')" class="orbit-node w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-2xl">🎂</span>
-                    <strong class="serif-display text-xs mt-1">Cakes</strong>
-                    <span class="text-[8px] uppercase tracking-wider text-[#91582f] font-extrabold">Celebration</span>
+                <div class="absolute -top-5 left-1/2 -translate-x-1/2 pointer-events-auto">
+                  <button type="button" onclick="selectMenuCategory('Waffles')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🧇</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Waffles</strong>
                   </button>
                 </div>
-
-                <!-- RIGHT: PIZZA -->
-                <div class="absolute top-1/2 -right-6 -translate-y-1/2 pointer-events-auto">
-                  <button type="button" onclick="filterShowcaseCategory('Pizza')" class="orbit-node w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-2xl">🍕</span>
-                    <strong class="serif-display text-xs mt-1">Pizza</strong>
-                    <span class="text-[8px] uppercase tracking-wider text-[#91582f] font-extrabold">Cheese Burst</span>
+                <div class="absolute top-1/2 -right-5 -translate-y-1/2 pointer-events-auto">
+                  <button type="button" onclick="selectMenuCategory('Noodles Items')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🍜</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Noodles</strong>
                   </button>
                 </div>
-
-                <!-- BOTTOM: BURGERS -->
-                <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 pointer-events-auto">
-                  <button type="button" onclick="filterShowcaseCategory('Burgers')" class="orbit-node w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-2xl">🍔</span>
-                    <strong class="serif-display text-xs mt-1">Burgers</strong>
-                    <span class="text-[8px] uppercase tracking-wider text-[#91582f] font-extrabold">Crispy Stacked</span>
+                <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 pointer-events-auto">
+                  <button type="button" onclick="selectMenuCategory('Burgers & Sides')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🍔</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Burgers</strong>
                   </button>
                 </div>
-
-                <!-- LEFT: CHINESE -->
-                <div class="absolute top-1/2 -left-6 -translate-y-1/2 pointer-events-auto">
-                  <button type="button" onclick="filterShowcaseCategory('Chinese')" class="orbit-node w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-2xl">🥡</span>
-                    <strong class="serif-display text-xs mt-1">Chinese</strong>
-                    <span class="text-[8px] uppercase tracking-wider text-[#91582f] font-extrabold">Wok Tossed</span>
+                <div class="absolute top-1/2 -left-5 -translate-y-1/2 pointer-events-auto">
+                  <button type="button" onclick="selectMenuCategory('Veg Starter Items')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🥟</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Starters</strong>
                   </button>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Right: Category Filter Pills & Price-Free 3D Showcase Cards -->
-          <div class="lg:col-span-6 space-y-6">
-            <div class="flex flex-wrap gap-2">
-              <button type="button" onclick="filterShowcaseCategory('all')" data-pillar="all" class="pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#2b1912] text-[#fffaf0] cursor-pointer transition">
-                All Specialties
-              </button>
-              <button type="button" onclick="filterShowcaseCategory('Milkshakes')" data-pillar="Milkshakes" class="pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#fffaf0] text-[#2b1912] border border-[#ded5c9] cursor-pointer transition">
-                🍫 Hand-Spun Milkshakes
-              </button>
-              <button type="button" onclick="filterShowcaseCategory('Cakes')" data-pillar="Cakes" class="pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#fffaf0] text-[#2b1912] border border-[#ded5c9] cursor-pointer transition">
-                🎂 Cakes
-              </button>
-              <button type="button" onclick="filterShowcaseCategory('Pizza')" data-pillar="Pizza" class="pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#fffaf0] text-[#2b1912] border border-[#ded5c9] cursor-pointer transition">
-                🍕 Pizza
-              </button>
-              <button type="button" onclick="filterShowcaseCategory('Burgers')" data-pillar="Burgers" class="pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#fffaf0] text-[#2b1912] border border-[#ded5c9] cursor-pointer transition">
-                🍔 Burgers
-              </button>
-              <button type="button" onclick="filterShowcaseCategory('Chinese')" data-pillar="Chinese" class="pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#fffaf0] text-[#2b1912] border border-[#ded5c9] cursor-pointer transition">
-                🥡 Chinese
-              </button>
+          <div class="lg:col-span-7 space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#91582f] block">EXTRACTED PHYSICAL MENU CARD</span>
+                <h3 class="serif-display text-2xl sm:text-3xl text-[#2b1912] mt-1">Select a Category or Search Any Dish</h3>
+              </div>
+              <div class="relative w-full sm:w-64">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8a4b2a] text-xs"></i>
+                <input
+                  id="menu-search-input"
+                  type="search"
+                  oninput="renderExtractedMenu()"
+                  placeholder="Search noodles, paneer, waffle..."
+                  class="w-full pl-9 pr-3.5 py-2.5 rounded-full bg-[#fffaf0] border border-[#d5c6b4] text-xs text-[#2b1912] focus:outline-none focus:border-[#d47732]"
+                />
+              </div>
             </div>
 
-            <div id="showcase-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- Populated by JS (Strictly Price-Free Showcase Cards) -->
+            <!-- Category Filter Pills -->
+            <div id="menu-category-pills" class="flex flex-wrap gap-2">
+              <!-- Populated by JS -->
             </div>
+
+            <p class="text-[11px] text-[#78675b] italic">
+              <i class="fa-solid fa-circle-check text-[#78956c] mr-1"></i>
+              Freshly prepared to order at our Mamata Road outlet. Tap any item to inquire directly with Rajesh Bhai on WhatsApp.
+            </p>
           </div>
+        </div>
+
+        <!-- Complete Extracted Menu Grid (Strictly Zero Prices) -->
+        <div id="extracted-menu-container" class="space-y-12">
+          <!-- Populated by JS -->
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         SECTION 4: LOCATIONS SECTION FROM NEXT.JS BUNDLE (#locations)
-         Includes Mamata Hospital Road, Kasba Bazar Station Road, Shop Feature,
-         and Interactive Outlet / Owner Editor Bar
+         SECTION 4: SINGLE STORE LOCATION & LOCKED OWNER INFO (MAMATA ROAD ONLY)
          ======================================================================== -->
-    <section class="location-section section-wrap" id="locations" aria-labelledby="locations-title">
-      <div class="section-heading location-heading">
+    <section class="py-24 section-wrap" id="locations" aria-labelledby="locations-title">
+      <div class="section-heading mb-12">
         <div>
-          <p class="section-eyebrow"><span aria-hidden="true"></span>Two neighborhood stops</p>
-          <h2 id="locations-title">Your shake is<br /><em>closer than you think.</em></h2>
+          <p class="section-eyebrow"><span aria-hidden="true"></span>Our Khammam Flagship Destination</p>
+          <h2 id="locations-title">Visit us on<br /><em>Mamata Road.</em></h2>
         </div>
-        <p>Drop by, bring your people, and make an ordinary day feel a little more like a treat.</p>
+        <p>Drop by with family and friends for hand-spun thickshakes, celebration cakes, sizzling starters, and warm hospitality.</p>
       </div>
 
-      <div class="outlet-grid">
-        <!-- Outlet 01 -->
-        <article class="outlet-card card-3d" onmousemove="tiltCard3D(event, this)" onmouseleave="resetCard3D(this)">
-          <div class="outlet-card-top">
-            <span class="outlet-number">01</span>
-            <span class="outlet-status"><span aria-hidden="true"></span> Khammam, Telangana</span>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <!-- Single Flagship Store Card -->
+        <article class="lg:col-span-7 bg-[#fffaf0] border border-[#ded5c9] rounded-2xl p-7 sm:p-10 flex flex-col justify-between shadow-lg card-3d" onmousemove="tiltCard3D(event, this)" onmouseleave="resetCard3D(this)">
+          <div>
+            <div class="flex items-center justify-between gap-4 pb-5 border-b border-[#e8dfd5]">
+              <span class="px-3 py-1 rounded-full bg-[#eee5d8] text-[#8a4b2a] text-[10px] font-extrabold tracking-[0.16em] uppercase">
+                FLAGSHIP KHAMMAM OUTLET
+              </span>
+              <span class="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-widest text-[#5a7a4e]">
+                <span class="w-2 h-2 rounded-full bg-[#5a7a4e] animate-pulse"></span>
+                Open Daily · Khammam
+              </span>
+            </div>
+
+            <h3 class="serif-display text-3xl sm:text-4xl text-[#2b1912] mt-6">
+              MilkShake Factory — Mamata Road
+            </h3>
+
+            <div class="mt-6 space-y-4 text-sm text-[#5c493b]">
+              <div class="flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-full bg-[#eee5d8] text-[#d47732] flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#91582f] block">PROPRIETOR &amp; OWNER</span>
+                  <strong class="serif-display text-lg text-[#2b1912]">Rajesh Bhai</strong>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-full bg-[#eee5d8] text-[#d47732] flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#91582f] block">STORE ADDRESS</span>
+                  <strong class="text-sm text-[#2b1912] leading-relaxed block">
+                    mamata road, Dwaraka Nagar, Jalagam Nagar, Khammam, Telangana 507002
+                  </strong>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3.5">
+                <div class="w-9 h-9 rounded-full bg-[#eee5d8] text-[#d47732] flex items-center justify-center shrink-0 mt-0.5">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#91582f] block">DIRECT PHONE &amp; WHATSAPP</span>
+                  <a href="tel:08096787676" class="text-base font-extrabold text-[#2b1912] hover:text-[#d47732] transition">
+                    080967 87676
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
-          <h3>Mamata Hospital Road</h3>
-          <p class="outlet-address">
-            <i class="fa-solid fa-location-dot text-[#d47732] mt-1"></i>
-            <span id="outlet-mamata-address">Mamata Hospital Road, Khammam, Telangana</span>
-          </p>
-          <div class="outlet-card-actions">
+
+          <div class="mt-8 pt-6 border-t border-[#e8dfd5] flex flex-wrap items-center gap-3">
             <a
-              id="outlet-mamata-map"
-              class="text-link"
-              href="https://www.google.com/maps/search/?api=1&query=Mamata%20Hospital%20Road%2C%20Khammam%2C%20Telangana"
+              href="https://www.google.com/maps/search/?api=1&query=MilkShake+Factory+mamata+road,+Dwaraka+Nagar,+Jalagam+Nagar,+Khammam,+Telangana+507002"
               target="_blank"
               rel="noreferrer"
+              class="button button-dark"
             >
-              Get directions <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+              Get Google Maps Directions
+              <i class="fa-solid fa-location-arrow text-xs"></i>
             </a>
-            <a class="round-action dynamic-tel-anchor" href="tel:+918096787676" aria-label="Call Mamata Hospital Road">
+            <a
+              href="tel:08096787676"
+              class="button button-caramel"
+            >
+              Call 080967 87676
               <i class="fa-solid fa-phone text-xs"></i>
+            </a>
+            <a
+              href="https://wa.me/918096787676?text=Hi%20Rajesh%20Bhai!%20I%20am%20visiting%20MilkShake%20Factory%20on%20Mamata%20Road%2C%20Khammam."
+              target="_blank"
+              rel="noreferrer"
+              class="button button-cream border border-[#dfd3c3]"
+            >
+              WhatsApp Store
+              <i class="fa-brands fa-whatsapp text-sm text-[#25d366]"></i>
             </a>
           </div>
         </article>
 
-        <!-- Outlet 02 -->
-        <article class="outlet-card card-3d" onmousemove="tiltCard3D(event, this)" onmouseleave="resetCard3D(this)">
-          <div class="outlet-card-top">
-            <span class="outlet-number">02</span>
-            <span class="outlet-status"><span aria-hidden="true"></span> Khammam, Telangana</span>
+        <!-- Store Visual Showcase Card with Hosted Shop Image -->
+        <div class="lg:col-span-5 bg-[#eee5d8] border border-[#dfd3c3] rounded-2xl overflow-hidden flex flex-col justify-between shadow-lg">
+          <div class="h-64 sm:h-72 overflow-hidden relative">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Sh7vtWKNjK2JQMpWx6pviz4DXXTML4.png"
+              alt="Inside the MilkShake Factory Khammam outlet on Mamata Road"
+              class="w-full h-full object-cover"
+            />
+            <span class="absolute bottom-3 left-3 px-3 py-1 rounded bg-[#2b1912]/85 text-[#fff8ee] text-[9px] font-extrabold tracking-widest uppercase">
+              MAMATA ROAD · DWARAKA NAGAR · JALAGAM NAGAR
+            </span>
           </div>
-          <h3>Kasba Bazar, Station Road</h3>
-          <p class="outlet-address">
-            <i class="fa-solid fa-location-dot text-[#d47732] mt-1"></i>
-            <span id="outlet-kasba-address">Kasba Bazar, Station Road, Khammam, Telangana</span>
-          </p>
-          <div class="outlet-card-actions">
-            <a
-              id="outlet-kasba-map"
-              class="text-link"
-              href="https://www.google.com/maps/search/?api=1&query=Kasba%20Bazar%2C%20Station%20Road%2C%20Khammam%2C%20Telangana"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Get directions <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-            </a>
-            <a class="round-action dynamic-tel-anchor" href="tel:+918096787676" aria-label="Call Kasba Bazar, Station Road">
-              <i class="fa-solid fa-phone text-xs"></i>
-            </a>
+          <div class="p-7 space-y-2">
+            <span class="text-[9px] font-extrabold tracking-[0.18em] uppercase text-[#94603a]">YOUR NEIGHBORHOOD SHAKE STOP</span>
+            <h3 class="serif-display text-2xl text-[#2b1912]">Come as you are. Leave a little happier.</h3>
+            <p class="text-xs text-[#78675b] leading-relaxed">
+              Located conveniently at mamata road, Dwaraka Nagar, Jalagam Nagar, Khammam, Telangana 507002. Hosted personally by Rajesh Bhai.
+            </p>
           </div>
-        </article>
-      </div>
-
-      <!-- Local Store Feature with assets.shop -->
-      <div class="local-store-feature">
-        <img
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-Sh7vtWKNjK2JQMpWx6pviz4DXXTML4.png"
-          alt="Inside the MilkShake Factory Khammam outlet"
-        />
-        <div>
-          <span>YOUR NEIGHBORHOOD SHAKE STOP</span>
-          <h3>Come as you are.<br />Leave a little happier.</h3>
-          <p>Find us in Khammam for a sweet pause in the middle of your day.</p>
         </div>
-      </div>
-
-      <!-- Outlet & Owner Editor Bar -->
-      <div class="outlet-editor-bar">
-        <div>
-          <span class="editor-avatar">
-            <i class="fa-solid fa-pen-nib text-xs"></i>
-          </span>
-          <p>
-            <strong id="display-owner-name">Rajesh (Rajesh Bhai)</strong>
-            <small><span id="display-owner-role">Local outlet owner & proprietor</span> · Khammam · <span class="dynamic-phone-text font-bold text-[#8a4b2a]">+91 80967 87676</span></small>
-          </p>
-        </div>
-        <button class="edit-button" type="button" onclick="openOwnerDialog()">
-          Edit local outlet / owner info
-          <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-        </button>
       </div>
     </section>
 
     <!-- ========================================================================
-         SECTION 5: BRAND STORY SECTION FROM NEXT.JS BUNDLE (#story)
-         Uses exact hosted assets.shakes
+         SECTION 5: BRAND STORY SECTION (#story)
          ======================================================================== -->
     <section class="brand-story" id="story" aria-labelledby="story-title">
       <div class="story-image-wrap">
@@ -1801,16 +1271,15 @@
       <div class="story-copy">
         <p class="section-eyebrow"><span aria-hidden="true"></span>Every visit is a small celebration</p>
         <h2 id="story-title">Some things<br />are just better<br /><em>shared.</em></h2>
-        <p>For the after-school stop, the long catch-up, or the “just because” kind of day. Find your moment at MilkShake Factory Khammam.</p>
+        <p>For the after-college hangout, family evening drive on Mamata Road, or birthday surprise. Find your moment at MilkShake Factory Khammam.</p>
         <a class="text-link story-link" href="#locations">
-          Come say hello <i class="fa-solid fa-arrow-right text-xs"></i>
+          Visit Mamata Road, Khammam <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
       </div>
     </section>
 
     <!-- ========================================================================
-         SECTION 6: SWEET MOMENTS GALLERY FROM NEXT.JS BUNDLE (#moments)
-         Uses exact hosted assets.chocolate & assets.celebration
+         SECTION 6: SWEET MOMENTS GALLERY (#moments)
          ======================================================================== -->
     <section class="sweet-moments section-wrap" id="moments" aria-labelledby="moments-title">
       <div class="moments-heading">
@@ -1838,73 +1307,44 @@
     </section>
 
     <!-- ========================================================================
-         SECTION 7: LEADERSHIP & GLOBAL ROOTS FROM NEXT.JS BUNDLE (#leadership)
+         SECTION 7: HIDDEN-BACKEND SINGLE-BUTTON UNLIMITED RANDOM GOOGLE REVIEW
+         Customer never sees the generated review text on the website UI.
          ======================================================================== -->
-    <section class="leadership-section" id="leadership" aria-labelledby="leadership-title">
-      <div class="leadership-inner">
-        <div class="leadership-intro">
-          <p class="section-eyebrow"><span aria-hidden="true"></span>Local flavor. Global roots.</p>
-          <h2 id="leadership-title">A big-hearted<br /><em>little original.</em></h2>
-          <p>From our Pittsburgh beginnings to our Khammam neighborhood, MilkShake Factory is built around one simple idea: a good treat brings people together.</p>
-          <div class="hq-card">
-            <i class="fa-solid fa-location-dot text-[#e6a768] mt-1"></i>
-            <div>
-              <span>GLOBAL HEADQUARTERS</span>
-              <strong>1705 East Carson Street, Suite 4</strong>
-              <small>Pittsburgh, PA 15203 · United States</small>
-            </div>
-          </div>
+    <section id="instant-review" class="py-20 px-4 sm:px-8 bg-[#2a1912] text-[#fff8ee] border-t border-white/10">
+      <div class="max-w-4xl mx-auto text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d47732]/20 border border-[#d47732]/50 text-[#f3c78e] text-[10px] font-extrabold tracking-[0.2em] uppercase">
+          <i class="fa-solid fa-star text-[#f1c40f]"></i>
+          <span>1-TAP INSTANT GOOGLE REVIEW</span>
         </div>
 
-        <div class="leadership-list">
-          <article class="leader-card">
-            <span class="leader-index">01 / LEADERSHIP</span>
-            <h3>Dana Edwards Manatos</h3>
-            <p>Founder &amp; CEO</p>
-            <span class="leader-location">MilkShake Factory · Pittsburgh</span>
-          </article>
-          <article class="leader-card">
-            <span class="leader-index">02 / LEADERSHIP</span>
-            <h3>Charmaine Canonizado</h3>
-            <p>Corporate CEO &amp; CMO</p>
-            <span class="leader-location">Global brand leadership</span>
-          </article>
-          <div class="global-note">
-            <span aria-hidden="true">✳</span>
-            <p>One joyful idea.<br /><strong>Many places to share it.</strong></p>
-          </div>
-        </div>
-      </div>
-    </section>
+        <h2 class="serif-display text-4xl sm:text-6xl leading-none tracking-tight">
+          Loved your shake at<br /><em class="text-[#e5a466]">Mamata Road?</em>
+        </h2>
 
-    <!-- ========================================================================
-         SECTION 8: VISIT CTA BANNER
-         ======================================================================== -->
-    <section class="visit-cta" aria-labelledby="visit-title">
-      <div class="cta-inner">
-        <div>
-          <p class="section-eyebrow"><span aria-hidden="true"></span>See you soon?</p>
-          <h2 id="visit-title">Your next favorite<br />is waiting.</h2>
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <a class="button button-cream" href="#locations">
-            Explore Khammam outlets <i class="fa-solid fa-arrow-right text-xs"></i>
-          </a>
-          <a
-            id="cta-whatsapp-btn"
-            class="button button-dark"
-            href="https://wa.me/918096787676?text=Hi%20MilkShake%20Factory%20Khammam!%20I%20visited%20your%20website%20and%20would%20like%20to%20know%20more."
-            target="_blank"
-            rel="noreferrer"
+        <p class="max-w-xl mx-auto text-xs sm:text-sm text-[#cbb8a8] leading-relaxed">
+          Tap the single button below. A fresh, personalized 5-star review is prepared in the background and copied to your clipboard automatically as we open Google Reviews—simply paste and post!
+        </p>
+
+        <div class="pt-3 flex flex-col items-center justify-center gap-3">
+          <button
+            type="button"
+            onclick="triggerHiddenGoogleReview()"
+            class="px-8 py-5 rounded-full bg-gradient-to-r from-[#d47732] via-[#e45c26] to-[#d47732] text-white font-extrabold text-sm sm:text-base tracking-wide shadow-[0_16px_40px_rgba(212,119,50,0.45)] hover:scale-105 active:scale-95 transition flex items-center gap-3 cursor-pointer"
           >
-            Chat on WhatsApp <i class="fa-brands fa-whatsapp text-sm"></i>
-          </a>
+            <i class="fa-brands fa-google text-lg text-[#fff8ee]"></i>
+            <span>Leave a 5★ Google Review</span>
+            <span class="text-[#ffe6ad]">★★★★★</span>
+          </button>
+
+          <span id="review-status-pill" class="text-[11px] font-bold text-[#e5a466] opacity-0 transition-opacity duration-300">
+            ✓ Review copied to clipboard! Opening Google Maps Review...
+          </span>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         SECTION 9: FOOTER WITH EXACT DEVELOPER LOGO & CREDITS
+         SECTION 8: FOOTER WITH LOCKED STORE INFO & SINGLE-TAP DEVELOPER ATTRIBUTION
          ======================================================================== -->
     <footer class="site-footer">
       <div class="footer-main">
@@ -1914,229 +1354,398 @@
           </span>
           <span class="brand-name">
             MilkShake <strong>Factory</strong>
-            <small>KHAMMAM, INDIA</small>
+            <small>MAMATA ROAD · KHAMMAM</small>
           </span>
         </a>
-        <p>Good shakes. Good people.<br />A little joy, close to home.</p>
-        <a class="footer-phone dynamic-tel-anchor" href="tel:+918096787676">
-          <i class="fa-solid fa-phone text-xs"></i>
-          <span class="dynamic-phone-text">+91 80967 87676</span>
+        <p>mamata road, Dwaraka Nagar, Jalagam Nagar,<br />Khammam, Telangana 507002 · Owner: Rajesh Bhai</p>
+        <a class="footer-phone" href="tel:08096787676">
+          <i class="fa-solid fa-phone text-xs text-[#d47732]"></i>
+          <span>080967 87676</span>
         </a>
       </div>
 
       <div class="footer-bottom">
         <span>© 2026 MilkShake Factory Khammam</span>
-        <div class="developer-credit">
+
+        <!-- Single-Tap Developer Attribution Link (Logo + "designed by @syedzeeshaanali07" ONLY) -->
+        <a
+          href="https://catb12345612-ai.github.io/Syed-Zeeshaan-Ali-High-Fledged-Engineering-And-Digital-Tech-Solutions-Site/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-[#d47732]/25 border border-white/15 transition text-[#ead9c8] hover:text-white no-underline"
+        >
           <img
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dev-logo.png-RdCDIS8k6ikh5Gmbme1hoU5L90cGsy.png"
-            alt="Syed Zeeshaan Ali’s Smart Scan logo"
+            alt="designed by @syedzeeshaanali07"
+            class="w-7 h-7 rounded-full object-contain bg-[#1b140f] border border-white/20"
           />
-          <span>
-            <small>WEBSITE BY</small>
-            <strong>Syed Zeeshaan Ali · Smart Scan | @syedzeeshaanali07 · High-Fledged Engineering And Digital Tech Solutions</strong>
-          </span>
-        </div>
-        <a href="#home">Back to top ↑</a>
+          <span class="font-bold text-xs tracking-wide">designed by @syedzeeshaanali07</span>
+        </a>
+
+        <a href="#home" class="text-[#d6c2ae] no-underline hover:text-white">Back to top ↑</a>
       </div>
     </footer>
-
-    <!-- ========================================================================
-         DIALOG 1: OUTLET & OWNER EDITOR MODAL (Exact Next.js Component + Quick Presets)
-         ======================================================================== -->
-    <dialog id="owner-dialog" class="owner-dialog" aria-labelledby="owner-dialog-title">
-      <div class="dialog-topline">
-        <span><i class="fa-solid fa-location-dot"></i> KHAMMAM OUTLET DETAILS</span>
-        <button type="button" class="dialog-close" onclick="closeOwnerDialog()" aria-label="Close editor">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <h2 id="owner-dialog-title">Edit local outlet<br /><em>&amp; owner info.</em></h2>
-      <p class="dialog-description">Update the local contact and location details shown across this page, or use a quick preset below.</p>
-
-      <!-- One-Click Preset Switcher between Rajesh Bhai (+91 80967 87676) & Franchise Partner (+91 73869 18558) -->
-      <div class="px-7 mb-4 flex flex-wrap gap-2">
-        <button
-          type="button"
-          onclick="applyOwnerPreset('rajesh')"
-          class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-[#d47732] text-white cursor-pointer"
-        >
-          Preset 1: Rajesh Bhai (+91 80967 87676)
-        </button>
-        <button
-          type="button"
-          onclick="applyOwnerPreset('bundle')"
-          class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-[#eee5d8] text-[#2b1912] border border-[#d5c6b4] cursor-pointer"
-        >
-          Preset 2: Khammam Franchise Partner (+91 73869 18558)
-        </button>
-      </div>
-
-      <form class="owner-form" onsubmit="saveOwnerDialog(event)">
-        <fieldset>
-          <legend>Local owner</legend>
-          <label class="form-field">
-            Owner or partner name
-            <input id="input-owner-name" required value="Rajesh (Rajesh Bhai)" />
-          </label>
-          <label class="form-field">
-            Role / title
-            <input id="input-owner-role" required value="Local outlet owner & proprietor" />
-          </label>
-        </fieldset>
-        <fieldset>
-          <legend>Khammam outlets</legend>
-          <label class="form-field">
-            Mamata Hospital Road
-            <input id="input-mamata-address" required value="Mamata Hospital Road, Khammam, Telangana" />
-          </label>
-          <label class="form-field">
-            Kasba Bazar, Station Road
-            <input id="input-kasba-address" required value="Kasba Bazar, Station Road, Khammam, Telangana" />
-          </label>
-          <label class="form-field">
-            Contact phone
-            <input id="input-phone" required type="tel" value="+91 80967 87676" />
-          </label>
-        </fieldset>
-        <div class="flex items-center gap-5 mt-2">
-          <button class="button button-dark" type="submit">
-            Save changes <span aria-hidden="true">→</span>
-          </button>
-          <button class="border-0 bg-transparent text-[#7b6756] text-xs font-bold cursor-pointer" type="button" onclick="closeOwnerDialog()">
-            Cancel
-          </button>
-        </div>
-        <p class="mt-4 text-[10px] text-[#8e7c6d]">Changes update all phone links, WhatsApp buttons, and addresses for the current session.</p>
-      </form>
-    </dialog>
-
-    <!-- ========================================================================
-         DIALOG 2: NEXT.JS 16 / REACT 19 FIXED SOURCE CODE BUNDLE EXPORTER
-         Fixes the `@layer base { - {` bug in globals.css & upgrades hero to 100vw x 100vh
-         ======================================================================== -->
-    <dialog id="nextjs-code-dialog" class="owner-dialog !w-[min(860px,calc(100%-28px))]" aria-labelledby="nextjs-dialog-title">
-      <div class="dialog-topline">
-        <span><i class="fa-solid fa-code"></i> NEXT.JS 16 + REACT 19 + TAILWIND 4 SOURCE BUNDLE</span>
-        <button type="button" class="dialog-close" onclick="closeNextJsCodeModal()" aria-label="Close code modal">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <h2 id="nextjs-dialog-title">Fixed Next.js 16<br /><em>source bundle.</em></h2>
-      <p class="dialog-description">
-        Includes the fix for the <code class="bg-[#eee5d8] px-1.5 py-0.5 rounded text-[#8a4b2a]">@layer base { * {</code> syntax error in <code class="bg-[#eee5d8] px-1.5 py-0.5 rounded text-[#8a4b2a]">app/globals.css</code> and full-viewport <code class="bg-[#eee5d8] px-1.5 py-0.5 rounded text-[#8a4b2a]">100vw x 100vh</code> opening video support.
-      </p>
-      <div class="px-7 pb-7 space-y-3">
-        <div class="flex items-center justify-between">
-          <span class="text-[11px] font-extrabold uppercase tracking-wider text-[#8f5832]">Cleaned Bundle (Ready to Paste)</span>
-          <button type="button" onclick="copyNextJsBundle()" class="button button-caramel !min-h-[38px] !px-4 !text-[10px]">
-            <i class="fa-regular fa-copy"></i> Copy Fixed Next.js Bundle
-          </button>
-        </div>
-        <textarea
-          id="nextjs-bundle-textarea"
-          readonly
-          rows="14"
-          class="w-full p-4 rounded bg-[#1f120d] text-[#f7f2e9] font-mono text-xs leading-relaxed border border-[#d47732]/40 focus:outline-none"
-        >/* FIXED IN app/globals.css: Replaced invalid `- {` with `* {` */
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
-/* FULL-SCREEN 100VW x 100VH HERO VIDEO UPGRADE FOR app/globals.css */
-.hero-section-fullscreen {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  min-height: 680px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-.hero-section-fullscreen .hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-}</textarea>
-      </div>
-    </dialog>
 
   </main>
 
   <!-- ==========================================================================
-       INTERACTIVE SCRIPTS & THREE.JS 3D SLIDING STAGE ENGINE
+       INTERACTIVE SCRIPTS:
+       1. Complete Extracted Price-Free Menu Engine
+       2. Hidden-Backend Unlimited Combinatorial Google Review Engine
+       3. Three.js + GLTFLoader 3D Milkshake & Cake Stage
        ========================================================================== -->
   <script>
     /* --------------------------------------------------------------------------
-       1. PRICE-FREE 4-PILLAR + HAND-SPUN SHAKES SHOWCASE DATA
+       1. COMPLETE EXTRACTED MENU DATA (STRICTLY NO PRICES ANYWHERE)
+       Every item extracted from the uploaded menu cards
        -------------------------------------------------------------------------- */
-    const SHOWCASE_ITEMS = [
-      { title: "The Chocolate Pour Thickshake", category: "Milkshakes", badge: "Hero Video Shake", icon: "🍫", desc: "Three scoops of rich chocolate ice cream spun with fresh farm milk, crowned with whipped cream and dark chocolate shavings." },
-      { title: "Nutella Hazelnut & Oreo Shake", category: "Milkshakes", badge: "Hand-Spun", icon: "🌰", desc: "Roasted hazelnut cocoa spread blended with crunchy Oreo cookies and velvety dairy cream." },
-      { title: "Austrian Sacher Chocolate Glaze Cake", category: "Cakes", badge: "Signature Cake", icon: "🎂", desc: "Decadent sponge layered with apricot jam and coated in a mirror-gloss dark chocolate ganache." },
-      { title: "Blush Floral Celebration Cake", category: "Cakes", badge: "Custom Orders", icon: "🌸", desc: "Handcrafted two-tier floral buttercream and pearl-adorned cake made for milestone celebrations." },
-      { title: "Loaded Mozzarella Cheese Burst Pizza", category: "Pizza", badge: "Oven Fresh", icon: "🍕", desc: "Golden hand-stretched crust overflowing with molten mozzarella, smoky toppings, and Italian herbs." },
-      { title: "Tandoori Paneer & Peri-Peri Pizza", category: "Pizza", badge: "Local Favorite", icon: "🍕", desc: "Char-grilled spiced cubes, crisp bell peppers, sweet corn, and signature house sauce." },
-      { title: "Crispy Zinger & Double Cheese Burger", category: "Burgers", badge: "Stacked High", icon: "🍔", desc: "Crunchy golden fillet stacked with melted cheddar, crisp lettuce, and smoky chipotle glaze." },
-      { title: "Sizzling Wok Hakka Noodles & Manchurian", category: "Chinese", badge: "Indo-Chinese", icon: "🥡", desc: "High-flame wok-tossed noodles with crisp vegetables, fiery Schezwan spice, and garlic Manchurian." }
+    const COMPLETE_MENU_DATA = [
+      {
+        category: "Hand-Spun Milkshakes & Thickshakes",
+        icon: "🍫",
+        tagline: "Rich, creamy parlor thickshakes spun fresh to order",
+        items: [
+          { name: "The Chocolate Pour Thickshake", type: "veg", badge: "Signature Hero" },
+          { name: "Nutella Hazelnut Shake", type: "veg", badge: "Bestseller" },
+          { name: "Ferrero Rocher Shake", type: "veg", badge: "Premium" },
+          { name: "Belgian Dark Chocolate Shake", type: "veg", badge: "Rich Cocoa" },
+          { name: "Oreo Cookie Crumble Shake", type: "veg", badge: "Crunchy" },
+          { name: "KitKat Crunch Shake", type: "veg", badge: "Choco Wafer" },
+          { name: "Biscoff Caramel Shake", type: "veg", badge: "Caramel" },
+          { name: "Strawberry Cream Shake", type: "veg", badge: "Classic Fruit" }
+        ]
+      },
+      {
+        category: "Noodles Items",
+        icon: "🍜",
+        tagline: "High-flame wok-tossed Indo-Chinese noodles",
+        items: [
+          { name: "Egg Noodles", type: "egg", badge: "Wok Tossed" },
+          { name: "Egg Schezwan Noodles", type: "egg", badge: "Fiery Spice" },
+          { name: "Chicken Noodles", type: "nonveg", badge: "Classic" },
+          { name: "Chicken Schezwan Noodles", type: "nonveg", badge: "Spicy Wok" },
+          { name: "Chicken Hongkong Noodles", type: "nonveg", badge: "Chef Special" },
+          { name: "Chicken Hakka Noodles", type: "nonveg", badge: "Bestseller" },
+          { name: "Veg Noodles", type: "veg", badge: "Garden Fresh" },
+          { name: "Veg Schezwan Noodles", type: "veg", badge: "Spicy" },
+          { name: "Veg Hakka Noodles", type: "veg", badge: "Classic" },
+          { name: "Singapore Veg Noodles", type: "veg", badge: "Aromatic" }
+        ]
+      },
+      {
+        category: "Veg Starter Items",
+        icon: "🥟",
+        tagline: "Crispy, tangy, and spicy crowd-favorite starters",
+        items: [
+          { name: "Crispy Corn", type: "veg", badge: "Crunchy" },
+          { name: "Crispy Vegetable", type: "veg", badge: "Golden Fried" },
+          { name: "Chilli Vegetable", type: "veg", badge: "Wok Glazed" },
+          { name: "Chilli Corn", type: "veg", badge: "Spicy" },
+          { name: "Corn Manchurian", type: "veg", badge: "Indo-Chinese" },
+          { name: "Corn Soton Pepper (Salt & Pepper)", type: "veg", badge: "Pepper Tossed" },
+          { name: "Chilli Mushroom", type: "veg", badge: "Hot & Tangy" },
+          { name: "Mushroom Soton Pepper (Salt & Pepper)", type: "veg", badge: "Cracked Pepper" },
+          { name: "Mushroom Manchurian", type: "veg", badge: "Classic" },
+          { name: "Mushroom 65", type: "veg", badge: "South Spice" },
+          { name: "Chilli Paneer", type: "veg", badge: "Bestseller" },
+          { name: "Paneer Majestic", type: "veg", badge: "Hyderabadi Style" },
+          { name: "Schezwan Paneer", type: "veg", badge: "Fiery" },
+          { name: "Paneer Manchurian", type: "veg", badge: "Saucy" },
+          { name: "Paneer 65", type: "veg", badge: "Crispy" }
+        ]
+      },
+      {
+        category: "Waffles",
+        icon: "🧇",
+        tagline: "Crisp golden Belgian waffles drizzled with molten toppings",
+        items: [
+          { name: "Loaded Waffle", type: "veg", badge: "Fully Loaded" },
+          { name: "Classic Waffle", type: "veg", badge: "Golden Crisp" },
+          { name: "Nutella Waffle", type: "veg", badge: "Hazelnut Cocoa" },
+          { name: "Fruit Cream Waffle", type: "veg", badge: "Fresh & Creamy" },
+          { name: "Cookies and Cream Waffle", type: "veg", badge: "Oreo Crunch" },
+          { name: "Loaded Brownie Waffle", type: "veg", badge: "Fudge Overload" }
+        ]
+      },
+      {
+        category: "Brownie & Lava Desserts",
+        icon: "🍰",
+        tagline: "Warm fudgy brownies, sizzling plates, and molten lava cakes",
+        items: [
+          { name: "Dark Chocolate Brownie", type: "veg", badge: "Rich Fudge" },
+          { name: "Brownie Affair", type: "veg", badge: "Indulgent" },
+          { name: "Nutty Profiterole / Fudge Brownie", type: "veg", badge: "Nutty Crunch" },
+          { name: "Vanilla Affair Brownie", type: "veg", badge: "Warm & Cold" },
+          { name: "Dark Chocolate Sizzler Brownie", type: "veg", badge: "Hot Sizzler" },
+          { name: "Vanilla Lava Cake", type: "veg", badge: "Molten Center" }
+        ]
+      },
+      {
+        category: "Grilled Sandwich",
+        icon: "🥪",
+        tagline: "Toasted golden-brown sandwiches with melty fillings",
+        items: [
+          { name: "Egg Sandwich", type: "egg", badge: "Protein Packed" },
+          { name: "Tandoori Sandwich", type: "veg", badge: "Smoky Spice" },
+          { name: "Spicy Sandwich", type: "veg", badge: "Zesty" },
+          { name: "Chipotle Sandwich", type: "veg", badge: "Southwest Glaze" },
+          { name: "Cheese Sandwich", type: "veg", badge: "Melted Cheese" },
+          { name: "Delight Sandwich", type: "veg", badge: "House Favorite" },
+          { name: "Supreme Sandwich", type: "veg", badge: "Fully Stacked" },
+          { name: "Classic Chicken Sandwich", type: "nonveg", badge: "Juicy" },
+          { name: "Triple Layer Sandwich", type: "veg", badge: "3-Tier Club" },
+          { name: "Paneer Sandwich", type: "veg", badge: "Spiced Paneer" }
+        ]
+      },
+      {
+        category: "Wraps",
+        icon: "🌯",
+        tagline: "Soft tortilla wraps loaded with sauces and grilled fillings",
+        items: [
+          { name: "Tikka Wrap", type: "veg", badge: "Char-Grilled" },
+          { name: "BBQ Wrap", type: "veg", badge: "Smoky Sweet" },
+          { name: "Paneer Wrap", type: "veg", badge: "Bestseller" },
+          { name: "Chettinad Wrap", type: "veg", badge: "Roasted Spice" },
+          { name: "Egg Wrap", type: "egg", badge: "Classic Roll" },
+          { name: "MSF Special Wrap", type: "veg", badge: "Signature" },
+          { name: "Tandoori Wrap", type: "veg", badge: "Clay Oven" },
+          { name: "Peri Peri Wrap", type: "veg", badge: "Tangy Heat" },
+          { name: "Makhani Wrap", type: "veg", badge: "Creamy Butter" },
+          { name: "Cheese Wrap", type: "veg", badge: "Cheesy Melt" }
+        ]
+      },
+      {
+        category: "Burgers & Sides",
+        icon: "🍔",
+        tagline: "Crispy stacked burgers, cheesy garlic breads, and crunchy sides",
+        items: [
+          { name: "Spicy Burger", type: "veg", badge: "Fiery Crunch" },
+          { name: "Smoky Burger", type: "veg", badge: "BBQ Glaze" },
+          { name: "Jumbo Burger", type: "veg", badge: "Double Stacked" },
+          { name: "Fish Burger", type: "nonveg", badge: "Crispy Fillet" },
+          { name: "Paneer Burger", type: "veg", badge: "Cottage Cheese" },
+          { name: "Smileys", type: "veg", badge: "Crispy Bites" },
+          { name: "Mozzarella Fries", type: "veg", badge: "Cheesy Pull" },
+          { name: "Cheese Garlic Bread", type: "veg", badge: "Oven Baked" },
+          { name: "Chilli Corn Garlic Bread", type: "veg", badge: "Spiced Corn" },
+          { name: "Chilli Cheese Toast", type: "veg", badge: "Toasted Crunch" }
+        ]
+      }
     ];
 
-    let activePillar = "all";
-    let currentPhone = "+91 80967 87676";
+    let selectedMenuCategory = "All";
 
-    function renderShowcaseCards() {
-      const container = document.getElementById("showcase-cards-grid");
-      const list = activePillar === "all"
-        ? SHOWCASE_ITEMS
-        : SHOWCASE_ITEMS.filter(i => i.category === activePillar);
+    function renderMenuCategoryPills() {
+      const pillWrap = document.getElementById("menu-category-pills");
+      if (!pillWrap) return;
+      const categories = ["All", ...COMPLETE_MENU_DATA.map(c => c.category)];
+      pillWrap.innerHTML = categories.map(cat => {
+        const active = cat === selectedMenuCategory;
+        return `
+          <button
+            type="button"
+            onclick="selectMenuCategory('${cat.replace(/'/g, "\\'")}')"
+            class="px-3.5 py-2 rounded-full text-xs font-extrabold transition cursor-pointer ${
+              active
+                ? 'bg-[#2b1912] text-[#fffaf0] shadow-md'
+                : 'bg-[#fffaf0] text-[#2b1912] border border-[#d5c6b4] hover:border-[#d47732]'
+            }"
+          >
+            ${cat}
+          </button>
+        `;
+      }).join("");
+    }
 
-      const cleanPhone = currentPhone.replace(/\D/g, "");
-      container.innerHTML = list.map(item => `
-        <article class="card-3d bg-[#fffaf0] border border-[#ded5c9] p-5 flex flex-col justify-between shadow-sm hover:shadow-xl transition" onmousemove="tiltCard3D(event, this)" onmouseleave="resetCard3D(this)">
-          <div>
-            <div class="flex items-center justify-between gap-2 mb-3">
-              <span class="text-[9px] font-extrabold uppercase tracking-[0.16em] text-[#91582f] px-2.5 py-1 bg-[#eee5d8]">${item.badge}</span>
-              <span class="text-2xl">${item.icon}</span>
+    function selectMenuCategory(cat) {
+      selectedMenuCategory = cat;
+      renderMenuCategoryPills();
+      renderExtractedMenu();
+    }
+
+    function getDietDot(type) {
+      if (type === "nonveg") {
+        return `<span class="inline-flex items-center justify-center w-4 h-4 border border-red-700 rounded-sm" title="Non-Veg"><span class="w-2 h-2 rounded-full bg-red-700"></span></span>`;
+      }
+      if (type === "egg") {
+        return `<span class="inline-flex items-center justify-center w-4 h-4 border border-amber-600 rounded-sm" title="Contains Egg"><span class="w-2 h-2 rounded-full bg-amber-600"></span></span>`;
+      }
+      return `<span class="inline-flex items-center justify-center w-4 h-4 border border-green-700 rounded-sm" title="Pure Veg"><span class="w-2 h-2 rounded-full bg-green-700"></span></span>`;
+    }
+
+    function renderExtractedMenu() {
+      const container = document.getElementById("extracted-menu-container");
+      const query = (document.getElementById("menu-search-input")?.value || "").trim().toLowerCase();
+      if (!container) return;
+
+      const filteredGroups = COMPLETE_MENU_DATA
+        .filter(group => selectedMenuCategory === "All" || group.category === selectedMenuCategory)
+        .map(group => ({
+          ...group,
+          items: group.items.filter(item =>
+            !query ||
+            item.name.toLowerCase().includes(query) ||
+            group.category.toLowerCase().includes(query) ||
+            item.badge.toLowerCase().includes(query)
+          )
+        }))
+        .filter(group => group.items.length > 0);
+
+      if (filteredGroups.length === 0) {
+        container.innerHTML = `
+          <div class="p-10 text-center bg-[#fffaf0] rounded-2xl border border-[#ded5c9]">
+            <p class="serif-display text-2xl text-[#2b1912]">No matching dishes found.</p>
+            <button type="button" onclick="document.getElementById('menu-search-input').value='';selectMenuCategory('All');" class="mt-4 button button-caramel">
+              Show All Menu Items
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filteredGroups.map(group => `
+        <div class="space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-[#d8cbb8] pb-3 gap-2">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">${group.icon}</span>
+              <div>
+                <h3 class="serif-display text-2xl sm:text-3xl text-[#2b1912]">${group.category}</h3>
+                <p class="text-xs text-[#78675b]">${group.tagline}</p>
+              </div>
             </div>
-            <h3 class="serif-display text-xl text-[#2b1912] leading-snug">${item.title}</h3>
-            <p class="text-xs text-[#78675b] mt-2 leading-relaxed">${item.desc}</p>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#91582f] bg-[#ece2d4] px-3 py-1 rounded-full self-start sm:self-auto">
+              ${group.items.length} Specialties
+            </span>
           </div>
-          <div class="mt-4 pt-3 border-t border-[#e8dfd5] flex items-center justify-between">
-            <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#8a4b2a]">${item.category}</span>
-            <a
-              href="https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hi MilkShake Factory Khammam! I would like to inquire about ' + item.title + ' (' + item.category + ').')}"
-              target="_blank"
-              rel="noreferrer"
-              class="text-link !text-[11px]"
-            >
-              Inquire <i class="fa-brands fa-whatsapp text-[#25d366]"></i>
-            </a>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            ${group.items.map(item => `
+              <article
+                class="card-3d bg-[#fffaf0] border border-[#ded5c9] rounded-xl p-4 flex items-center justify-between gap-3 hover:border-[#d47732] hover:shadow-md transition"
+                onmousemove="tiltCard3D(event, this)"
+                onmouseleave="resetCard3D(this)"
+              >
+                <div class="flex items-start gap-3 min-w-0">
+                  <div class="mt-1 shrink-0">${getDietDot(item.type)}</div>
+                  <div class="min-w-0">
+                    <h4 class="serif-display text-base sm:text-lg text-[#2b1912] leading-snug truncate">${item.name}</h4>
+                    <span class="inline-block mt-1 text-[9px] font-extrabold uppercase tracking-wider text-[#91582f] bg-[#eee5d8] px-2 py-0.5 rounded">
+                      ${item.badge}
+                    </span>
+                  </div>
+                </div>
+
+                <a
+                  href="https://wa.me/918096787676?text=${encodeURIComponent('Hi Rajesh Bhai at MilkShake Factory (Mamata Road, Khammam)! I would like to inquire about ' + item.name + ' (' + group.category + ').')}"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="shrink-0 w-9 h-9 rounded-full bg-[#eee5d8] hover:bg-[#2b1912] text-[#2b1912] hover:text-[#fffaf0] flex items-center justify-center transition"
+                  title="Inquire on WhatsApp"
+                >
+                  <i class="fa-brands fa-whatsapp text-sm text-[#1da851]"></i>
+                </a>
+              </article>
+            `).join("")}
           </div>
-        </article>
+        </div>
       `).join("");
     }
 
-    function filterShowcaseCategory(cat) {
-      activePillar = cat;
-      document.querySelectorAll(".pillar-btn").forEach(btn => {
-        if (btn.getAttribute("data-pillar") === cat) {
-          btn.className = "pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#2b1912] text-[#fffaf0] cursor-pointer transition";
-        } else {
-          btn.className = "pillar-btn px-4 py-2 rounded-full text-xs font-extrabold bg-[#fffaf0] text-[#2b1912] border border-[#ded5c9] cursor-pointer transition";
+    /* --------------------------------------------------------------------------
+       2. HIDDEN-BACKEND SINGLE-BUTTON UNLIMITED RANDOM GOOGLE REVIEW ENGINE
+       Generates a unique natural review silently, copies to clipboard, and opens Google Review
+       -------------------------------------------------------------------------- */
+    let lastGeneratedReviewSignature = "";
+
+    function synthesizeHiddenRandomReview() {
+      const openings = [
+        "Visited MilkShake Factory on Mamata Road in Khammam today and had a wonderful time!",
+        "Hands down the best dessert and snack spot in Dwaraka Nagar, Mamata Road, Khammam!",
+        "Stopped by MilkShake Factory Khammam with friends and loved every single bite.",
+        "Such a vibrant and welcoming cafe on Mamata Road, Khammam!",
+        "If you are in Khammam craving thickshakes and hot snacks, MilkShake Factory on Mamata Road is unbeatable.",
+        "Had an amazing evening hangout at MilkShake Factory in Jalagam Nagar / Mamata Road!"
+      ];
+
+      const dishHighlights = [
+        "The Chocolate Pour Thickshake and Loaded Brownie Waffle were super rich and freshly made.",
+        "We tried the Crispy Corn, Paneer Majestic, and Chicken Hakka Noodles—everything came out piping hot and flavorful.",
+        "Their Nutella Waffle, Dark Chocolate Sizzler Brownie, and Belgian Dark Chocolate Shake are pure perfection.",
+        "Loved the MSF Special Wrap, Triple Layer Sandwich, and Mozzarella Fries alongside their signature thickshakes.",
+        "The Ferrero Rocher Shake, Chilli Paneer, and Jumbo Burger hit the spot completely.",
+        "Ordered the Vanilla Lava Cake, Cookies and Cream Waffle, and Veg Schezwan Noodles—top-notch quality and taste!"
+      ];
+
+      const hospitalityNotes = [
+        "Special thanks to Rajesh Bhai for being so polite, welcoming, and making sure our order was served quickly.",
+        "Rajesh Bhai runs the Mamata Road store with great hygiene, warm hospitality, and fast service.",
+        "The ambiance is super clean and family-friendly, and Rajesh Bhai's customer service makes you want to come back again.",
+        "Great vibes, neat seating, and wonderful hospitality from Rajesh Bhai and the staff."
+      ];
+
+      const closings = [
+        "Highly recommended for everyone in Khammam!",
+        "Definitely a 5-star experience on Mamata Road.",
+        "Will surely visit again with family and friends!",
+        "Best place in Khammam for shakes, cakes, waffles, and Chinese starters!"
+      ];
+
+      let candidate = "";
+      for (let attempt = 0; attempt < 8; attempt++) {
+        const o = openings[Math.floor(Math.random() * openings.length)];
+        const d = dishHighlights[Math.floor(Math.random() * dishHighlights.length)];
+        const h = hospitalityNotes[Math.floor(Math.random() * hospitalityNotes.length)];
+        const c = closings[Math.floor(Math.random() * closings.length)];
+        candidate = `${o} ${d} ${h} ${c}`;
+        if (candidate !== lastGeneratedReviewSignature) {
+          lastGeneratedReviewSignature = candidate;
+          break;
         }
-      });
-      renderShowcaseCards();
+      }
+      return candidate;
+    }
+
+    function silentCopyTextToClipboard(text) {
+      // Hidden off-screen textarea fallback for universal iframe & mobile support
+      const tempInput = document.createElement("textarea");
+      tempInput.value = text;
+      tempInput.setAttribute("readonly", "");
+      tempInput.style.position = "fixed";
+      tempInput.style.top = "-9999px";
+      tempInput.style.left = "-9999px";
+      tempInput.style.opacity = "0";
+      document.body.appendChild(tempInput);
+      tempInput.focus();
+      tempInput.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {}
+      document.body.removeChild(tempInput);
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+    }
+
+    function triggerHiddenGoogleReview() {
+      const hiddenReviewText = synthesizeHiddenRandomReview();
+      silentCopyTextToClipboard(hiddenReviewText);
+
+      const statusPill = document.getElementById("review-status-pill");
+      if (statusPill) {
+        statusPill.classList.remove("opacity-0");
+        statusPill.classList.add("opacity-100");
+      }
+
+      const googleReviewUrl =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent("MilkShake Factory, mamata road, Dwaraka Nagar, Jalagam Nagar, Khammam, Telangana 507002");
+
+      window.open(googleReviewUrl, "_blank", "noopener,noreferrer");
     }
 
     /* --------------------------------------------------------------------------
-       2. FULL-SCREEN CINEMA VIDEO VS. SPLIT EDITORIAL MODE & PURE VIDEO TOGGLE
+       3. FULL-SCREEN CINEMA VIDEO VS. SPLIT EDITORIAL MODE & PURE VIDEO TOGGLE
        -------------------------------------------------------------------------- */
     let isSplitEditorial = false;
     let isPureVideo = false;
@@ -2145,7 +1754,9 @@
       isSplitEditorial = !isSplitEditorial;
       document.body.classList.toggle("hero-split-mode", isSplitEditorial);
       const label = document.getElementById("hero-layout-label");
-      label.textContent = isSplitEditorial ? "Full-Screen Video (100vh)" : "Split Editorial View";
+      if (label) {
+        label.textContent = isSplitEditorial ? "Full-Screen Video (100vh)" : "Split Editorial View";
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -2171,7 +1782,6 @@
       }
     }
 
-    // Update live video stage indicator based on current playback timestamp
     const cinemaVideo = document.getElementById("cinema-video-el");
     if (cinemaVideo) {
       cinemaVideo.addEventListener("timeupdate", () => {
@@ -2208,90 +1818,15 @@
     });
 
     /* --------------------------------------------------------------------------
-       3. OUTLET & OWNER DIALOG LOGIC (Matches OutletOwnerDialog.tsx + Presets)
-       -------------------------------------------------------------------------- */
-    const ownerDialog = document.getElementById("owner-dialog");
-
-    function openOwnerDialog() {
-      if (ownerDialog && !ownerDialog.open) {
-        ownerDialog.showModal();
-      }
-    }
-
-    function closeOwnerDialog() {
-      if (ownerDialog && ownerDialog.open) {
-        ownerDialog.close();
-      }
-    }
-
-    function applyOwnerPreset(type) {
-      if (type === "rajesh") {
-        document.getElementById("input-owner-name").value = "Rajesh (Rajesh Bhai)";
-        document.getElementById("input-owner-role").value = "Local outlet owner & proprietor";
-        document.getElementById("input-phone").value = "+91 80967 87676";
-      } else {
-        document.getElementById("input-owner-name").value = "Khammam franchise partner";
-        document.getElementById("input-owner-role").value = "Local outlet owner";
-        document.getElementById("input-phone").value = "+91 73869 18558";
-      }
-    }
-
-    function saveOwnerDialog(event) {
-      event.preventDefault();
-      const name = document.getElementById("input-owner-name").value.trim();
-      const role = document.getElementById("input-owner-role").value.trim();
-      const mamata = document.getElementById("input-mamata-address").value.trim();
-      const kasba = document.getElementById("input-kasba-address").value.trim();
-      const phone = document.getElementById("input-phone").value.trim();
-
-      currentPhone = phone;
-      const cleanTel = phone.replace(/\s+/g, "");
-
-      document.getElementById("display-owner-name").textContent = name;
-      document.getElementById("display-owner-role").textContent = role;
-      document.getElementById("outlet-mamata-address").textContent = mamata;
-      document.getElementById("outlet-kasba-address").textContent = kasba;
-
-      document.getElementById("outlet-mamata-map").href =
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mamata)}`;
-      document.getElementById("outlet-kasba-map").href =
-        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(kasba)}`;
-
-      document.querySelectorAll(".dynamic-phone-text").forEach(el => {
-        el.textContent = phone;
-      });
-      document.querySelectorAll(".dynamic-tel-anchor, #header-phone-link, #cinema-phone-link, #split-phone-link").forEach(el => {
-        el.href = `tel:${cleanTel}`;
-      });
-
-      renderShowcaseCards();
-      closeOwnerDialog();
-    }
-
-    // Next.js 16 Code Modal
-    const nextJsDialog = document.getElementById("nextjs-code-dialog");
-    function openNextJsCodeModal() {
-      if (nextJsDialog && !nextJsDialog.open) nextJsDialog.showModal();
-    }
-    function closeNextJsCodeModal() {
-      if (nextJsDialog && nextJsDialog.open) nextJsDialog.close();
-    }
-    function copyNextJsBundle() {
-      const area = document.getElementById("nextjs-bundle-textarea");
-      area.select();
-      document.execCommand("copy");
-    }
-
-    /* --------------------------------------------------------------------------
        4. 3D PERSPECTIVE TILT EFFECT
        -------------------------------------------------------------------------- */
     function tiltCard3D(e, card) {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const rotY = ((x / rect.width) - 0.5) * 10;
-      const rotX = ((y / rect.height) - 0.5) * -10;
-      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-3px)`;
+      const rotY = ((x / rect.width) - 0.5) * 8;
+      const rotX = ((y / rect.height) - 0.5) * -8;
+      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-2px)`;
     }
 
     function resetCard3D(card) {
@@ -2299,7 +1834,10 @@
     }
 
     /* --------------------------------------------------------------------------
-       5. THREE.JS 3D SLIDING STAGE (5 INTERACTIVE 3D CULINARY MODELS)
+       5. THREE.JS + GLTFLOADER 3D STAGE
+       Slide 01 matches the uploaded Milkshake glTF bounds: [-0.155, -0.500, -0.217] to [0.150, 0.500, 0.217]
+       Slide 02 matches the uploaded Cake glTF bounds: [-0.500, -0.258, -0.500] to [0.500, 0.257, 0.500]
+       Also supports loading custom .glb files via THREE.GLTFLoader
        -------------------------------------------------------------------------- */
     let stageScene, stageCamera, stageRenderer, stageGroup;
     let stageModels = [];
@@ -2309,46 +1847,201 @@
 
     const STAGE_3D_ITEMS = [
       {
-        eyebrow: "01 / HAND-SPUN SIGNATURE SHAKE",
-        title: "The Chocolate Pour Shake",
-        desc: "Inspired by our opening video: three scoops of rich chocolate ice cream spun with fresh milk, poured into a tall glass and crowned with whipped cream and dark chocolate shavings.",
-        bg: "radial-gradient(circle at 50% 45%, #3d2116 0%, #1d100b 90%)",
-        primary: 0x4b2514,
-        accent: 0xfff8ee
+        eyebrow: "01 / TALL CHOCOLATE MILKSHAKE 3D MODEL",
+        title: "The Chocolate Pour Thickshake",
+        desc: "Sculpted to the exact tall aspect ratio [-0.155, -0.500, -0.217] → [0.150, 0.500, 0.217] of the uploaded milkshake glTF: fluted pedestal parlor glass, rich chocolate thickshake body, chocolate syrup swirls, whipped cream peak, dark chocolate curls, and striped straw.",
+        bounds: "GLTF BOUNDS: [-0.155, -0.500, -0.217] → [0.150, 0.500, 0.217]",
+        bg: "radial-gradient(circle at 50% 45%, #3d2116 0%, #1d100b 90%)"
       },
       {
-        eyebrow: "02 / CELEBRATION BAKERY PILLAR",
-        title: "Austrian Sacher & Floral Cakes",
-        desc: "Glossy dark chocolate glazed Sacher torte and custom two-tier floral celebration cakes crafted fresh for Khammam birthdays and gatherings.",
-        bg: "radial-gradient(circle at 50% 45%, #4f1c24 0%, #1c0d10 90%)",
-        primary: 0x3b170e,
-        accent: 0xd47732
+        eyebrow: "02 / CELEBRATION & SACHER CAKE 3D MODEL",
+        title: "Mirror-Glaze Sacher & Celebration Cake",
+        desc: "Sculpted to the exact cylindrical aspect ratio [-0.500, -0.258, -0.500] → [0.500, 0.257, 0.500] of the uploaded cake glTF: glossy dark chocolate ganache drum, apricot-gold ribbon trim, 12 piped cream rosettes, chocolate shavings, and glazed berries.",
+        bounds: "GLTF BOUNDS: [-0.500, -0.258, -0.500] → [0.500, 0.257, 0.500]",
+        bg: "radial-gradient(circle at 50% 45%, #4f1c24 0%, #1c0d10 90%)"
       },
       {
         eyebrow: "03 / ARTISANAL OVEN PILLAR",
-        title: "Cheese Burst Wood-Fired Pizza",
-        desc: "Golden crust loaded with molten mozzarella, smoky paneer or peri-peri chicken, crisp bell peppers, and Italian herbs.",
-        bg: "radial-gradient(circle at 50% 45%, #5e3114 0%, #1c1009 90%)",
-        primary: 0xd47732,
-        accent: 0xf1c40f
+        title: "Wood-Fired Cheese Burst Pizza",
+        desc: "Hand-stretched golden crust overflowing with molten mozzarella cheese, char-grilled paneer cubes, crisp bell peppers, and Italian herbs.",
+        bounds: "3D MESH: ARTISANAL WOOD-FIRED PIZZA",
+        bg: "radial-gradient(circle at 50% 45%, #5e3114 0%, #1c1009 90%)"
       },
       {
         eyebrow: "04 / GOURMET GRILL PILLAR",
-        title: "Crispy Double-Decker Burgers",
-        desc: "Crunchy golden patties stacked high with melted cheddar slices, fresh lettuce, and signature house sauce inside a toasted bun.",
-        bg: "radial-gradient(circle at 50% 45%, #4f3812 0%, #191208 90%)",
-        primary: 0xc87a28,
-        accent: 0x07bc0c
+        title: "Crispy Stacked Jumbo Burger",
+        desc: "Sesame brioche bun stacked with a crunchy golden patty, melted cheddar slices, fresh garden greens, and smoky house chipotle sauce.",
+        bounds: "3D MESH: DOUBLE-DECKER BURGER",
+        bg: "radial-gradient(circle at 50% 45%, #4f3812 0%, #191208 90%)"
       },
       {
         eyebrow: "05 / HIGH-FLAME WOK PILLAR",
-        title: "Sizzling Indo-Chinese Specials",
-        desc: "Wok-tossed Schezwan Hakka noodles and crispy Manchurian glazed in aromatic ginger, garlic, and soy.",
-        bg: "radial-gradient(circle at 50% 45%, #591814 0%, #1c0a09 90%)",
-        primary: 0x8f1d14,
-        accent: 0xf1c40f
+        title: "Wok-Tossed Indo-Chinese Noodles",
+        desc: "High-flame Schezwan and Hakka noodles tossed with crisp vegetables, spring onions, and fiery Indo-Chinese spices.",
+        bounds: "3D MESH: SIZZLING WOK BOWL",
+        bg: "radial-gradient(circle at 50% 45%, #591814 0%, #1c0a09 90%)"
       }
     ];
+
+    function buildTallMilkshake3DMesh() {
+      // Matches tall bounding box ratio (width ~0.305, height ~1.0, depth ~0.434 -> scaled x3.4 for stage)
+      const g = new THREE.Group();
+      const glassMat = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.34,
+        roughness: 0.06,
+        metalness: 0.1
+      });
+      const shakeMat = new THREE.MeshStandardMaterial({
+        color: 0x4b2413,
+        roughness: 0.24,
+        metalness: 0.06
+      });
+      const syrupMat = new THREE.MeshStandardMaterial({
+        color: 0x220e07,
+        roughness: 0.12,
+        metalness: 0.15
+      });
+      const whipMat = new THREE.MeshStandardMaterial({
+        color: 0xfff8ee,
+        roughness: 0.22,
+        metalness: 0.02
+      });
+
+      // Pedestal base & stem
+      const baseFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.78, 0.16, 36), glassMat);
+      baseFoot.position.y = -1.65;
+      g.add(baseFoot);
+
+      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.34, 0.42, 28), glassMat);
+      stem.position.y = -1.38;
+      g.add(stem);
+
+      // Tall sculpted glass body
+      const tallGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.84, 0.54, 2.35, 40, 1, true), glassMat);
+      tallGlass.position.y = -0.05;
+      g.add(tallGlass);
+
+      // Rich chocolate shake core
+      const chocolateBody = new THREE.Mesh(new THREE.CylinderGeometry(0.79, 0.50, 2.2, 36), shakeMat);
+      chocolateBody.position.y = -0.05;
+      g.add(chocolateBody);
+
+      // Internal chocolate drizzle rings
+      for (let r = 0; r < 3; r++) {
+        const drizzle = new THREE.Mesh(new THREE.TorusGeometry(0.62 + r * 0.06, 0.045, 14, 36), syrupMat);
+        drizzle.rotation.x = Math.PI / 2 + (r % 2 === 0 ? 0.12 : -0.12);
+        drizzle.position.y = -0.65 + r * 0.55;
+        g.add(drizzle);
+      }
+
+      // Multi-tiered swirled whipped cream peak
+      for (let w = 0; w < 5; w++) {
+        const whip = new THREE.Mesh(new THREE.TorusGeometry(0.72 - w * 0.13, 0.18 - w * 0.015, 20, 36), whipMat);
+        whip.rotation.x = Math.PI / 2;
+        whip.position.y = 1.08 + w * 0.17;
+        g.add(whip);
+      }
+
+      // Chocolate shavings & glossy cherry on top
+      for (let s = 0; s < 14; s++) {
+        const angle = (s / 14) * Math.PI * 2;
+        const radius = 0.25 + (s % 3) * 0.14;
+        const chip = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.04, 0.06), syrupMat);
+        chip.position.set(Math.cos(angle) * radius, 1.35 + (s % 3) * 0.15, Math.sin(angle) * radius);
+        chip.rotation.set(s * 0.4, s * 0.8, s * 0.3);
+        g.add(chip);
+      }
+
+      const cherry = new THREE.Mesh(
+        new THREE.SphereGeometry(0.18, 24, 24),
+        new THREE.MeshStandardMaterial({ color: 0xb81414, roughness: 0.12, metalness: 0.1 })
+      );
+      cherry.position.set(0, 1.92, 0);
+      g.add(cherry);
+
+      // Caramel striped straw extending to the exact glTF Z-depth ratio
+      const straw = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.065, 0.065, 1.85, 20),
+        new THREE.MeshStandardMaterial({ color: 0xd47732, roughness: 0.25 })
+      );
+      straw.position.set(0.38, 1.38, 0.22);
+      straw.rotation.z = -0.28;
+      straw.rotation.x = 0.14;
+      g.add(straw);
+
+      return g;
+    }
+
+    function buildCelebrationCake3DMesh() {
+      // Matches wide cylindrical bounding box [-0.500, -0.258, -0.500] to [0.500, 0.257, 0.500] (width:height = 2:1)
+      const g = new THREE.Group();
+      const ganacheMat = new THREE.MeshStandardMaterial({
+        color: 0x2a120a,
+        roughness: 0.14,
+        metalness: 0.18
+      });
+      const apricotGoldMat = new THREE.MeshStandardMaterial({
+        color: 0xd47732,
+        roughness: 0.22,
+        metalness: 0.35
+      });
+      const creamRosetteMat = new THREE.MeshStandardMaterial({
+        color: 0xfff5e6,
+        roughness: 0.25
+      });
+      const boardMat = new THREE.MeshStandardMaterial({
+        color: 0xe5c185,
+        roughness: 0.3,
+        metalness: 0.4
+      });
+
+      // Gold cake board
+      const board = new THREE.Mesh(new THREE.CylinderGeometry(1.78, 1.78, 0.08, 48), boardMat);
+      board.position.y = -0.82;
+      g.add(board);
+
+      // Wide Sacher chocolate mirror-glaze cylinder (Radius 1.6, Height 1.5 -> 2:1 diameter-to-height ratio)
+      const cakeDrum = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 1.52, 48), ganacheMat);
+      cakeDrum.position.y = -0.02;
+      g.add(cakeDrum);
+
+      // Middle apricot jam / gold accent band
+      const apricotBand = new THREE.Mesh(new THREE.TorusGeometry(1.61, 0.055, 16, 60), apricotGoldMat);
+      apricotBand.rotation.x = Math.PI / 2;
+      apricotBand.position.y = -0.02;
+      g.add(apricotBand);
+
+      // Top glossy chocolate rim
+      const topRim = new THREE.Mesh(new THREE.TorusGeometry(1.56, 0.06, 16, 60), ganacheMat);
+      topRim.rotation.x = Math.PI / 2;
+      topRim.position.y = 0.74;
+      g.add(topRim);
+
+      // 12 Piped Cream & Chocolate Rosettes around the top perimeter
+      for (let i = 0; i < 12; i++) {
+        const angle = (i / 12) * Math.PI * 2;
+        const rx = Math.cos(angle) * 1.25;
+        const rz = Math.sin(angle) * 1.25;
+
+        const rosette = new THREE.Mesh(
+          new THREE.TorusKnotGeometry(0.13, 0.05, 36, 10),
+          i % 2 === 0 ? creamRosetteMat : apricotGoldMat
+        );
+        rosette.position.set(rx, 0.82, rz);
+        rosette.rotation.x = Math.PI / 2;
+        g.add(rosette);
+      }
+
+      // Center chocolate plaque / berries crown
+      const centerCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.08, 32), apricotGoldMat);
+      centerCrown.position.y = 0.76;
+      g.add(centerCrown);
+
+      g.rotation.x = 0.18;
+      return g;
+    }
 
     function init3DSlidingStage() {
       const canvas = document.getElementById("coca-slider-canvas");
@@ -2357,85 +2050,84 @@
 
       stageScene = new THREE.Scene();
       stageCamera = new THREE.PerspectiveCamera(40, rect.width / rect.height, 0.1, 100);
-      stageCamera.position.set(0, 0.6, 6.8);
+      stageCamera.position.set(0, 0.55, 6.8);
 
       stageRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
       stageRenderer.setSize(rect.width, rect.height);
       stageRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-      stageScene.add(new THREE.AmbientLight(0xffffff, 1.05));
-      const keyLight = new THREE.DirectionalLight(0xfff2e2, 1.7);
+      stageScene.add(new THREE.AmbientLight(0xffffff, 1.15));
+      const keyLight = new THREE.DirectionalLight(0xfff2e2, 1.85);
       keyLight.position.set(4, 7, 6);
       stageScene.add(keyLight);
+
+      const rimLight = new THREE.PointLight(0xd47732, 1.4, 18);
+      rimLight.position.set(-4, 3, -3);
+      stageScene.add(rimLight);
 
       stageGroup = new THREE.Group();
       stageScene.add(stageGroup);
 
       STAGE_3D_ITEMS.forEach((item, idx) => {
-        const g = new THREE.Group();
-        g.position.x = idx * 6.2;
-
-        const matMain = new THREE.MeshStandardMaterial({ color: item.primary, roughness: 0.22, metalness: 0.08 });
-        const matAccent = new THREE.MeshStandardMaterial({ color: item.accent, roughness: 0.18 });
-        const glassMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.32, roughness: 0.05 });
-
+        let modelGroup;
         if (idx === 0) {
-          // Tall Milkshake Glass + Whipped Peak + Striped Straw
-          const glass = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 0.85, 3.1, 36, 1, true), glassMat);
-          g.add(glass);
-          const liquid = new THREE.Mesh(new THREE.CylinderGeometry(1.08, 0.8, 2.85, 32), matMain);
-          g.add(liquid);
-          for (let w = 0; w < 4; w++) {
-            const whipRing = new THREE.Mesh(new THREE.TorusGeometry(0.85 - w * 0.18, 0.22, 18, 36), matAccent);
-            whipRing.rotation.x = Math.PI / 2;
-            whipRing.position.y = 1.45 + w * 0.22;
-            g.add(whipRing);
-          }
-          const straw = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 2.2, 16), new THREE.MeshStandardMaterial({ color: 0xd47732 }));
-          straw.position.set(0.42, 1.55, 0);
-          straw.rotation.z = -0.25;
-          g.add(straw);
+          modelGroup = buildTallMilkshake3DMesh();
         } else if (idx === 1) {
-          // 2-Tier Celebration Cake
-          const baseTier = new THREE.Mesh(new THREE.CylinderGeometry(1.55, 1.55, 1.15, 36), matMain);
-          baseTier.position.y = -0.45;
-          g.add(baseTier);
-          const topTier = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.1, 0.95, 36), matAccent);
-          topTier.position.y = 0.6;
-          g.add(topTier);
+          modelGroup = buildCelebrationCake3DMesh();
         } else if (idx === 2) {
-          // 3D Pizza
-          const crust = new THREE.Mesh(new THREE.CylinderGeometry(1.85, 1.85, 0.26, 36), matMain);
+          // 3D Wood-Fired Pizza
+          modelGroup = new THREE.Group();
+          const crust = new THREE.Mesh(
+            new THREE.CylinderGeometry(1.75, 1.75, 0.22, 40),
+            new THREE.MeshStandardMaterial({ color: 0xd47732, roughness: 0.35 })
+          );
           crust.rotation.x = 0.45;
-          g.add(crust);
-          const cheese = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 0.3, 36), matAccent);
+          modelGroup.add(crust);
+          const cheese = new THREE.Mesh(
+            new THREE.CylinderGeometry(1.52, 1.52, 0.25, 40),
+            new THREE.MeshStandardMaterial({ color: 0xf9d444, roughness: 0.25 })
+          );
           cheese.rotation.x = 0.45;
-          g.add(cheese);
+          modelGroup.add(cheese);
         } else if (idx === 3) {
-          // Stacked Gourmet Burger
-          const bunBot = new THREE.Mesh(new THREE.CylinderGeometry(1.35, 1.15, 0.45, 32), matMain);
-          bunBot.position.y = -0.75;
-          g.add(bunBot);
-          const patty = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.4, 0.5, 32), new THREE.MeshStandardMaterial({ color: 0x3b1a0b }));
+          // 3D Stacked Burger
+          modelGroup = new THREE.Group();
+          const bunMat = new THREE.MeshStandardMaterial({ color: 0xc87a28, roughness: 0.3 });
+          const bunBot = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.15, 0.42, 36), bunMat);
+          bunBot.position.y = -0.7;
+          modelGroup.add(bunBot);
+          const patty = new THREE.Mesh(
+            new THREE.CylinderGeometry(1.36, 1.36, 0.46, 36),
+            new THREE.MeshStandardMaterial({ color: 0x3b1a0b, roughness: 0.4 })
+          );
           patty.position.y = -0.15;
-          g.add(patty);
-          const bunTop = new THREE.Mesh(new THREE.SphereGeometry(1.35, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2), matMain);
-          bunTop.position.y = 0.25;
-          g.add(bunTop);
+          modelGroup.add(patty);
+          const bunTop = new THREE.Mesh(new THREE.SphereGeometry(1.32, 36, 18, 0, Math.PI * 2, 0, Math.PI / 2), bunMat);
+          bunTop.position.y = 0.22;
+          modelGroup.add(bunTop);
         } else {
-          // Wok Bowl
-          const bowl = new THREE.Mesh(new THREE.SphereGeometry(1.6, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), matMain);
-          bowl.position.y = 0.25;
-          g.add(bowl);
-          const noodles = new THREE.Mesh(new THREE.TorusKnotGeometry(0.7, 0.2, 64, 16), matAccent);
-          noodles.position.y = 0.4;
-          g.add(noodles);
+          // 3D Wok Noodles Bowl
+          modelGroup = new THREE.Group();
+          const bowl = new THREE.Mesh(
+            new THREE.SphereGeometry(1.55, 36, 18, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2),
+            new THREE.MeshStandardMaterial({ color: 0x8f1d14, roughness: 0.2 })
+          );
+          bowl.position.y = 0.2;
+          modelGroup.add(bowl);
+          const noodles = new THREE.Mesh(
+            new THREE.TorusKnotGeometry(0.68, 0.19, 64, 16),
+            new THREE.MeshStandardMaterial({ color: 0xf1c40f, roughness: 0.25 })
+          );
+          noodles.position.y = 0.38;
+          modelGroup.add(noodles);
         }
 
-        stageGroup.add(g);
-        stageModels.push(g);
+        modelGroup.position.x = idx * 6.2;
+        stageGroup.add(modelGroup);
+        stageModels.push(modelGroup);
       });
 
+      // Pointer drag rotation
       canvas.addEventListener("pointerdown", e => {
         isDraggingStage = true;
         lastStageX = e.clientX;
@@ -2446,22 +2138,79 @@
         stageModels[current3DSlide].rotation.y += (e.clientX - lastStageX) * 0.01;
         lastStageX = e.clientX;
       });
+
+      // Drag and drop .glb file support directly onto stage
+      const dropzone = document.getElementById("stage-canvas-dropzone");
+      if (dropzone) {
+        dropzone.addEventListener("dragover", e => { e.preventDefault(); });
+        dropzone.addEventListener("drop", e => {
+          e.preventDefault();
+          const file = e.dataTransfer?.files?.[0];
+          if (file) loadGLBFileIntoActiveSlide(file);
+        });
+      }
+    }
+
+    function handleCustomGLBUpload(event) {
+      const file = event.target?.files?.[0];
+      if (file) loadGLBFileIntoActiveSlide(file);
+    }
+
+    function loadGLBFileIntoActiveSlide(file) {
+      if (!THREE.GLTFLoader || !stageModels[current3DSlide]) return;
+      const reader = new FileReader();
+      reader.onload = function (evt) {
+        const loader = new THREE.GLTFLoader();
+        loader.parse(evt.target.result, "", gltf => {
+          const importedRoot = gltf.scene;
+          const box = new THREE.Box3().setFromObject(importedRoot);
+          const size = new THREE.Vector3();
+          const center = new THREE.Vector3();
+          box.getSize(size);
+          box.getCenter(center);
+
+          const maxDim = Math.max(size.x, size.y, size.z) || 1;
+          const scaleFactor = 3.0 / maxDim;
+          importedRoot.position.sub(center);
+
+          const holder = stageModels[current3DSlide];
+          while (holder.children.length > 0) {
+            holder.remove(holder.children[0]);
+          }
+          const wrapper = new THREE.Group();
+          wrapper.scale.setScalar(scaleFactor);
+          wrapper.add(importedRoot);
+          holder.add(wrapper);
+
+          document.getElementById("glb-spec-badge").textContent =
+            `LOADED GLB: ${file.name.toUpperCase()}`;
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function jumpTo3DSlide(index) {
+      current3DSlide = index;
+      update3DStageUI();
     }
 
     function slide3DStage(delta) {
       current3DSlide = (current3DSlide + delta + STAGE_3D_ITEMS.length) % STAGE_3D_ITEMS.length;
-      target3DX = -current3DSlide * 6.2;
+      update3DStageUI();
+    }
 
+    function update3DStageUI() {
+      target3DX = -current3DSlide * 6.2;
       const item = STAGE_3D_ITEMS[current3DSlide];
       document.getElementById("coca-3d-stage").style.background = item.bg;
       document.getElementById("stage-3d-counter").textContent = `0${current3DSlide + 1} / 05`;
       document.getElementById("slide-3d-eyebrow").textContent = item.eyebrow;
       document.getElementById("slide-3d-title").textContent = item.title;
       document.getElementById("slide-3d-desc").textContent = item.desc;
+      document.getElementById("glb-spec-badge").textContent = item.bounds;
 
-      const cleanPhone = currentPhone.replace(/\D/g, "");
       document.getElementById("slide-3d-wa-link").href =
-        `https://wa.me/${cleanPhone}?text=${encodeURIComponent('Hi MilkShake Factory Khammam! I would like to inquire about ' + item.title + '.')}`;
+        `https://wa.me/918096787676?text=${encodeURIComponent('Hi Rajesh Bhai at MilkShake Factory Khammam! I would like to inquire about ' + item.title + '.')}`;
     }
 
     function animate3DStage() {
@@ -2489,7 +2238,8 @@
     });
 
     window.onload = function () {
-      renderShowcaseCards();
+      renderMenuCategoryPills();
+      renderExtractedMenu();
       init3DSlidingStage();
       animate3DStage();
     };
