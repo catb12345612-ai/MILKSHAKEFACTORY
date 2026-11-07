@@ -1,15 +1,14 @@
-<!DOCTYPE html>
+<!DOC TYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MilkShake Factory Khammam | Hand-spun happiness & 3D Experience</title>
-  <meta name="description" content="Find your MilkShake Factory in Khammam, Telangana. Discover both local outlets, explore our 3D showcase, meet the leadership team, and enjoy a little more milkshake in your day." />
+  <meta name="description" content="Visit MilkShake Factory on Mamata Road, Khammam, Telangana. Hosted by Rajesh Bhai. Explore our 5-dish 3D Video Coverflow, full menu card, and hand-spun thickshakes." />
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Three.js & GLTFLoader for 3D Milkshake & Cake Stage -->
+  <!-- Three.js for Built-in 3D Interactive Mode -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
@@ -667,6 +666,62 @@
       transition: transform 0.28s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.28s ease;
     }
 
+    /* ==========================================================================
+       3D PERSPECTIVE VIDEO COVERFLOW CAROUSEL FOR ALL 5 DISHES
+       ========================================================================== */
+    .coverflow-perspective {
+      perspective: 1400px;
+      transform-style: preserve-3d;
+    }
+
+    .coverflow-card {
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.65s ease, box-shadow 0.65s ease;
+      will-change: transform, opacity;
+      background: #1a0e09;
+      border: 1px solid rgba(255, 248, 238, 0.18);
+      user-select: none;
+    }
+
+    .coverflow-card.is-active {
+      transform: translate3d(0, 0, 0) rotateY(0deg) scale(1);
+      opacity: 1;
+      z-index: 30;
+      box-shadow: 0 28px 65px rgba(0, 0, 0, 0.65), 0 0 40px rgba(212, 119, 50, 0.28);
+    }
+
+    .coverflow-card.is-prev {
+      transform: translate3d(-24%, 0, -160px) rotateY(28deg) scale(0.84);
+      opacity: 0.45;
+      z-index: 20;
+      cursor: pointer;
+    }
+
+    .coverflow-card.is-next {
+      transform: translate3d(24%, 0, -160px) rotateY(-28deg) scale(0.84);
+      opacity: 0.45;
+      z-index: 20;
+      cursor: pointer;
+    }
+
+    .coverflow-card.is-hidden-left {
+      transform: translate3d(-45%, 0, -320px) rotateY(40deg) scale(0.68);
+      opacity: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .coverflow-card.is-hidden-right {
+      transform: translate3d(45%, 0, -320px) rotateY(-40deg) scale(0.68);
+      opacity: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+
     /* Footer */
     .site-footer {
       padding: 40px max(32px, calc((100vw - 1320px) / 2)) 0;
@@ -757,7 +812,8 @@
 
       <nav class="main-nav" aria-label="Main navigation">
         <a href="#home">Opening Video</a>
-        <a href="#coca-3d-stage">3D Models</a>
+        <a href="#coca-3d-stage">3D Video Coverflow</a>
+        <a href="#making-process-scroll">Making Process</a>
         <a href="#complete-menu">Full Menu Card</a>
         <a href="#locations">Mamata Road Store</a>
         <a href="#instant-review">5★ Google Review</a>
@@ -776,7 +832,7 @@
           <span id="hero-layout-label" class="hidden sm:inline">Split Editorial View</span>
         </button>
 
-        <a class="header-call" href="tel:08096787676">
+        <a class="header-call" href="tel:+918096787676">
           <i class="fa-solid fa-phone text-xs"></i>
           <span>080967 87676</span>
         </a>
@@ -802,9 +858,10 @@
   <main class="factory-site" id="home">
 
     <!-- ========================================================================
-         HERO MODE A (DEFAULT ON OPEN): 100VW × 100VH FULL-SCALE OPENING VIDEO
+         SECTION 1 (FIRST VIEW ON PAGE OPEN): 100VW × 100VH FULL-VIEWPORT MILKSHAKE HERO
+         Includes 5-stage timestamp jumper (00:00 to 00:08) + Split Editorial View
          ======================================================================== -->
-    <section class="hero-cinema-stage" aria-label="Full-screen chocolate milkshake video hero">
+    <section class="hero-cinema-stage" aria-label="Opening Full-Screen Chocolate Milkshake Making Experience">
       <video
         id="cinema-video-el"
         class="hero-cinema-video"
@@ -816,133 +873,127 @@
         poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
       >
         <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Making_chocolate_milkshake_e75771e8_1080p-wbBZMeZ2xrKJOFKicLZFhYmt005nAt.mp4" type="video/mp4" />
+        <source src="Making_chocolate_milkshake_e75771e8_1080p.mp4" type="video/mp4" />
       </video>
 
       <div class="hero-cinema-scrim"></div>
 
-      <!-- Floating Editorial Content over the 100vw x 100vh Video -->
       <div class="hero-cinema-content hero-ui-hideable">
-        <!-- Top Row: Live Video Telemetry + Sticker Badge -->
+        <!-- Top Row: Live Stage Badge + Floating Parlor Sticker -->
         <div class="flex items-start justify-between gap-4 flex-wrap">
-          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/55 backdrop-blur-md border border-white/15 text-[#fff8ed] text-[10px] font-extrabold tracking-[0.18em] uppercase">
-            <span class="w-2 h-2 rounded-full bg-[#e7a856] animate-ping"></span>
+          <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/55 backdrop-blur-md border border-[#d47732]/60 text-[#ffdfb8] text-[10px] font-extrabold tracking-[0.18em] uppercase">
+            <span class="w-2 h-2 rounded-full bg-[#f1c40f] animate-ping"></span>
             <span id="live-video-stage-badge">01 / 05 • THE CHOCOLATE POUR (00:00)</span>
           </div>
 
-          <div class="hero-sticker" aria-hidden="true">
-            <span>MADE FOR</span>
-            <strong>the<br />moment</strong>
-            <i>✳</i>
+          <div class="hero-sticker hidden sm:flex">
+            <span>HAND-SPUN</span>
+            <strong>100%<br />Thick</strong>
+            <span>MAMATA RD</span>
+            <i>★</i>
           </div>
         </div>
 
-        <!-- Center Editorial Typography -->
+        <!-- Middle Editorial Headline Overlay -->
         <div class="max-w-2xl my-auto py-6">
-          <p class="section-eyebrow !text-[#f3c78e] !mb-4">
+          <p class="section-eyebrow !text-[#f3c78e] !mb-3">
             <span aria-hidden="true" class="!bg-[#d47732]"></span>
-            HAND-SPUN HAPPINESS · MAMATA ROAD, KHAMMAM
+            FIRST VIEW • SIGNATURE CHOCOLATE POUR &amp; 3D SHAKE BAR
           </p>
-          <h1 class="editorial-h1 text-[#fffaf0] drop-shadow-[0_10px_30px_rgba(0,0,0,0.65)]">
-            A little more<br />
-            <em>milkshake</em> in<br />
-            your day.
+          <h1 class="editorial-h1 text-[#fff8ee] drop-shadow-2xl">
+            Spun thick.<br />Poured <em>live.</em>
           </h1>
-          <p class="text-sm sm:text-base text-[#f0e4d4] max-w-md mt-6 mb-7 leading-relaxed drop-shadow">
-            Big chocolate energy. Old-fashioned goodness. Hosted by <strong>Rajesh Bhai</strong> on Mamata Road, Dwaraka Nagar, Jalagam Nagar, Khammam.
+          <p class="mt-5 text-sm sm:text-base text-[#e6d6c6] max-w-lg leading-relaxed">
+            Welcome to <strong>MilkShake Factory Khammam</strong> on Mamata Road, hosted by <strong>Rajesh Bhai</strong>. Watch our signature Chocolate Milkshake come to life, then scroll down to experience the live making process of our <strong>Cakes, Pizzas, Burgers &amp; Indo-Chinese</strong> one by one.
           </p>
-
-          <div class="hero-actions">
-            <a class="button button-caramel" href="#complete-menu">
-              Explore Full Menu Card
-              <i class="fa-solid fa-utensils text-xs"></i>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <a href="#making-process-scroll" class="button button-caramel">
+              Scroll Making Process (Cakes, Pizza, Burgers, Chinese)
+              <i class="fa-solid fa-angles-down text-xs"></i>
             </a>
-            <a class="button button-cream" href="#locations">
-              Visit Mamata Road Store
-            </a>
-            <a class="inline-flex items-center gap-2 text-xs font-extrabold text-[#ffdfb8] hover:text-white px-3 py-2" href="tel:08096787676">
-              <i class="fa-solid fa-phone text-[#d47732]"></i>
-              <span>080967 87676</span>
+            <a href="#coca-3d-stage" class="button button-cream">
+              Open 3D Video Coverflow
             </a>
           </div>
         </div>
 
-        <!-- Bottom Scrubber & Coordinates Bar -->
-        <div class="space-y-3">
-          <!-- Interactive 5-Stage Video Timestamp Jump Bar -->
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-black/55 backdrop-blur-md p-2 rounded-xl border border-white/15">
-            <button type="button" onclick="seekHeroVideo(0)" class="video-step-btn text-left p-2 rounded-lg bg-[#d47732] text-white transition cursor-pointer">
-              <span class="text-[9px] font-extrabold tracking-widest block opacity-85">00:00</span>
-              <strong class="text-xs serif-display block">01. Molten Pour</strong>
-            </button>
-            <button type="button" onclick="seekHeroVideo(1.8)" class="video-step-btn text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
-              <span class="text-[9px] font-extrabold tracking-widest block text-[#e7a856]">00:02</span>
-              <strong class="text-xs serif-display block">02. Scoops & Milk</strong>
-            </button>
-            <button type="button" onclick="seekHeroVideo(3.5)" class="video-step-btn text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
-              <span class="text-[9px] font-extrabold tracking-widest block text-[#e7a856]">00:04</span>
-              <strong class="text-xs serif-display block">03. Blender Vortex</strong>
-            </button>
-            <button type="button" onclick="seekHeroVideo(6.0)" class="video-step-btn text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
-              <span class="text-[9px] font-extrabold tracking-widest block text-[#e7a856]">00:06</span>
-              <strong class="text-xs serif-display block">04. Glass & Whip</strong>
-            </button>
-            <button type="button" onclick="seekHeroVideo(8.2)" class="video-step-btn col-span-2 sm:col-span-1 text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
-              <span class="text-[9px] font-extrabold tracking-widest block text-[#e7a856]">00:08</span>
-              <strong class="text-xs serif-display block">05. Shavings & Straw</strong>
-            </button>
+        <!-- Bottom 5-Stage Interactive Timestamp Jumper Bar (00:00 to 00:08) -->
+        <div class="bg-black/65 backdrop-blur-md border border-white/15 rounded-2xl p-3 sm:p-4">
+          <div class="flex items-center justify-between text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#f3c78e] mb-2.5 px-1">
+            <span><i class="fa-solid fa-Clapperboard mr-1.5 text-[#d47732]"></i>Click Any Timestamp Stage to Jump Live in Video</span>
+            <span class="hidden sm:inline">00:00 → 00:09 LOOP</span>
           </div>
-
-          <div class="flex items-center justify-between text-[9px] font-extrabold tracking-[0.18em] text-[#d8c7b8] uppercase">
-            <span>MILKSHAKE FACTORY · OWNER: RAJESH BHAI</span>
-            <span>MAMATA ROAD, DWARAKA NAGAR, JALAGAM NAGAR, KHAMMAM 507002</span>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+            <button type="button" onclick="seekHeroVideo(0)" class="video-step-btn text-left p-2 rounded-lg bg-[#d47732] text-white transition cursor-pointer">
+              <span class="block text-[9px] font-extrabold tracking-widest opacity-80">00:00 • STAGE 01</span>
+              <strong class="serif-display text-xs block mt-0.5">Molten Choco Pour</strong>
+            </button>
+            <button type="button" onclick="seekHeroVideo(2)" class="video-step-btn text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
+              <span class="block text-[9px] font-extrabold tracking-widest opacity-80">00:02 • STAGE 02</span>
+              <strong class="serif-display text-xs block mt-0.5">3 Scoops &amp; Ice Splash</strong>
+            </button>
+            <button type="button" onclick="seekHeroVideo(4)" class="video-step-btn text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
+              <span class="block text-[9px] font-extrabold tracking-widest opacity-80">00:04 • STAGE 03</span>
+              <strong class="serif-display text-xs block mt-0.5">Blender Vortex Swirl</strong>
+            </button>
+            <button type="button" onclick="seekHeroVideo(6)" class="video-step-btn text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
+              <span class="block text-[9px] font-extrabold tracking-widest opacity-80">00:06 • STAGE 04</span>
+              <strong class="serif-display text-xs block mt-0.5">Tall Glass &amp; Cream Peak</strong>
+            </button>
+            <button type="button" onclick="seekHeroVideo(8)" class="video-step-btn col-span-2 sm:col-span-1 text-left p-2 rounded-lg bg-white/5 hover:bg-white/15 text-[#fff8ee] transition cursor-pointer">
+              <span class="block text-[9px] font-extrabold tracking-widest opacity-80">00:08 • STAGE 05</span>
+              <strong class="serif-display text-xs block mt-0.5">Shavings &amp; Straw</strong>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         HERO MODE B: SPLIT EDITORIAL LAYOUT
+         HERO MODE 2 (OPTIONAL TOGGLE): SPLIT EDITORIAL HERO
          ======================================================================== -->
-    <section class="hero-split-section" aria-labelledby="hero-split-title">
+    <section class="hero-split-section" aria-label="Split Editorial Milkshake Hero">
       <div class="hero-copy">
-        <p class="section-eyebrow"><span aria-hidden="true"></span>Hand-spun happiness, now in Khammam</p>
-        <h2 id="hero-split-title" class="editorial-h1">A little more<br /> <em>milkshake</em> in<br />your day.</h2>
-        <p class="hero-description">Big chocolate energy. Old-fashioned goodness. Visit <strong>Rajesh Bhai</strong> at MilkShake Factory on Mamata Road, Dwaraka Nagar, Jalagam Nagar, Khammam.</p>
+        <p class="section-eyebrow"><span aria-hidden="true"></span>Mamata Road · Khammam · Hosted by Rajesh Bhai</p>
+        <h2 class="editorial-h1">Hand-spun<br /><em>happiness.</em></h2>
+        <p class="hero-description">
+          Thick, indulgent milkshakes, freshly frosted berry chocolate cakes, wood-fired cheese burst pizzas, gourmet burgers, and high-flame Indo-Chinese noodles—crafted live on Mamata Road.
+        </p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#complete-menu">
-            Explore Full Menu Card
-            <i class="fa-solid fa-arrow-right text-xs"></i>
+          <a href="#making-process-scroll" class="button button-caramel">
+            Watch 4-Dish Making Process
+            <i class="fa-solid fa-play text-xs"></i>
           </a>
-          <a class="inline-flex items-center gap-2 text-xs font-bold text-[#664a37]" href="tel:08096787676">
-            <i class="fa-solid fa-phone text-[#d47732]"></i>
-            <span>080967 87676</span>
-          </a>
+          <button type="button" onclick="toggleHeroLayoutMode()" class="button button-dark">
+            Back to 100vh Full-Screen Video
+          </button>
         </div>
       </div>
 
       <div class="hero-media">
         <video
-          id="split-video-el"
           class="hero-video"
           autoplay
           muted
           loop
           playsinline
-          controls
-          preload="metadata"
           poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
         >
           <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Making_chocolate_milkshake_e75771e8_1080p-wbBZMeZ2xrKJOFKicLZFhYmt005nAt.mp4" type="video/mp4" />
+          <source src="Making_chocolate_milkshake_e75771e8_1080p.mp4" type="video/mp4" />
         </video>
         <div class="video-caption">
-          <span class="caption-dot"></span> THE CHOCOLATE POUR <span>MAMATA ROAD · KHAMMAM</span>
+          <span class="caption-dot"></span>
+          <span>LIVE PARLOR POUR • MILKSHAKE FACTORY KHAMMAM</span>
+          <span>00:00 – 00:09</span>
         </div>
       </div>
     </section>
 
     <!-- ========================================================================
-         SECTION 2: INTERACTIVE 3D STAGE FEATURING THE UPLOADED MILKSHAKE & CAKE
-         3D DESIGNS (GLB LOADER + EXACT BOUNDING-BOX PROCEDURAL 3D MESHES)
+         SECTION 2: OPTION 1 + HYBRID 3D PERSPECTIVE VIDEO COVERFLOW STAGE
+         5–10 SECOND LOOPING VIDEOS FOR ALL 5 DISHES + BUILT-IN 3D MODEL VIEW
+         Zero .glb file uploads required! Works immediately on every phone & PC.
          ======================================================================== -->
     <section id="coca-3d-stage" class="py-24 px-4 sm:px-8 transition-colors duration-700" style="background: radial-gradient(circle at 50% 45%, #3d2116 0%, #1d100b 90%); color: #fff8ee;">
       <div class="max-w-6xl mx-auto">
@@ -950,70 +1001,106 @@
           <div>
             <p class="section-eyebrow !text-[#e5a466] !mb-3">
               <span aria-hidden="true" class="!bg-[#d47732]"></span>
-              INTERACTIVE 3D GLTF / WEBGL STAGE
+              5–10S LOOPING HD VIDEO COVERFLOW + INTERACTIVE 3D STAGE
             </p>
             <h2 class="serif-display text-4xl sm:text-6xl tracking-tight leading-none">
-              Milkshake &amp; Cake in <em>3D motion.</em>
+              5 Signature Cravings in <em>3D motion.</em>
             </h2>
           </div>
 
           <div class="flex flex-wrap items-center gap-3">
-            <!-- Optional Custom GLB Loader Input for Local .glb Files -->
-            <label class="px-3.5 py-2.5 rounded-full border border-[#d47732]/60 bg-black/30 hover:bg-[#d47732] text-[#fff8ee] text-[11px] font-extrabold tracking-wider uppercase cursor-pointer transition flex items-center gap-2">
-              <i class="fa-solid fa-cube text-[#f1c40f]"></i>
-              <span>Load .GLB Model</span>
-              <input type="file" accept=".glb,.gltf" class="hidden" onchange="handleCustomGLBUpload(event)" />
-            </label>
+            <!-- Seamless Mode Toggle: 3D Video Coverflow (Default) vs. Interactive 3D Model View -->
+            <div class="inline-flex rounded-full p-1 bg-black/45 border border-white/15">
+              <button
+                type="button"
+                id="mode-video-btn"
+                onclick="setStageDisplayMode('video')"
+                class="px-4 py-2 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-[#d47732] text-white transition cursor-pointer flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-film"></i>
+                <span>3D Video Coverflow</span>
+              </button>
+              <button
+                type="button"
+                id="mode-webgl-btn"
+                onclick="setStageDisplayMode('webgl')"
+                class="px-4 py-2 rounded-full text-[11px] font-extrabold tracking-wider uppercase text-[#f3c78e] hover:text-white transition cursor-pointer flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-cube"></i>
+                <span>Interactive 3D Model View</span>
+              </button>
+            </div>
 
-            <button type="button" onclick="slide3DStage(-1)" class="w-12 h-12 rounded-full border border-white/25 bg-white/10 hover:bg-[#d47732] text-white flex items-center justify-center transition cursor-pointer" aria-label="Previous 3D item">
+            <button type="button" onclick="slide3DStage(-1)" class="w-12 h-12 rounded-full border border-white/25 bg-white/10 hover:bg-[#d47732] text-white flex items-center justify-center transition cursor-pointer" aria-label="Previous dish">
               <i class="fa-solid fa-arrow-left"></i>
             </button>
             <span id="stage-3d-counter" class="serif-display italic text-lg px-2 text-[#f3c78e]">01 / 05</span>
-            <button type="button" onclick="slide3DStage(1)" class="w-12 h-12 rounded-full bg-[#d47732] hover:bg-[#e4321b] text-white flex items-center justify-center transition cursor-pointer shadow-lg" aria-label="Next 3D item">
+            <button type="button" onclick="slide3DStage(1)" class="w-12 h-12 rounded-full bg-[#d47732] hover:bg-[#e4321b] text-white flex items-center justify-center transition cursor-pointer shadow-lg" aria-label="Next dish">
               <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <!-- Three.js 3D Stage Canvas (Supports Drag Rotate + Drag & Drop .glb) -->
-          <div
-            id="stage-canvas-dropzone"
-            class="lg:col-span-7 h-[390px] sm:h-[460px] rounded-2xl bg-black/35 border border-white/15 relative overflow-hidden shadow-2xl"
-          >
-            <canvas id="coca-slider-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
-            <div class="absolute top-3 left-4 right-4 flex items-center justify-between text-[10px] font-extrabold tracking-widest uppercase text-[#f3c78e] pointer-events-none">
-              <span id="glb-spec-badge" class="px-2.5 py-1 rounded bg-black/55 border border-white/10">
-                GLTF BOUNDS: [-0.155, -0.500, -0.217] → [0.150, 0.500, 0.217]
-              </span>
-              <span class="px-2.5 py-1 rounded bg-black/55 border border-white/10 hidden sm:inline">
-                PBR METALLIC-ROUGHNESS
-              </span>
+          <!-- Left 7 Columns: 3D Perspective Video Coverflow Stage + Built-in WebGL Stage -->
+          <div class="lg:col-span-7 h-[400px] sm:h-[470px] relative">
+            <!-- DEFAULT VIEW: 3D PERSPECTIVE VIDEO COVERFLOW DECK FOR ALL 5 DISHES -->
+            <div
+              id="video-coverflow-stage"
+              class="w-full h-full relative coverflow-perspective flex items-center justify-center"
+              onmousemove="tiltActiveCoverflowCard(event)"
+              onmouseleave="resetActiveCoverflowCard()"
+            >
+              <!-- Cards injected by JS with 5-10s looping videos + 60fps real-time steam/sparks/glaze canvas -->
+              <div id="coverflow-deck-wrapper" class="relative w-[88%] sm:w-[82%] h-[360px] sm:h-[430px]"></div>
             </div>
-            <div class="absolute bottom-3 left-4 text-[10px] font-bold tracking-widest uppercase text-[#e5cdb3] pointer-events-none">
-              <i class="fa-solid fa-hand-pointer text-[#d47732] mr-1"></i> Drag to rotate 3D mesh • Drop any .glb file onto canvas
+
+            <!-- SECONDARY TOGGLE VIEW: BUILT-IN THREE.JS 3D PROCEDURAL STAGE -->
+            <div
+              id="webgl-model-stage"
+              class="hidden w-full h-full rounded-2xl bg-black/35 border border-white/15 relative overflow-hidden shadow-2xl"
+            >
+              <canvas id="coca-slider-canvas" class="w-full h-full block cursor-grab active:cursor-grabbing"></canvas>
+              <div class="absolute top-3 left-4 right-4 flex items-center justify-between text-[10px] font-extrabold tracking-widest uppercase text-[#f3c78e] pointer-events-none">
+                <span id="glb-spec-badge" class="px-2.5 py-1 rounded bg-black/55 border border-white/10">
+                  BUILT-IN 3D WEBGL MESH • ZERO DOWNLOAD REQUIRED
+                </span>
+                <span class="px-2.5 py-1 rounded bg-black/55 border border-white/10 hidden sm:inline">
+                  360° DRAG ROTATION
+                </span>
+              </div>
+              <div class="absolute bottom-3 left-4 text-[10px] font-bold tracking-widest uppercase text-[#e5cdb3] pointer-events-none">
+                <i class="fa-solid fa-hand-pointer text-[#d47732] mr-1"></i> Drag to spin 3D model 360°
+              </div>
             </div>
           </div>
 
-          <!-- Active 3D Slide Editorial Description (Strictly Price-Free) -->
+          <!-- Right 5 Columns: Active Dish Editorial Details (Strictly Price-Free) -->
           <div class="lg:col-span-5 bg-[#2a1810]/90 border border-white/15 p-7 sm:p-9 rounded-2xl space-y-5 shadow-2xl">
-            <span id="slide-3d-eyebrow" class="text-[10px] font-extrabold tracking-[0.18em] uppercase text-[#e5a466] block">
-              01 / TALL CHOCOLATE MILKSHAKE 3D MODEL
-            </span>
+            <div class="flex items-center justify-between gap-2">
+              <span id="slide-3d-eyebrow" class="text-[10px] font-extrabold tracking-[0.18em] uppercase text-[#e5a466] block">
+                01 / HAND-SPUN MILKSHAKES (10S HD VIDEO LOOP)
+              </span>
+              <span id="slide-loop-badge" class="px-2.5 py-1 rounded-full bg-[#d47732]/25 border border-[#d47732]/50 text-[#ffdfb8] text-[9px] font-extrabold tracking-widest uppercase">
+                AUTO-LOOPING
+              </span>
+            </div>
+
             <h3 id="slide-3d-title" class="serif-display text-3xl sm:text-4xl text-[#fff8ee] leading-tight">
               The Chocolate Pour Thickshake
             </h3>
+
             <p id="slide-3d-desc" class="text-xs sm:text-sm text-[#d5c3b3] leading-relaxed">
-              Sculpted to the exact tall aspect ratio of our 3D milkshake design: fluted pedestal parlor glass filled with rich cocoa thickshake, chocolate drizzle ribbons, high-swirl whipped cream peak, dark chocolate shavings, and striped straw.
+              Watch our signature 10-second molten chocolate pour, three rich scoops, high-speed blender vortex, and tall parlor glass topped with whipped cream and dark chocolate shavings.
             </p>
 
-            <!-- Quick Slide Selector Pills -->
-            <div class="flex flex-wrap gap-1.5 pt-1">
-              <button type="button" onclick="jumpTo3DSlide(0)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-[#d47732] text-white cursor-pointer">01. Milkshake 3D</button>
-              <button type="button" onclick="jumpTo3DSlide(1)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">02. Cake 3D</button>
-              <button type="button" onclick="jumpTo3DSlide(2)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">03. Pizza 3D</button>
-              <button type="button" onclick="jumpTo3DSlide(3)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">04. Burger 3D</button>
-              <button type="button" onclick="jumpTo3DSlide(4)" class="px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">05. Noodles 3D</button>
+            <!-- Quick 5-Dish Selector Pills -->
+            <div id="stage-dish-pills" class="flex flex-wrap gap-1.5 pt-1">
+              <button type="button" onclick="jumpTo3DSlide(0)" class="stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-[#d47732] text-white cursor-pointer">01. Milkshakes</button>
+              <button type="button" onclick="jumpTo3DSlide(1)" class="stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">02. Cakes</button>
+              <button type="button" onclick="jumpTo3DSlide(2)" class="stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">03. Pizza</button>
+              <button type="button" onclick="jumpTo3DSlide(3)" class="stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">04. Burgers</button>
+              <button type="button" onclick="jumpTo3DSlide(4)" class="stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer">05. Chinese</button>
             </div>
 
             <div class="pt-2 flex flex-wrap items-center gap-3">
@@ -1027,8 +1114,8 @@
                 Inquire on WhatsApp
                 <i class="fa-brands fa-whatsapp text-sm"></i>
               </a>
-              <a href="#complete-menu" class="button button-cream">
-                See Full Menu
+              <a href="#making-process-scroll" class="button button-cream">
+                Scroll 1-by-1 Making Process ↓
               </a>
             </div>
           </div>
@@ -1037,8 +1124,61 @@
     </section>
 
     <!-- ========================================================================
-         SECTION 3: EXTRACTED COMPLETE MENU CARD (STRICTLY NO PRICE LISTING ANYWHERE)
-         Includes every item extracted from the uploaded physical menu sheets
+         SECTION 2B: SCROLL-DOWN ONE-BY-ONE LIVE MAKING PROCESS WALKTHROUGH
+         1. Cakes Making Process (00:00 - 00:09)
+         2. Wood-Fired Pizza Making Process (00:00 - 00:09)
+         3. Gourmet Burger Making Process (00:00 - 00:09)
+         4. High-Flame Indo-Chinese Wok Making Process (00:00 - 00:09)
+         ======================================================================== -->
+    <section id="making-process-scroll" class="py-24 px-4 sm:px-8 bg-[#180d09] text-[#fff8ee] border-t border-white/10">
+      <div class="max-w-6xl mx-auto">
+        <!-- Section Header + Sticky Quick-Jump Bar -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-14">
+          <div>
+            <p class="section-eyebrow !text-[#f3c78e] !mb-3">
+              <span aria-hidden="true" class="!bg-[#d47732]"></span>
+              SCROLL DOWN • ONE-BY-ONE CULINARY MAKING PROCESS (00:00 – 00:09)
+            </p>
+            <h2 class="serif-display text-4xl sm:text-6xl tracking-tight leading-none">
+              Crafted from scratch,<br /><em class="text-[#d47732]">dish by dish.</em>
+            </h2>
+          </div>
+          <p class="max-w-md text-xs sm:text-sm text-[#cbb8a8] leading-relaxed">
+            As you scroll down from our signature Milkshake hero, experience the step-by-step kitchen craft behind our four pillars—<strong>Cakes, Wood-Fired Pizzas, Gourmet Burgers, and High-Flame Chinese Wok</strong>. Tap any timestamp (`00:00` to `00:09`) to scrub each step or attach your local `.mp4` clip.
+          </p>
+        </div>
+
+        <!-- Sticky Chapter Navigation Bar -->
+        <div class="sticky top-[86px] z-40 mb-12 py-3 px-4 rounded-2xl bg-[#26150e]/90 backdrop-blur-md border border-white/15 shadow-2xl flex items-center justify-between gap-2 overflow-x-auto">
+          <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#f3c78e] shrink-0 hidden md:inline">
+            <i class="fa-solid fa-fire-burner text-[#d47732] mr-1.5"></i>One-by-One Chapters:
+          </span>
+          <div class="flex items-center gap-2 shrink-0">
+            <a href="#chapter-cakes" class="px-3.5 py-2 rounded-full text-xs font-extrabold bg-[#d47732] text-white no-underline hover:bg-[#e08643] transition">
+              01. 🎂 Cakes Making (00:00–00:09)
+            </a>
+            <a href="#chapter-pizzas" class="px-3.5 py-2 rounded-full text-xs font-extrabold bg-white/10 hover:bg-[#d47732] text-[#fff8ee] no-underline transition">
+              02. 🍕 Pizza Making (00:00–00:09)
+            </a>
+            <a href="#chapter-burgers" class="px-3.5 py-2 rounded-full text-xs font-extrabold bg-white/10 hover:bg-[#d47732] text-[#fff8ee] no-underline transition">
+              03. 🍔 Burger Making (00:00–00:09)
+            </a>
+            <a href="#chapter-chinese" class="px-3.5 py-2 rounded-full text-xs font-extrabold bg-white/10 hover:bg-[#d47732] text-[#fff8ee] no-underline transition">
+              04. 🍜 Chinese Wok Making (00:00–00:09)
+            </a>
+          </div>
+        </div>
+
+        <!-- Dynamic Container for the 4 One-by-One Making Process Chapters -->
+        <div id="making-chapters-container" class="space-y-20">
+          <!-- Populated by JS with interactive 00:00-00:09 video + live 60fps procedural storyboard + step timeline -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         SECTION 3: CIRCULAR 4-PILLAR ORBITING HUB + COMPLETE EXTRACTED MENU CARD
+         Strictly NO prices listed anywhere.
          ======================================================================== -->
     <section id="complete-menu" class="py-24 px-4 sm:px-8 bg-[#f2eadf] border-b border-[#ded5c9]">
       <div class="section-wrap">
@@ -1047,16 +1187,17 @@
             <p class="section-eyebrow"><span aria-hidden="true"></span>Complete Khammam Kitchen &amp; Shake Bar</p>
             <h2>Every craving,<br /><em>on one menu card.</em></h2>
           </div>
-          <p>Browse our full range of hand-spun thickshakes, crispy veg starters, wok-tossed noodles, Belgian waffles, sizzling brownies, grilled sandwiches, wraps, and burgers—crafted fresh on Mamata Road.</p>
+          <p>Browse our full range of hand-spun thickshakes, crispy veg starters, wok-tossed noodles, Belgian waffles, sizzling brownies, grilled sandwiches, wraps, pizzas, and burgers—crafted fresh on Mamata Road.</p>
         </div>
 
-        <!-- Circular 4-Pillar Orbiting Visual Hub + Search & Category Filter -->
+        <!-- Circular 4-Pillar Orbiting Visual Hub (Cakes, Pizza, Burgers, Chinese) + Search & Category Filter -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-14 bg-[#ece2d4] p-6 sm:p-8 rounded-2xl border border-[#dfd3c3]">
           <div class="lg:col-span-5 flex items-center justify-center py-4">
             <div class="relative w-[270px] h-[270px] sm:w-[320px] sm:h-[320px] flex items-center justify-center">
               <div class="absolute inset-0 rounded-full border border-dashed border-[#8a4b2a]/40"></div>
               <div class="absolute inset-8 rounded-full border border-[#d47732]/35 bg-[#f7f2e9]/70"></div>
 
+              <!-- Central MilkShake Factory Hub Button -->
               <button
                 type="button"
                 onclick="selectMenuCategory('All')"
@@ -1067,34 +1208,34 @@
                   alt="MilkShake Factory Khammam"
                   class="w-12 h-12 rounded-full object-cover border border-[#f3c78e] mb-1"
                 />
-                <span class="serif-display text-xs font-bold leading-none">Full Menu</span>
-                <span class="text-[8px] tracking-[0.16em] uppercase text-[#e5a466] font-extrabold mt-1">74 Specialties</span>
+                <span class="serif-display text-xs font-bold leading-none">MilkShake</span>
+                <span class="text-[8px] tracking-[0.16em] uppercase text-[#e5a466] font-extrabold mt-1">View Full Menu</span>
               </button>
 
-              <!-- Revolving 4 Pillars -->
+              <!-- Revolving 4 Pillars: Cakes, Pizza, Burgers, Chinese -->
               <div class="orbit-ring absolute inset-0 pointer-events-none">
                 <div class="absolute -top-5 left-1/2 -translate-x-1/2 pointer-events-auto">
-                  <button type="button" onclick="selectMenuCategory('Waffles')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-xl">🧇</span>
-                    <strong class="serif-display text-[11px] mt-0.5">Waffles</strong>
+                  <button type="button" onclick="selectMenuCategory('Waffles & Brownie Lava Desserts')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🎂</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Cakes</strong>
                   </button>
                 </div>
                 <div class="absolute top-1/2 -right-5 -translate-y-1/2 pointer-events-auto">
-                  <button type="button" onclick="selectMenuCategory('Noodles Items')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-xl">🍜</span>
-                    <strong class="serif-display text-[11px] mt-0.5">Noodles</strong>
+                  <button type="button" onclick="selectMenuCategory('Pizza, Burgers & Sides')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🍕</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Pizza</strong>
                   </button>
                 </div>
                 <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 pointer-events-auto">
-                  <button type="button" onclick="selectMenuCategory('Burgers & Sides')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                  <button type="button" onclick="selectMenuCategory('Pizza, Burgers & Sides')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
                     <span class="text-xl">🍔</span>
                     <strong class="serif-display text-[11px] mt-0.5">Burgers</strong>
                   </button>
                 </div>
                 <div class="absolute top-1/2 -left-5 -translate-y-1/2 pointer-events-auto">
-                  <button type="button" onclick="selectMenuCategory('Veg Starter Items')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
-                    <span class="text-xl">🥟</span>
-                    <strong class="serif-display text-[11px] mt-0.5">Starters</strong>
+                  <button type="button" onclick="selectMenuCategory('Noodles Items')" class="orbit-node w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#fffaf0] border-2 border-[#d47732] shadow-xl flex flex-col items-center justify-center hover:bg-[#2b1912] hover:text-white transition cursor-pointer">
+                    <span class="text-xl">🍜</span>
+                    <strong class="serif-display text-[11px] mt-0.5">Chinese</strong>
                   </button>
                 </div>
               </div>
@@ -1113,7 +1254,7 @@
                   id="menu-search-input"
                   type="search"
                   oninput="renderExtractedMenu()"
-                  placeholder="Search noodles, paneer, waffle..."
+                  placeholder="Search shake, noodles, paneer, waffle..."
                   class="w-full pl-9 pr-3.5 py-2.5 rounded-full bg-[#fffaf0] border border-[#d5c6b4] text-xs text-[#2b1912] focus:outline-none focus:border-[#d47732]"
                 />
               </div>
@@ -1197,7 +1338,7 @@
                 </div>
                 <div>
                   <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#91582f] block">DIRECT PHONE &amp; WHATSAPP</span>
-                  <a href="tel:08096787676" class="text-base font-extrabold text-[#2b1912] hover:text-[#d47732] transition">
+                  <a href="tel:+918096787676" class="text-base font-extrabold text-[#2b1912] hover:text-[#d47732] transition">
                     080967 87676
                   </a>
                 </div>
@@ -1216,7 +1357,7 @@
               <i class="fa-solid fa-location-arrow text-xs"></i>
             </a>
             <a
-              href="tel:08096787676"
+              href="tel:+918096787676"
               class="button button-caramel"
             >
               Call 080967 87676
@@ -1358,7 +1499,7 @@
           </span>
         </a>
         <p>mamata road, Dwaraka Nagar, Jalagam Nagar,<br />Khammam, Telangana 507002 · Owner: Rajesh Bhai</p>
-        <a class="footer-phone" href="tel:08096787676">
+        <a class="footer-phone" href="tel:+918096787676">
           <i class="fa-solid fa-phone text-xs text-[#d47732]"></i>
           <span>080967 87676</span>
         </a>
@@ -1392,12 +1533,12 @@
        INTERACTIVE SCRIPTS:
        1. Complete Extracted Price-Free Menu Engine
        2. Hidden-Backend Unlimited Combinatorial Google Review Engine
-       3. Three.js + GLTFLoader 3D Milkshake & Cake Stage
+       3. 5-Dish 3D Video Coverflow Stage + Built-in Three.js WebGL Stage
        ========================================================================== -->
   <script>
     /* --------------------------------------------------------------------------
        1. COMPLETE EXTRACTED MENU DATA (STRICTLY NO PRICES ANYWHERE)
-       Every item extracted from the uploaded menu cards
+       Every item extracted from the physical menu cards
        -------------------------------------------------------------------------- */
     const COMPLETE_MENU_DATA = [
       {
@@ -1406,13 +1547,15 @@
         tagline: "Rich, creamy parlor thickshakes spun fresh to order",
         items: [
           { name: "The Chocolate Pour Thickshake", type: "veg", badge: "Signature Hero" },
-          { name: "Nutella Hazelnut Shake", type: "veg", badge: "Bestseller" },
-          { name: "Ferrero Rocher Shake", type: "veg", badge: "Premium" },
           { name: "Belgian Dark Chocolate Shake", type: "veg", badge: "Rich Cocoa" },
-          { name: "Oreo Cookie Crumble Shake", type: "veg", badge: "Crunchy" },
-          { name: "KitKat Crunch Shake", type: "veg", badge: "Choco Wafer" },
-          { name: "Biscoff Caramel Shake", type: "veg", badge: "Caramel" },
-          { name: "Strawberry Cream Shake", type: "veg", badge: "Classic Fruit" }
+          { name: "Ferrero Rocher Hazelnut Shake", type: "veg", badge: "Premium" },
+          { name: "Nutella Brownie Crumble Shake", type: "veg", badge: "Bestseller" },
+          { name: "Oreo Cookies & Cream Thickshake", type: "veg", badge: "Crunchy" },
+          { name: "KitKat Crunch Choco Shake", type: "veg", badge: "Choco Wafer" },
+          { name: "Biscoff Caramel Lotus Shake", type: "veg", badge: "Caramel" },
+          { name: "Alphonso Mango Fruit Shake", type: "veg", badge: "Seasonal Tropical" },
+          { name: "Strawberry Cream Thickshake", type: "veg", badge: "Berry Cream" },
+          { name: "Dry Fruit Royal Kaju Anjeer Shake", type: "veg", badge: "Royal Nutty" }
         ]
       },
       {
@@ -1442,9 +1585,9 @@
           { name: "Chilli Vegetable", type: "veg", badge: "Wok Glazed" },
           { name: "Chilli Corn", type: "veg", badge: "Spicy" },
           { name: "Corn Manchurian", type: "veg", badge: "Indo-Chinese" },
-          { name: "Corn Soton Pepper (Salt & Pepper)", type: "veg", badge: "Pepper Tossed" },
+          { name: "Corn Soton Pepper", type: "veg", badge: "Pepper Tossed" },
           { name: "Chilli Mushroom", type: "veg", badge: "Hot & Tangy" },
-          { name: "Mushroom Soton Pepper (Salt & Pepper)", type: "veg", badge: "Cracked Pepper" },
+          { name: "Mushroom Soton Pepper", type: "veg", badge: "Cracked Pepper" },
           { name: "Mushroom Manchurian", type: "veg", badge: "Classic" },
           { name: "Mushroom 65", type: "veg", badge: "South Spice" },
           { name: "Chilli Paneer", type: "veg", badge: "Bestseller" },
@@ -1455,28 +1598,21 @@
         ]
       },
       {
-        category: "Waffles",
+        category: "Waffles & Brownie Lava Desserts",
         icon: "🧇",
-        tagline: "Crisp golden Belgian waffles drizzled with molten toppings",
+        tagline: "Crisp golden Belgian waffles, sizzling brownies, and molten lava cakes",
         items: [
           { name: "Loaded Waffle", type: "veg", badge: "Fully Loaded" },
           { name: "Classic Waffle", type: "veg", badge: "Golden Crisp" },
           { name: "Nutella Waffle", type: "veg", badge: "Hazelnut Cocoa" },
           { name: "Fruit Cream Waffle", type: "veg", badge: "Fresh & Creamy" },
           { name: "Cookies and Cream Waffle", type: "veg", badge: "Oreo Crunch" },
-          { name: "Loaded Brownie Waffle", type: "veg", badge: "Fudge Overload" }
-        ]
-      },
-      {
-        category: "Brownie & Lava Desserts",
-        icon: "🍰",
-        tagline: "Warm fudgy brownies, sizzling plates, and molten lava cakes",
-        items: [
+          { name: "Loaded Brownie Waffle", type: "veg", badge: "Fudge Overload" },
           { name: "Dark Chocolate Brownie", type: "veg", badge: "Rich Fudge" },
-          { name: "Brownie Affair", type: "veg", badge: "Indulgent" },
-          { name: "Nutty Profiterole / Fudge Brownie", type: "veg", badge: "Nutty Crunch" },
+          { name: "Brownie with Hot Fudge", type: "veg", badge: "Indulgent" },
+          { name: "Nutty Profiterole Brownie", type: "veg", badge: "Nutty Crunch" },
           { name: "Vanilla Affair Brownie", type: "veg", badge: "Warm & Cold" },
-          { name: "Dark Chocolate Sizzler Brownie", type: "veg", badge: "Hot Sizzler" },
+          { name: "Dark Chocolate Sizzler", type: "veg", badge: "Hot Sizzler" },
           { name: "Vanilla Lava Cake", type: "veg", badge: "Molten Center" }
         ]
       },
@@ -1506,8 +1642,8 @@
           { name: "BBQ Wrap", type: "veg", badge: "Smoky Sweet" },
           { name: "Paneer Wrap", type: "veg", badge: "Bestseller" },
           { name: "Chettinad Wrap", type: "veg", badge: "Roasted Spice" },
-          { name: "Egg Wrap", type: "egg", badge: "Classic Roll" },
           { name: "MSF Special Wrap", type: "veg", badge: "Signature" },
+          { name: "Egg Wrap", type: "egg", badge: "Classic Roll" },
           { name: "Tandoori Wrap", type: "veg", badge: "Clay Oven" },
           { name: "Peri Peri Wrap", type: "veg", badge: "Tangy Heat" },
           { name: "Makhani Wrap", type: "veg", badge: "Creamy Butter" },
@@ -1515,17 +1651,20 @@
         ]
       },
       {
-        category: "Burgers & Sides",
-        icon: "🍔",
-        tagline: "Crispy stacked burgers, cheesy garlic breads, and crunchy sides",
+        category: "Pizza, Burgers & Sides",
+        icon: "🍕",
+        tagline: "Oven-fresh cheese burst pizzas, crispy stacked burgers, and crunchy sides",
         items: [
+          { name: "Loaded Cheese Burst Pizza", type: "veg", badge: "Molten Cheese" },
+          { name: "Tandoori Paneer Pizza", type: "veg", badge: "Spiced Paneer" },
+          { name: "Peri-Peri Chicken Pizza", type: "nonveg", badge: "Fiery Crust" },
           { name: "Spicy Burger", type: "veg", badge: "Fiery Crunch" },
           { name: "Smoky Burger", type: "veg", badge: "BBQ Glaze" },
           { name: "Jumbo Burger", type: "veg", badge: "Double Stacked" },
           { name: "Fish Burger", type: "nonveg", badge: "Crispy Fillet" },
           { name: "Paneer Burger", type: "veg", badge: "Cottage Cheese" },
           { name: "Smileys", type: "veg", badge: "Crispy Bites" },
-          { name: "Mozzarella Fries", type: "veg", badge: "Cheesy Pull" },
+          { name: "Masala Fries", type: "veg", badge: "Spiced Crunch" },
           { name: "Cheese Garlic Bread", type: "veg", badge: "Oven Baked" },
           { name: "Chilli Corn Garlic Bread", type: "veg", badge: "Spiced Corn" },
           { name: "Chilli Cheese Toast", type: "veg", badge: "Toasted Crunch" }
@@ -1834,415 +1973,860 @@
     }
 
     /* --------------------------------------------------------------------------
-       5. THREE.JS + GLTFLOADER 3D STAGE
-       Slide 01 matches the uploaded Milkshake glTF bounds: [-0.155, -0.500, -0.217] to [0.150, 0.500, 0.217]
-       Slide 02 matches the uploaded Cake glTF bounds: [-0.500, -0.258, -0.500] to [0.500, 0.257, 0.500]
-       Also supports loading custom .glb files via THREE.GLTFLoader
+       5. OPTION 1 + HYBRID: 3D PERSPECTIVE VIDEO COVERFLOW STAGE FOR ALL 5 DISHES
+          + BUILT-IN THREE.JS 3D PROCEDURAL MODEL STAGE (ZERO .GLB UPLOADS NEEDED)
        -------------------------------------------------------------------------- */
     let stageScene, stageCamera, stageRenderer, stageGroup;
     let stageModels = [];
     let current3DSlide = 0;
     let target3DX = 0;
     let isDraggingStage = false, lastStageX = 0;
+    let activeStageDisplayMode = "video"; // 'video' (default) or 'webgl'
 
     const STAGE_3D_ITEMS = [
       {
-        eyebrow: "01 / TALL CHOCOLATE MILKSHAKE 3D MODEL",
+        id: "milkshakes",
+        eyebrow: "01 / FIRST VIEW • HAND-SPUN MILKSHAKES (10S HD VIDEO LOOP)",
         title: "The Chocolate Pour Thickshake",
-        desc: "Sculpted to the exact tall aspect ratio [-0.155, -0.500, -0.217] → [0.150, 0.500, 0.217] of the uploaded milkshake glTF: fluted pedestal parlor glass, rich chocolate thickshake body, chocolate syrup swirls, whipped cream peak, dark chocolate curls, and striped straw.",
-        bounds: "GLTF BOUNDS: [-0.155, -0.500, -0.217] → [0.150, 0.500, 0.217]",
-        bg: "radial-gradient(circle at 50% 45%, #3d2116 0%, #1d100b 90%)"
+        desc: "Our signature opening showcase: molten dark chocolate poured inside a tall parlor glass, spun with three rich scoops of ice cream, and crowned with whipped cream and chocolate shavings.",
+        videoUrl: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Making_chocolate_milkshake_e75771e8_1080p-wbBZMeZ2xrKJOFKicLZFhYmt005nAt.mp4",
+        fallbackVideo: "Making_chocolate_milkshake_e75771e8_1080p.mp4",
+        poster: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg",
+        bgGradient: "radial-gradient(circle at 50% 45%, #3d2116 0%, #1d100b 90%)",
+        particleType: "cocoa",
+        timeLabel: "00:00 – 00:09 • MOLTEN POUR → BLENDER VORTEX → WHIPPED PEAK"
       },
       {
-        eyebrow: "02 / CELEBRATION & SACHER CAKE 3D MODEL",
-        title: "Mirror-Glaze Sacher & Celebration Cake",
-        desc: "Sculpted to the exact cylindrical aspect ratio [-0.500, -0.258, -0.500] → [0.500, 0.257, 0.500] of the uploaded cake glTF: glossy dark chocolate ganache drum, apricot-gold ribbon trim, 12 piped cream rosettes, chocolate shavings, and glazed berries.",
-        bounds: "GLTF BOUNDS: [-0.500, -0.258, -0.500] → [0.500, 0.257, 0.500]",
-        bg: "radial-gradient(circle at 50% 45%, #4f1c24 0%, #1c0d10 90%)"
+        id: "cakes",
+        eyebrow: "02 / CELEBRATION & BERRY CHOCOLATE CAKES (00:00–00:09 MAKING)",
+        title: "3-Layer Berry & Chocolate Fudge Cake",
+        desc: "Whisked dark cocoa and flour folded into silky chocolate batter, baked golden, layered with velvety vanilla buttercream, and crowned with fresh raspberries, blackberries, blueberries, and mint.",
+        videoUrl: "making_cake.mp4",
+        fallbackVideo: "",
+        poster: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chocolate-sacher-cake-with-apricot-jam-wooden-table-traditional-austrian-dessert-ai-generative-WW34xw1hHEsecJ57XQDHUgHhbVfTVz.jpg",
+        bgGradient: "radial-gradient(circle at 50% 45%, #471c24 0%, #1a0b0e 90%)",
+        particleType: "glaze",
+        timeLabel: "00:00 – 00:09 • COCOA WHISK → OVEN RISE → BUTTERCREAM & BERRIES"
       },
       {
-        eyebrow: "03 / ARTISANAL OVEN PILLAR",
-        title: "Wood-Fired Cheese Burst Pizza",
-        desc: "Hand-stretched golden crust overflowing with molten mozzarella cheese, char-grilled paneer cubes, crisp bell peppers, and Italian herbs.",
-        bounds: "3D MESH: ARTISANAL WOOD-FIRED PIZZA",
-        bg: "radial-gradient(circle at 50% 45%, #5e3114 0%, #1c1009 90%)"
+        id: "pizzas",
+        eyebrow: "03 / WOOD-FIRED ARTISAN PIZZAS (00:00–00:09 MAKING)",
+        title: "Wood-Fired Molten Cheese Pull Pizza",
+        desc: "Hand-kneaded artisan dough proofed under linen, rolled fresh, swirled with tangy tomato sauce, loaded with mozzarella, olives, bell peppers & basil, and baked beside roaring wood flames.",
+        videoUrl: "making_pizza.mp4",
+        fallbackVideo: "",
+        poster: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80",
+        bgGradient: "radial-gradient(circle at 50% 45%, #4e2212 0%, #1c0c07 90%)",
+        particleType: "steam",
+        timeLabel: "00:00 – 00:09 • DOUGH KNEAD → SAUCE SWIRL → WOOD OVEN CHEESE PULL"
       },
       {
-        eyebrow: "04 / GOURMET GRILL PILLAR",
-        title: "Crispy Stacked Jumbo Burger",
-        desc: "Sesame brioche bun stacked with a crunchy golden patty, melted cheddar slices, fresh garden greens, and smoky house chipotle sauce.",
-        bounds: "3D MESH: DOUBLE-DECKER BURGER",
-        bg: "radial-gradient(circle at 50% 45%, #4f3812 0%, #191208 90%)"
+        id: "burgers",
+        eyebrow: "04 / CAST-IRON GOURMET BURGERS (00:00–00:09 MAKING)",
+        title: "Sizzling Double-Cheese Sesame Burger",
+        desc: "Freshly seasoned patty hand-pressed and seared with cross-hatch grill marks on a smoking cast-iron flat top, stacked on a butter-toasted sesame brioche bun with crisp lettuce, tomato, melted cheddar, and smoky house sauce.",
+        videoUrl: "making_burger.mp4",
+        fallbackVideo: "",
+        poster: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1000&q=80",
+        bgGradient: "radial-gradient(circle at 50% 45%, #462a11 0%, #1a1007 90%)",
+        particleType: "sizzle",
+        timeLabel: "00:00 – 00:09 • PEPPER SEASON → GRILL SEAR → CHEDDAR MELT & CROWN"
       },
       {
-        eyebrow: "05 / HIGH-FLAME WOK PILLAR",
-        title: "Wok-Tossed Indo-Chinese Noodles",
-        desc: "High-flame Schezwan and Hakka noodles tossed with crisp vegetables, spring onions, and fiery Indo-Chinese spices.",
-        bounds: "3D MESH: SIZZLING WOK BOWL",
-        bg: "radial-gradient(circle at 50% 45%, #591814 0%, #1c0a09 90%)"
+        id: "chinese",
+        eyebrow: "05 / HIGH-FLAME INDO-CHINESE WOK (00:00–00:09 MAKING)",
+        title: "Fiery Wok-Tossed Schezwan Hakka Noodles",
+        desc: "Julienne carrots, crisp cabbage, spring onions, and noodles tossed into a smoking hot wok with fiery Schezwan chili paste, soy glaze, and leaping wok-hei flames before plating steaming hot.",
+        videoUrl: "making_chinese.mp4",
+        fallbackVideo: "",
+        poster: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=1000&q=80",
+        bgGradient: "radial-gradient(circle at 50% 45%, #4d1914 0%, #190907 90%)",
+        particleType: "wokfire",
+        timeLabel: "00:00 – 00:09 • VEGGIE DROP → SCHEZWAN GLAZE → HIGH-FLAME WOK TOSS"
       }
     ];
 
-    function buildTallMilkshake3DMesh() {
-      // Matches tall bounding box ratio (width ~0.305, height ~1.0, depth ~0.434 -> scaled x3.4 for stage)
-      const g = new THREE.Group();
-      const glassMat = new THREE.MeshPhysicalMaterial({
-        color: 0xffffff,
-        transparent: true,
-        opacity: 0.34,
-        roughness: 0.06,
-        metalness: 0.1
-      });
-      const shakeMat = new THREE.MeshStandardMaterial({
-        color: 0x4b2413,
-        roughness: 0.24,
-        metalness: 0.06
-      });
-      const syrupMat = new THREE.MeshStandardMaterial({
-        color: 0x220e07,
-        roughness: 0.12,
-        metalness: 0.15
-      });
-      const whipMat = new THREE.MeshStandardMaterial({
-        color: 0xfff8ee,
-        roughness: 0.22,
-        metalness: 0.02
-      });
-
-      // Pedestal base & stem
-      const baseFoot = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.78, 0.16, 36), glassMat);
-      baseFoot.position.y = -1.65;
-      g.add(baseFoot);
-
-      const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.34, 0.42, 28), glassMat);
-      stem.position.y = -1.38;
-      g.add(stem);
-
-      // Tall sculpted glass body
-      const tallGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.84, 0.54, 2.35, 40, 1, true), glassMat);
-      tallGlass.position.y = -0.05;
-      g.add(tallGlass);
-
-      // Rich chocolate shake core
-      const chocolateBody = new THREE.Mesh(new THREE.CylinderGeometry(0.79, 0.50, 2.2, 36), shakeMat);
-      chocolateBody.position.y = -0.05;
-      g.add(chocolateBody);
-
-      // Internal chocolate drizzle rings
-      for (let r = 0; r < 3; r++) {
-        const drizzle = new THREE.Mesh(new THREE.TorusGeometry(0.62 + r * 0.06, 0.045, 14, 36), syrupMat);
-        drizzle.rotation.x = Math.PI / 2 + (r % 2 === 0 ? 0.12 : -0.12);
-        drizzle.position.y = -0.65 + r * 0.55;
-        g.add(drizzle);
-      }
-
-      // Multi-tiered swirled whipped cream peak
-      for (let w = 0; w < 5; w++) {
-        const whip = new THREE.Mesh(new THREE.TorusGeometry(0.72 - w * 0.13, 0.18 - w * 0.015, 20, 36), whipMat);
-        whip.rotation.x = Math.PI / 2;
-        whip.position.y = 1.08 + w * 0.17;
-        g.add(whip);
-      }
-
-      // Chocolate shavings & glossy cherry on top
-      for (let s = 0; s < 14; s++) {
-        const angle = (s / 14) * Math.PI * 2;
-        const radius = 0.25 + (s % 3) * 0.14;
-        const chip = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.04, 0.06), syrupMat);
-        chip.position.set(Math.cos(angle) * radius, 1.35 + (s % 3) * 0.15, Math.sin(angle) * radius);
-        chip.rotation.set(s * 0.4, s * 0.8, s * 0.3);
-        g.add(chip);
-      }
-
-      const cherry = new THREE.Mesh(
-        new THREE.SphereGeometry(0.18, 24, 24),
-        new THREE.MeshStandardMaterial({ color: 0xb81414, roughness: 0.12, metalness: 0.1 })
-      );
-      cherry.position.set(0, 1.92, 0);
-      g.add(cherry);
-
-      // Caramel striped straw extending to the exact glTF Z-depth ratio
-      const straw = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.065, 0.065, 1.85, 20),
-        new THREE.MeshStandardMaterial({ color: 0xd47732, roughness: 0.25 })
-      );
-      straw.position.set(0.38, 1.38, 0.22);
-      straw.rotation.z = -0.28;
-      straw.rotation.x = 0.14;
-      g.add(straw);
-
-      return g;
-    }
-
-    function buildCelebrationCake3DMesh() {
-      // Matches wide cylindrical bounding box [-0.500, -0.258, -0.500] to [0.500, 0.257, 0.500] (width:height = 2:1)
-      const g = new THREE.Group();
-      const ganacheMat = new THREE.MeshStandardMaterial({
-        color: 0x2a120a,
-        roughness: 0.14,
-        metalness: 0.18
-      });
-      const apricotGoldMat = new THREE.MeshStandardMaterial({
-        color: 0xd47732,
-        roughness: 0.22,
-        metalness: 0.35
-      });
-      const creamRosetteMat = new THREE.MeshStandardMaterial({
-        color: 0xfff5e6,
-        roughness: 0.25
-      });
-      const boardMat = new THREE.MeshStandardMaterial({
-        color: 0xe5c185,
-        roughness: 0.3,
-        metalness: 0.4
-      });
-
-      // Gold cake board
-      const board = new THREE.Mesh(new THREE.CylinderGeometry(1.78, 1.78, 0.08, 48), boardMat);
-      board.position.y = -0.82;
-      g.add(board);
-
-      // Wide Sacher chocolate mirror-glaze cylinder (Radius 1.6, Height 1.5 -> 2:1 diameter-to-height ratio)
-      const cakeDrum = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 1.52, 48), ganacheMat);
-      cakeDrum.position.y = -0.02;
-      g.add(cakeDrum);
-
-      // Middle apricot jam / gold accent band
-      const apricotBand = new THREE.Mesh(new THREE.TorusGeometry(1.61, 0.055, 16, 60), apricotGoldMat);
-      apricotBand.rotation.x = Math.PI / 2;
-      apricotBand.position.y = -0.02;
-      g.add(apricotBand);
-
-      // Top glossy chocolate rim
-      const topRim = new THREE.Mesh(new THREE.TorusGeometry(1.56, 0.06, 16, 60), ganacheMat);
-      topRim.rotation.x = Math.PI / 2;
-      topRim.position.y = 0.74;
-      g.add(topRim);
-
-      // 12 Piped Cream & Chocolate Rosettes around the top perimeter
-      for (let i = 0; i < 12; i++) {
-        const angle = (i / 12) * Math.PI * 2;
-        const rx = Math.cos(angle) * 1.25;
-        const rz = Math.sin(angle) * 1.25;
-
-        const rosette = new THREE.Mesh(
-          new THREE.TorusKnotGeometry(0.13, 0.05, 36, 10),
-          i % 2 === 0 ? creamRosetteMat : apricotGoldMat
-        );
-        rosette.position.set(rx, 0.82, rz);
-        rosette.rotation.x = Math.PI / 2;
-        g.add(rosette);
-      }
-
-      // Center chocolate plaque / berries crown
-      const centerCrown = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 0.08, 32), apricotGoldMat);
-      centerCrown.position.y = 0.76;
-      g.add(centerCrown);
-
-      g.rotation.x = 0.18;
-      return g;
-    }
-
-    function init3DSlidingStage() {
-      const canvas = document.getElementById("coca-slider-canvas");
-      if (!canvas) return;
-      const rect = canvas.parentElement.getBoundingClientRect();
-
-      stageScene = new THREE.Scene();
-      stageCamera = new THREE.PerspectiveCamera(40, rect.width / rect.height, 0.1, 100);
-      stageCamera.position.set(0, 0.55, 6.8);
-
-      stageRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-      stageRenderer.setSize(rect.width, rect.height);
-      stageRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-      stageScene.add(new THREE.AmbientLight(0xffffff, 1.15));
-      const keyLight = new THREE.DirectionalLight(0xfff2e2, 1.85);
-      keyLight.position.set(4, 7, 6);
-      stageScene.add(keyLight);
-
-      const rimLight = new THREE.PointLight(0xd47732, 1.4, 18);
-      rimLight.position.set(-4, 3, -3);
-      stageScene.add(rimLight);
-
-      stageGroup = new THREE.Group();
-      stageScene.add(stageGroup);
-
-      STAGE_3D_ITEMS.forEach((item, idx) => {
-        let modelGroup;
-        if (idx === 0) {
-          modelGroup = buildTallMilkshake3DMesh();
-        } else if (idx === 1) {
-          modelGroup = buildCelebrationCake3DMesh();
-        } else if (idx === 2) {
-          // 3D Wood-Fired Pizza
-          modelGroup = new THREE.Group();
-          const crust = new THREE.Mesh(
-            new THREE.CylinderGeometry(1.75, 1.75, 0.22, 40),
-            new THREE.MeshStandardMaterial({ color: 0xd47732, roughness: 0.35 })
-          );
-          crust.rotation.x = 0.45;
-          modelGroup.add(crust);
-          const cheese = new THREE.Mesh(
-            new THREE.CylinderGeometry(1.52, 1.52, 0.25, 40),
-            new THREE.MeshStandardMaterial({ color: 0xf9d444, roughness: 0.25 })
-          );
-          cheese.rotation.x = 0.45;
-          modelGroup.add(cheese);
-        } else if (idx === 3) {
-          // 3D Stacked Burger
-          modelGroup = new THREE.Group();
-          const bunMat = new THREE.MeshStandardMaterial({ color: 0xc87a28, roughness: 0.3 });
-          const bunBot = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.15, 0.42, 36), bunMat);
-          bunBot.position.y = -0.7;
-          modelGroup.add(bunBot);
-          const patty = new THREE.Mesh(
-            new THREE.CylinderGeometry(1.36, 1.36, 0.46, 36),
-            new THREE.MeshStandardMaterial({ color: 0x3b1a0b, roughness: 0.4 })
-          );
-          patty.position.y = -0.15;
-          modelGroup.add(patty);
-          const bunTop = new THREE.Mesh(new THREE.SphereGeometry(1.32, 36, 18, 0, Math.PI * 2, 0, Math.PI / 2), bunMat);
-          bunTop.position.y = 0.22;
-          modelGroup.add(bunTop);
-        } else {
-          // 3D Wok Noodles Bowl
-          modelGroup = new THREE.Group();
-          const bowl = new THREE.Mesh(
-            new THREE.SphereGeometry(1.55, 36, 18, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2),
-            new THREE.MeshStandardMaterial({ color: 0x8f1d14, roughness: 0.2 })
-          );
-          bowl.position.y = 0.2;
-          modelGroup.add(bowl);
-          const noodles = new THREE.Mesh(
-            new THREE.TorusKnotGeometry(0.68, 0.19, 64, 16),
-            new THREE.MeshStandardMaterial({ color: 0xf1c40f, roughness: 0.25 })
-          );
-          noodles.position.y = 0.38;
-          modelGroup.add(noodles);
-        }
-
-        modelGroup.position.x = idx * 6.2;
-        stageGroup.add(modelGroup);
-        stageModels.push(modelGroup);
-      });
-
-      // Pointer drag rotation
-      canvas.addEventListener("pointerdown", e => {
-        isDraggingStage = true;
-        lastStageX = e.clientX;
-      });
-      window.addEventListener("pointerup", () => { isDraggingStage = false; });
-      window.addEventListener("pointermove", e => {
-        if (!isDraggingStage || !stageModels[current3DSlide]) return;
-        stageModels[current3DSlide].rotation.y += (e.clientX - lastStageX) * 0.01;
-        lastStageX = e.clientX;
-      });
-
-      // Drag and drop .glb file support directly onto stage
-      const dropzone = document.getElementById("stage-canvas-dropzone");
-      if (dropzone) {
-        dropzone.addEventListener("dragover", e => { e.preventDefault(); });
-        dropzone.addEventListener("drop", e => {
-          e.preventDefault();
-          const file = e.dataTransfer?.files?.[0];
-          if (file) loadGLBFileIntoActiveSlide(file);
-        });
-      }
-    }
-
-    function handleCustomGLBUpload(event) {
-      const file = event.target?.files?.[0];
-      if (file) loadGLBFileIntoActiveSlide(file);
-    }
-
-    function loadGLBFileIntoActiveSlide(file) {
-      if (!THREE.GLTFLoader || !stageModels[current3DSlide]) return;
-      const reader = new FileReader();
-      reader.onload = function (evt) {
-        const loader = new THREE.GLTFLoader();
-        loader.parse(evt.target.result, "", gltf => {
-          const importedRoot = gltf.scene;
-          const box = new THREE.Box3().setFromObject(importedRoot);
-          const size = new THREE.Vector3();
-          const center = new THREE.Vector3();
-          box.getSize(size);
-          box.getCenter(center);
-
-          const maxDim = Math.max(size.x, size.y, size.z) || 1;
-          const scaleFactor = 3.0 / maxDim;
-          importedRoot.position.sub(center);
-
-          const holder = stageModels[current3DSlide];
-          while (holder.children.length > 0) {
-            holder.remove(holder.children[0]);
+    /* --------------------------------------------------------------------------
+       ONE-BY-ONE MAKING PROCESS CHAPTER DATA (MATCHING USER'S 4 VIDEOS 00:00–00:09)
+       -------------------------------------------------------------------------- */
+    const MAKING_PROCESS_CHAPTERS = [
+      {
+        id: "chapter-cakes",
+        number: "01",
+        category: "Waffles & Brownie Lava Desserts",
+        badge: "CHAPTER 01 • CAKES MAKING PROCESS (00:00 – 00:09)",
+        title: "3-Layer Berry & Dark Chocolate Cake",
+        subtitle: "From raw cocoa powder and farm eggs to a 3-layer frosted berry cake slice.",
+        videoSrc: "making_cake.mp4",
+        accent: "#d47732",
+        effectType: "glaze",
+        steps: [
+          {
+            time: "00:00",
+            label: "Raw Artisanal Ingredients",
+            detail: "Rich dark cocoa powder, sifted flour, brown sugar, farm-fresh eggs, creamy butter, and whole milk arranged on rustic wood.",
+            img: "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:01 – 00:02",
+            label: "Whisking Glossy Chocolate Batter",
+            detail: "Dry cocoa and flour are whisked into a velvety, ribbon-like dark chocolate ganache batter with a mirror sheen.",
+            img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:03 – 00:04",
+            label: "Pan Pour & Golden Oven Rise",
+            detail: "Thick chocolate batter is poured into a parchment-lined springform pan and baked in a warm convection oven until risen and fragrant.",
+            img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:05 – 00:06",
+            label: "Swirling Vanilla Buttercream Frosting",
+            detail: "Whipped clouds of vanilla bean cream cheese frosting are smoothed across the chocolate sponge layers with a steel offset spatula.",
+            img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/deliciae0039-14-A1HwpnyNihatr5yU9gxq5yVrdt2X0Y.jpg"
+          },
+          {
+            time: "00:07 – 00:09",
+            label: "Fresh Berries, Sugar Dust & 3-Layer Slice",
+            detail: "Crowned with fresh raspberries, blackberries, blueberries, mint leaves, and a snowfall of powdered sugar before lifting a 3-layer slice.",
+            img: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chocolate-sacher-cake-with-apricot-jam-wooden-table-traditional-austrian-dessert-ai-generative-WW34xw1hHEsecJ57XQDHUgHhbVfTVz.jpg"
           }
-          const wrapper = new THREE.Group();
-          wrapper.scale.setScalar(scaleFactor);
-          wrapper.add(importedRoot);
-          holder.add(wrapper);
+        ]
+      },
+      {
+        id: "chapter-pizzas",
+        number: "02",
+        category: "Pizza, Burgers & Sides",
+        badge: "CHAPTER 02 • WOOD-FIRED PIZZA MAKING PROCESS (00:00 – 00:09)",
+        title: "Wood-Fired Margherita & Olive Cheese Pull Pizza",
+        subtitle: "From hand-kneaded flour dough to a roaring wood-fired oven cheese pull.",
+        videoSrc: "making_pizza.mp4",
+        accent: "#e45c26",
+        effectType: "steam",
+        steps: [
+          {
+            time: "00:00 – 00:02",
+            label: "Flour Dusting, Hand-Kneading & Linen Proof",
+            detail: "Fine flour rains over the prep table alongside vine tomatoes, basil, and olive oil; artisan dough is kneaded by hand and proofed under linen.",
+            img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:03 – 00:04",
+            label: "Rolling the Base & Ladling Tomato Sauce",
+            detail: "The risen dough is rolled into an airy disc with a wooden pin and swirled with crushed San Marzano herb tomato sauce.",
+            img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:05 – 00:06",
+            label: "Mozzarella Rain & Roaring Wood-Fired Oven",
+            detail: "Generous handfuls of shredded mozzarella, black olives, sliced tomatoes, and bell peppers bake beside crackling wood-fired flames.",
+            img: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:07",
+            label: "Crisp Wheel Cut Across Blistered Crust",
+            detail: "A stainless-steel pizza wheel glides through the golden, leopard-spotted crust and bubbling mozzarella.",
+            img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:08 – 00:09",
+            label: "The Ultimate Steaming Cheese Pull",
+            detail: "Lifting a piping-hot slice garnished with fresh green basil leaves and stretching ribbons of molten mozzarella.",
+            img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80"
+          }
+        ]
+      },
+      {
+        id: "chapter-burgers",
+        number: "03",
+        category: "Pizza, Burgers & Sides",
+        badge: "CHAPTER 03 • GOURMET BURGER MAKING PROCESS (00:00 – 00:09)",
+        title: "Cast-Iron Seared Cheddar & Chipotle Burger",
+        subtitle: "From cracked-pepper patty seasoning and flat-top sear to the sesame brioche crown.",
+        videoSrc: "making_burger.mp4",
+        accent: "#e5a466",
+        effectType: "sizzle",
+        steps: [
+          {
+            time: "00:00 – 00:02",
+            label: "Cracked Pepper Seasoning & Hand-Pressing Patty",
+            detail: "Coarse sea salt, cracked black pepper, and herbs are sprinkled into the mix before hand-forming a thick, juicy burger patty on wood.",
+            img: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:03 – 00:04",
+            label: "Cast-Iron Sizzle & Butter-Toasted Sesame Bun",
+            detail: "Patties sear with cross-hatch grill marks on a smoking hot griddle while golden sesame brioche buns toast in melted butter.",
+            img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:05 – 00:06",
+            label: "Crisp Lettuce, Vine Tomatoes & Melted Cheddar",
+            detail: "Ripe red tomato slices and curly green lettuce form the base before the sizzling patty is draped with a melting slice of cheddar cheese.",
+            img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:07",
+            label: "Spiraling Smoky Chipotle House Sauce",
+            detail: "Creamy, spiced house burger sauce is swirled generously across the melted cheddar cheese.",
+            img: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:08 – 00:09",
+            label: "Crowned Brioche Stack with Golden Fries",
+            detail: "Crowned with the toasted sesame seed bun, red onion rings, and served steaming hot alongside crispy golden French fries.",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80"
+          }
+        ]
+      },
+      {
+        id: "chapter-chinese",
+        number: "04",
+        category: "Noodles Items",
+        badge: "CHAPTER 04 • HIGH-FLAME INDO-CHINESE WOK PROCESS (00:00 – 00:09)",
+        title: "Wok-Hei Flame Tossed Hakka & Schezwan Noodles",
+        subtitle: "From crisp julienne vegetables and fiery chili paste to leaping wok flames.",
+        videoSrc: "making_chinese.mp4",
+        accent: "#ef4444",
+        effectType: "wokfire",
+        steps: [
+          {
+            time: "00:00 – 00:01",
+            label: "Fresh Julienne Veggies, Noodles & Chili Paste",
+            detail: "Bowls of julienne carrots, shredded cabbage, chopped spring onions, fiery red Schezwan sauce, and boiled noodles hit the smoking wok.",
+            img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:02 – 00:04",
+            label: "Noodle Drop & Ladling Signature Schezwan Glaze",
+            detail: "Steaming noodles cascade over the sizzling vegetables as the chef ladles rich red Schezwan chili and soy glaze over roaring blue flames.",
+            img: "https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:05 – 00:06",
+            label: "High-Flame Wok-Hei Toss in Mid-Air",
+            detail: "Flames leap around the carbon-steel wok as the chef tosses noodles, carrots, and snow peas high into the air for authentic smoky wok-hei.",
+            img: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:07",
+            label: "Glossy Wok Reduction & Aroma",
+            detail: "Every strand of noodle is evenly coated in the savory, glossy Indo-Chinese sauce over the burner.",
+            img: "https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=900&q=80"
+          },
+          {
+            time: "00:08 – 00:09",
+            label: "Steaming Hot Plating into Black Ceramic Bowl",
+            detail: "Finished Hakka noodles are poured steaming hot from the wok straight into a matte-black serving bowl.",
+            img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=900&q=80"
+          }
+        ]
+      }
+    ];
 
-          document.getElementById("glb-spec-badge").textContent =
-            `LOADED GLB: ${file.name.toUpperCase()}`;
-        });
-      };
-      reader.readAsArrayBuffer(file);
+    /* --------------------------------------------------------------------------
+       RENDER & ANIMATE THE 3D PERSPECTIVE VIDEO COVERFLOW DECK (5 DISHES)
+       -------------------------------------------------------------------------- */
+    function renderCoverflowDeck() {
+      const wrapper = document.getElementById("coverflow-deck-wrapper");
+      if (!wrapper) return;
+
+      wrapper.innerHTML = STAGE_3D_ITEMS.map((item, idx) => `
+        <div
+          id="coverflow-card-${idx}"
+          onclick="handleCoverflowCardClick(${idx})"
+          class="coverflow-card ${idx === 0 ? 'is-active' : idx === 1 ? 'is-next' : idx === STAGE_3D_ITEMS.length - 1 ? 'is-prev' : 'is-hidden-right'}"
+        >
+          <!-- Background Poster + Looping Video -->
+          <img
+            src="${item.poster}"
+            alt="${item.title}"
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <video
+            id="coverflow-video-${idx}"
+            class="absolute inset-0 w-full h-full object-cover"
+            autoplay
+            muted
+            loop
+            playsinline
+            poster="${item.poster}"
+          >
+            <source src="${item.videoUrl}" type="video/mp4" />
+            ${item.fallbackVideo ? `<source src="${item.fallbackVideo}" type="video/mp4" />` : ""}
+          </video>
+
+          <!-- 60FPS Real-Time Culinary Particle Overlay Canvas (Cocoa / Glaze / Steam / Sizzle / Wok Fire) -->
+          <canvas
+            class="culinary-fx-canvas absolute inset-0 w-full h-full pointer-events-none"
+            data-fx="${item.particleType}"
+          ></canvas>
+
+          <!-- Top & Bottom 3D Coverflow Overlays -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/45 pointer-events-none"></div>
+
+          <div class="absolute top-3.5 left-4 right-4 flex items-center justify-between gap-2 pointer-events-none">
+            <span class="px-3 py-1 rounded-full bg-black/65 border border-white/15 text-[#ffdfb8] text-[9px] font-extrabold tracking-[0.16em] uppercase">
+              0${idx + 1} / 05 • 3D VIDEO COVERFLOW
+            </span>
+            <span class="px-2.5 py-1 rounded-full bg-[#d47732] text-white text-[9px] font-extrabold tracking-widest uppercase">
+              LIVE LOOP
+            </span>
+          </div>
+
+          <div class="absolute bottom-4 left-4 right-4 pointer-events-none">
+            <span class="text-[9px] font-extrabold tracking-[0.16em] uppercase text-[#f3c78e] block">
+              ${item.timeLabel}
+            </span>
+            <h4 class="serif-display text-xl sm:text-2xl text-white mt-0.5">${item.title}</h4>
+          </div>
+        </div>
+      `).join("");
+
+      updateCoverflowClasses();
+    }
+
+    function handleCoverflowCardClick(idx) {
+      if (idx !== current3DSlide) {
+        jumpTo3DSlide(idx);
+      }
+    }
+
+    function updateCoverflowClasses() {
+      const total = STAGE_3D_ITEMS.length;
+      STAGE_3D_ITEMS.forEach((item, idx) => {
+        const card = document.getElementById(`coverflow-card-${idx}`);
+        if (!card) return;
+        card.classList.remove("is-active", "is-prev", "is-next", "is-hidden-left", "is-hidden-right");
+
+        const diff = (idx - current3DSlide + total) % total;
+        if (diff === 0) {
+          card.classList.add("is-active");
+        } else if (diff === 1) {
+          card.classList.add("is-next");
+        } else if (diff === total - 1) {
+          card.classList.add("is-prev");
+        } else if (diff <= 2) {
+          card.classList.add("is-hidden-right");
+        } else {
+          card.classList.add("is-hidden-left");
+        }
+      });
+
+      // Update Right Panel Details & Section Backdrop
+      const activeItem = STAGE_3D_ITEMS[current3DSlide];
+      const stageSection = document.getElementById("coca-3d-stage");
+      if (stageSection && activeItem) {
+        stageSection.style.background = activeItem.bgGradient;
+      }
+
+      const counterEl = document.getElementById("stage-3d-counter");
+      if (counterEl) counterEl.textContent = `0${current3DSlide + 1} / 0${total}`;
+
+      const eyebrowEl = document.getElementById("slide-3d-eyebrow");
+      if (eyebrowEl) eyebrowEl.textContent = activeItem.eyebrow;
+
+      const titleEl = document.getElementById("slide-3d-title");
+      if (titleEl) titleEl.textContent = activeItem.title;
+
+      const descEl = document.getElementById("slide-3d-desc");
+      if (descEl) descEl.textContent = activeItem.desc;
+
+      const waLink = document.getElementById("slide-3d-wa-link");
+      if (waLink) {
+        waLink.href = `https://wa.me/918096787676?text=${encodeURIComponent(
+          "Hi Rajesh Bhai at MilkShake Factory (Mamata Road, Khammam)! I would like to inquire about " + activeItem.title + "."
+        )}`;
+      }
+
+      const pillBtns = document.querySelectorAll(".stage-pill-btn");
+      pillBtns.forEach((btn, i) => {
+        btn.className = i === current3DSlide
+          ? "stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-[#d47732] text-white cursor-pointer"
+          : "stage-pill-btn px-3 py-1.5 rounded-full text-[10px] font-extrabold bg-white/10 hover:bg-white/20 text-[#fff8ee] cursor-pointer";
+      });
+
+      target3DX = -current3DSlide * 4.2;
+    }
+
+    function slide3DStage(delta) {
+      const total = STAGE_3D_ITEMS.length;
+      current3DSlide = (current3DSlide + delta + total) % total;
+      updateCoverflowClasses();
     }
 
     function jumpTo3DSlide(index) {
       current3DSlide = index;
-      update3DStageUI();
+      updateCoverflowClasses();
     }
 
-    function slide3DStage(delta) {
-      current3DSlide = (current3DSlide + delta + STAGE_3D_ITEMS.length) % STAGE_3D_ITEMS.length;
-      update3DStageUI();
+    function tiltActiveCoverflowCard(e) {
+      const activeCard = document.querySelector(".coverflow-card.is-active");
+      if (!activeCard) return;
+      const rect = activeCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const rotY = ((x / rect.width) - 0.5) * 12;
+      const rotX = ((y / rect.height) - 0.5) * -12;
+      activeCard.style.transform = `translate3d(0, 0, 15px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.01)`;
     }
 
-    function update3DStageUI() {
-      target3DX = -current3DSlide * 6.2;
-      const item = STAGE_3D_ITEMS[current3DSlide];
-      document.getElementById("coca-3d-stage").style.background = item.bg;
-      document.getElementById("stage-3d-counter").textContent = `0${current3DSlide + 1} / 05`;
-      document.getElementById("slide-3d-eyebrow").textContent = item.eyebrow;
-      document.getElementById("slide-3d-title").textContent = item.title;
-      document.getElementById("slide-3d-desc").textContent = item.desc;
-      document.getElementById("glb-spec-badge").textContent = item.bounds;
-
-      document.getElementById("slide-3d-wa-link").href =
-        `https://wa.me/918096787676?text=${encodeURIComponent('Hi Rajesh Bhai at MilkShake Factory Khammam! I would like to inquire about ' + item.title + '.')}`;
+    function resetActiveCoverflowCard() {
+      const activeCard = document.querySelector(".coverflow-card.is-active");
+      if (activeCard) {
+        activeCard.style.transform = "";
+      }
     }
 
-    function animate3DStage() {
-      requestAnimationFrame(animate3DStage);
-      if (stageGroup && stageRenderer) {
+    function setStageDisplayMode(mode) {
+      activeStageDisplayMode = mode;
+      const videoStage = document.getElementById("video-coverflow-stage");
+      const webglStage = document.getElementById("webgl-model-stage");
+      const vBtn = document.getElementById("mode-video-btn");
+      const wBtn = document.getElementById("mode-webgl-btn");
+
+      if (mode === "webgl") {
+        videoStage.classList.add("hidden");
+        webglStage.classList.remove("hidden");
+        wBtn.className = "px-4 py-2 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-[#d47732] text-white transition cursor-pointer flex items-center gap-1.5";
+        vBtn.className = "px-4 py-2 rounded-full text-[11px] font-extrabold tracking-wider uppercase text-[#f3c78e] hover:text-white transition cursor-pointer flex items-center gap-1.5";
+        onResizeWebGLStage();
+      } else {
+        webglStage.classList.add("hidden");
+        videoStage.classList.remove("hidden");
+        vBtn.className = "px-4 py-2 rounded-full text-[11px] font-extrabold tracking-wider uppercase bg-[#d47732] text-white transition cursor-pointer flex items-center gap-1.5";
+        wBtn.className = "px-4 py-2 rounded-full text-[11px] font-extrabold tracking-wider uppercase text-[#f3c78e] hover:text-white transition cursor-pointer flex items-center gap-1.5";
+      }
+    }
+
+    /* --------------------------------------------------------------------------
+       RENDER ONE-BY-ONE MAKING PROCESS CHAPTERS (CAKES, PIZZA, BURGER, CHINESE)
+       Each chapter plays the user's video (or animated 5-stage 00:00-00:09 reel)
+       -------------------------------------------------------------------------- */
+    const activeChapterStepMap = { 0: 0, 1: 0, 2: 0, 3: 0 };
+
+    function renderMakingProcessChapters() {
+      const container = document.getElementById("making-chapters-container");
+      if (!container) return;
+
+      container.innerHTML = MAKING_PROCESS_CHAPTERS.map((chap, cIdx) => `
+        <article
+          id="${chap.id}"
+          class="scroll-mt-32 rounded-3xl bg-[#24140e] border border-white/15 p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+        >
+          <!-- Left / Alternating 3D Video & Step Visualizer Frame -->
+          <div class="lg:col-span-6 ${cIdx % 2 === 1 ? 'lg:order-2' : ''}">
+            <div
+              class="relative h-[420px] sm:h-[500px] rounded-2xl overflow-hidden bg-[#120906] border border-white/20 shadow-2xl card-3d"
+              onmousemove="tiltCard3D(event, this)"
+              onmouseleave="resetCard3D(this)"
+            >
+              <!-- Active Step High-Res Visual Backdrop (Auto-Cycles 00:00 -> 00:09 or Scrubbable) -->
+              <img
+                id="chapter-poster-${cIdx}"
+                src="${chap.steps[0].img}"
+                alt="${chap.title}"
+                class="absolute inset-0 w-full h-full object-cover transition-all duration-700 scale-105"
+              />
+
+              <!-- HTML5 Video Element for 00:00 - 00:09 Making Clip -->
+              <video
+                id="chapter-video-${cIdx}"
+                class="absolute inset-0 w-full h-full object-cover hidden"
+                autoplay
+                muted
+                loop
+                playsinline
+              >
+                <source src="${chap.videoSrc}" type="video/mp4" />
+              </video>
+
+              <!-- 60FPS Real-Time Culinary Particle Overlay (Frosting Glaze / Wood-Oven Steam / Grill Sizzle / Wok Flame) -->
+              <canvas
+                class="culinary-fx-canvas absolute inset-0 w-full h-full pointer-events-none"
+                data-fx="${chap.effectType}"
+              ></canvas>
+
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/50 pointer-events-none"></div>
+
+              <!-- Top Bar: Timestamp & Custom Local Video Loader -->
+              <div class="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-20">
+                <span
+                  id="chapter-time-pill-${cIdx}"
+                  class="px-3 py-1.5 rounded-full bg-black/75 border border-[#d47732] text-[#ffdfb8] text-[10px] font-extrabold tracking-widest uppercase"
+                >
+                  ⏱ ${chap.steps[0].time} • STEP 01 / 05
+                </span>
+
+                <label
+                  class="px-3 py-1.5 rounded-full bg-[#d47732]/90 hover:bg-[#d47732] text-white text-[10px] font-extrabold tracking-wider uppercase cursor-pointer shadow-lg flex items-center gap-1.5 transition"
+                  title="Attach your local 9-second MP4 video file for this dish"
+                >
+                  <i class="fa-solid fa-video"></i>
+                  <span>Attach .MP4 Clip</span>
+                  <input
+                    type="file"
+                    accept="video/mp4,video/webm,video/*"
+                    class="hidden"
+                    onchange="attachLocalMakingVideo(event, ${cIdx})"
+                  />
+                </label>
+              </div>
+
+              <!-- Bottom Caption Inside Video Frame -->
+              <div class="absolute bottom-4 left-4 right-4 z-20 pointer-events-none">
+                <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#f3c78e] block">
+                  LIVE MAKING STEP PREVIEW
+                </span>
+                <h4 id="chapter-step-title-${cIdx}" class="serif-display text-2xl sm:text-3xl text-white mt-0.5">
+                  ${chap.steps[0].label}
+                </h4>
+                <p id="chapter-step-detail-${cIdx}" class="text-xs text-[#e2d2c3] mt-1 line-clamp-2">
+                  ${chap.steps[0].detail}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right / Alternating 5-Step Making Process Timeline (00:00 to 00:09) -->
+          <div class="lg:col-span-6 ${cIdx % 2 === 1 ? 'lg:order-1' : ''} space-y-5">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#d47732]/20 border border-[#d47732]/40 text-[#f3c78e] text-[10px] font-extrabold tracking-[0.18em] uppercase">
+              <span>${chap.badge}</span>
+            </div>
+
+            <h3 class="serif-display text-3xl sm:text-5xl text-[#fff8ee] leading-tight">
+              ${chap.title}
+            </h3>
+
+            <p class="text-xs sm:text-sm text-[#cbb8a8] leading-relaxed">
+              ${chap.subtitle}
+            </p>
+
+            <!-- Interactive 5-Stage Timeline Buttons (00:00 -> 00:09) -->
+            <div class="space-y-2.5 pt-1">
+              ${chap.steps.map((st, sIdx) => `
+                <button
+                  type="button"
+                  id="chap-${cIdx}-step-btn-${sIdx}"
+                  onclick="selectMakingStep(${cIdx}, ${sIdx}, true)"
+                  class="w-full text-left p-3.5 rounded-xl border transition flex items-start gap-3.5 cursor-pointer ${
+                    sIdx === 0
+                      ? 'bg-[#d47732]/25 border-[#d47732] text-white shadow-md'
+                      : 'bg-white/5 border-white/10 hover:bg-white/10 text-[#e4d4c5]'
+                  }"
+                >
+                  <span class="px-2.5 py-1 rounded bg-black/50 text-[#f3c78e] text-[10px] font-extrabold tracking-wider shrink-0 mt-0.5">
+                    ${st.time}
+                  </span>
+                  <div class="min-w-0">
+                    <strong class="serif-display text-sm sm:text-base block text-[#fff8ee]">${st.label}</strong>
+                    <span class="text-xs text-[#cbb8a8] leading-relaxed block mt-0.5">${st.detail}</span>
+                  </div>
+                </button>
+              `).join("")}
+            </div>
+
+            <div class="pt-3 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onclick="selectMenuCategory('${chap.category.replace(/'/g, "\\'")}'); document.getElementById('complete-menu').scrollIntoView({behavior:'smooth'});"
+                class="button button-caramel"
+              >
+                Explore ${chap.category} on Menu
+                <i class="fa-solid fa-utensils text-xs"></i>
+              </button>
+              <a
+                href="https://wa.me/918096787676?text=${encodeURIComponent('Hi Rajesh Bhai at MilkShake Factory (Mamata Road, Khammam)! I watched the making process of ' + chap.title + ' and would like to inquire.')}"
+                target="_blank"
+                rel="noreferrer"
+                class="button button-cream"
+              >
+                Inquire on WhatsApp
+                <i class="fa-brands fa-whatsapp text-sm text-[#1da851]"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function selectMakingStep(chapterIdx, stepIdx, manualClick = false) {
+      const chap = MAKING_PROCESS_CHAPTERS[chapterIdx];
+      if (!chap) return;
+      activeChapterStepMap[chapterIdx] = stepIdx;
+      const step = chap.steps[stepIdx];
+
+      const poster = document.getElementById(`chapter-poster-${chapterIdx}`);
+      if (poster) poster.src = step.img;
+
+      const timePill = document.getElementById(`chapter-time-pill-${chapterIdx}`);
+      if (timePill) timePill.textContent = `⏱ ${step.time} • STEP 0${stepIdx + 1} / 05`;
+
+      const titleEl = document.getElementById(`chapter-step-title-${chapterIdx}`);
+      if (titleEl) titleEl.textContent = step.label;
+
+      const detailEl = document.getElementById(`chapter-step-detail-${chapterIdx}`);
+      if (detailEl) detailEl.textContent = step.detail;
+
+      // If custom video is active and user clicked a step, seek the video proportionally (0s, 2s, 4s, 6s, 8s)
+      const vid = document.getElementById(`chapter-video-${chapterIdx}`);
+      if (manualClick && vid && !vid.classList.contains("hidden")) {
+        vid.currentTime = stepIdx * 1.8;
+        vid.play().catch(() => {});
+      }
+
+      chap.steps.forEach((_, idx) => {
+        const btn = document.getElementById(`chap-${chapterIdx}-step-btn-${idx}`);
+        if (!btn) return;
+        btn.className = idx === stepIdx
+          ? "w-full text-left p-3.5 rounded-xl border transition flex items-start gap-3.5 cursor-pointer bg-[#d47732]/25 border-[#d47732] text-white shadow-md"
+          : "w-full text-left p-3.5 rounded-xl border transition flex items-start gap-3.5 cursor-pointer bg-white/5 border-white/10 hover:bg-white/10 text-[#e4d4c5]";
+      });
+    }
+
+    function attachLocalMakingVideo(event, chapterIdx) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const objectUrl = URL.createObjectURL(file);
+
+      const vid = document.getElementById(`chapter-video-${chapterIdx}`);
+      if (vid) {
+        vid.src = objectUrl;
+        vid.classList.remove("hidden");
+        vid.play().catch(() => {});
+      }
+
+      // Also sync the corresponding card in the 3D Video Coverflow (chapterIdx + 1)
+      const coverflowVideo = document.getElementById(`coverflow-video-${chapterIdx + 1}`);
+      if (coverflowVideo) {
+        coverflowVideo.src = objectUrl;
+        coverflowVideo.play().catch(() => {});
+      }
+    }
+
+    // Auto-cycle the 5 making steps (00:00 -> 00:09) every 2.4s so every chapter feels alive immediately
+    setInterval(() => {
+      MAKING_PROCESS_CHAPTERS.forEach((chap, cIdx) => {
+        const nextStep = ((activeChapterStepMap[cIdx] || 0) + 1) % chap.steps.length;
+        selectMakingStep(cIdx, nextStep, false);
+      });
+    }, 2600);
+
+    /* --------------------------------------------------------------------------
+       60FPS REAL-TIME CULINARY PARTICLE ENGINE (WOK FIRE, STEAM, SIZZLE, GLAZE)
+       -------------------------------------------------------------------------- */
+    function initCulinaryParticleCanvases() {
+      const canvases = document.querySelectorAll(".culinary-fx-canvas");
+      canvases.forEach(canvas => {
+        const ctx = canvas.getContext("2d");
+        const fxType = canvas.dataset.fx || "steam";
+        const particles = Array.from({ length: 26 }, () => ({
+          x: Math.random() * 400,
+          y: Math.random() * 400,
+          r: 2 + Math.random() * 6,
+          vy: -(0.5 + Math.random() * 1.4),
+          vx: (Math.random() - 0.5) * 0.8,
+          alpha: 0.2 + Math.random() * 0.55
+        }));
+
+        function renderFX() {
+          if (canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+            canvas.width = canvas.clientWidth || 360;
+            canvas.height = canvas.clientHeight || 360;
+          }
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.y < -10) {
+              p.y = canvas.height + 10;
+              p.x = Math.random() * canvas.width;
+            }
+            ctx.beginPath();
+            if (fxType === "wokfire") {
+              ctx.fillStyle = `rgba(255, ${110 + Math.floor(Math.random() * 90)}, 30, ${p.alpha})`;
+            } else if (fxType === "glaze" || fxType === "cocoa") {
+              ctx.fillStyle = `rgba(243, 199, 142, ${p.alpha * 0.75})`;
+            } else if (fxType === "sizzle") {
+              ctx.fillStyle = `rgba(255, 210, 120, ${p.alpha * 0.8})`;
+            } else {
+              ctx.fillStyle = `rgba(255, 250, 240, ${p.alpha * 0.45})`;
+            }
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+          });
+          requestAnimationFrame(renderFX);
+        }
+        renderFX();
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       BUILT-IN THREE.JS 3D PROCEDURAL STAGE (SECONDARY TOGGLE VIEW)
+       -------------------------------------------------------------------------- */
+    function initWebGL3DStage() {
+      const canvas = document.getElementById("coca-slider-canvas");
+      if (!canvas || typeof THREE === "undefined") return;
+
+      stageScene = new THREE.Scene();
+      stageCamera = new THREE.PerspectiveCamera(42, Math.max(1, canvas.clientWidth) / Math.max(1, canvas.clientHeight), 0.1, 100);
+      stageCamera.position.set(0, 0.5, 4.4);
+
+      stageRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      stageRenderer.setSize(canvas.clientWidth || 600, canvas.clientHeight || 420);
+      stageRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const amb = new THREE.AmbientLight(0xffffff, 0.85);
+      stageScene.add(amb);
+      const dir = new THREE.DirectionalLight(0xffdfb8, 1.35);
+      dir.position.set(4, 6, 5);
+      stageScene.add(dir);
+
+      stageGroup = new THREE.Group();
+      stageScene.add(stageGroup);
+
+      // Build 5 Procedural 3D Culinary Sculptures (Milkshake, Cake, Pizza, Burger, Chinese Wok Bowl)
+      const spacing = 4.2;
+
+      // 01: Tall Parlor Chocolate Milkshake
+      const shakeGrp = new THREE.Group();
+      const glass = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.45, 0.32, 1.45, 32),
+        new THREE.MeshStandardMaterial({ color: 0x4b2818, roughness: 0.25, metalness: 0.15 })
+      );
+      const cream = new THREE.Mesh(
+        new THREE.SphereGeometry(0.44, 24, 24),
+        new THREE.MeshStandardMaterial({ color: 0xfff8ee, roughness: 0.4 })
+      );
+      cream.position.y = 0.78;
+      const straw = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.04, 0.04, 0.9, 16),
+        new THREE.MeshStandardMaterial({ color: 0xd47732 })
+      );
+      straw.position.set(0.18, 1.05, 0);
+      straw.rotation.z = -0.25;
+      shakeGrp.add(glass, cream, straw);
+      shakeGrp.position.x = 0 * spacing;
+      stageGroup.add(shakeGrp);
+      stageModels.push(shakeGrp);
+
+      // 02: 3-Layer Berry Chocolate Cake
+      const cakeGrp = new THREE.Group();
+      const sponge = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.75, 0.75, 0.75, 36),
+        new THREE.MeshStandardMaterial({ color: 0x3b1d12, roughness: 0.35 })
+      );
+      const frosting = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.77, 0.77, 0.16, 36),
+        new THREE.MeshStandardMaterial({ color: 0xfff5e4, roughness: 0.3 })
+      );
+      frosting.position.y = 0.35;
+      cakeGrp.add(sponge, frosting);
+      cakeGrp.position.x = 1 * spacing;
+      stageGroup.add(cakeGrp);
+      stageModels.push(cakeGrp);
+
+      // 03: Wood-Fired Pizza
+      const pizzaGrp = new THREE.Group();
+      const crust = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.9, 0.9, 0.14, 36),
+        new THREE.MeshStandardMaterial({ color: 0xd99b52, roughness: 0.5 })
+      );
+      const cheeseTop = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.78, 0.78, 0.16, 36),
+        new THREE.MeshStandardMaterial({ color: 0xf4c44e, roughness: 0.35 })
+      );
+      pizzaGrp.add(crust, cheeseTop);
+      pizzaGrp.rotation.x = 0.35;
+      pizzaGrp.position.x = 2 * spacing;
+      stageGroup.add(pizzaGrp);
+      stageModels.push(pizzaGrp);
+
+      // 04: Stacked Sesame Burger
+      const burgerGrp = new THREE.Group();
+      const bottomBun = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.68, 0.62, 0.25, 32),
+        new THREE.MeshStandardMaterial({ color: 0xd6893e })
+      );
+      bottomBun.position.y = -0.35;
+      const patty = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.7, 0.7, 0.26, 32),
+        new THREE.MeshStandardMaterial({ color: 0x422114, roughness: 0.6 })
+      );
+      const topBun = new THREE.Mesh(
+        new THREE.SphereGeometry(0.68, 32, 16, 0, Math.PI * 2, 0, Math.PI / 2),
+        new THREE.MeshStandardMaterial({ color: 0xd6893e })
+      );
+      topBun.position.y = 0.15;
+      burgerGrp.add(bottomBun, patty, topBun);
+      burgerGrp.position.x = 3 * spacing;
+      stageGroup.add(burgerGrp);
+      stageModels.push(burgerGrp);
+
+      // 05: High-Flame Indo-Chinese Wok Bowl
+      const wokGrp = new THREE.Group();
+      const bowl = new THREE.Mesh(
+        new THREE.SphereGeometry(0.78, 32, 16, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2),
+        new THREE.MeshStandardMaterial({ color: 0x1c1917, roughness: 0.3, side: THREE.DoubleSide })
+      );
+      bowl.position.y = 0.2;
+      const noodles = new THREE.Mesh(
+        new THREE.TorusKnotGeometry(0.36, 0.11, 64, 12),
+        new THREE.MeshStandardMaterial({ color: 0xe08d3c, roughness: 0.4 })
+      );
+      noodles.position.y = 0.22;
+      wokGrp.add(bowl, noodles);
+      wokGrp.position.x = 4 * spacing;
+      stageGroup.add(wokGrp);
+      stageModels.push(wokGrp);
+
+      // Drag 360 Spin
+      canvas.addEventListener("mousedown", e => {
+        isDraggingStage = true;
+        lastStageX = e.clientX;
+      });
+      window.addEventListener("mouseup", () => { isDraggingStage = false; });
+      window.addEventListener("mousemove", e => {
+        if (!isDraggingStage || !stageModels[current3DSlide]) return;
+        const dx = e.clientX - lastStageX;
+        lastStageX = e.clientX;
+        stageModels[current3DSlide].rotation.y += dx * 0.012;
+      });
+
+      function animateStage() {
+        requestAnimationFrame(animateStage);
         stageGroup.position.x += (target3DX - stageGroup.position.x) * 0.08;
-        stageModels.forEach((model, idx) => {
-          if (!isDraggingStage) model.rotation.y += 0.01;
-          const dist = Math.abs(stageGroup.position.x + idx * 6.2);
-          const scale = Math.max(0.65, 1.12 - dist * 0.08);
-          model.scale.setScalar(scale);
+        stageModels.forEach((m, idx) => {
+          if (!isDraggingStage || idx !== current3DSlide) {
+            m.rotation.y += 0.008;
+          }
         });
         stageRenderer.render(stageScene, stageCamera);
       }
+      animateStage();
     }
 
-    window.addEventListener("resize", () => {
+    function onResizeWebGLStage() {
       const canvas = document.getElementById("coca-slider-canvas");
-      if (canvas && stageCamera && stageRenderer) {
-        const rect = canvas.parentElement.getBoundingClientRect();
-        stageCamera.aspect = rect.width / rect.height;
-        stageCamera.updateProjectionMatrix();
-        stageRenderer.setSize(rect.width, rect.height);
-      }
-    });
+      if (!canvas || !stageRenderer || !stageCamera) return;
+      const w = canvas.clientWidth || 600;
+      const h = canvas.clientHeight || 420;
+      stageCamera.aspect = w / h;
+      stageCamera.updateProjectionMatrix();
+      stageRenderer.setSize(w, h);
+    }
 
-    window.onload = function () {
+    window.addEventListener("resize", onResizeWebGLStage);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderCoverflowDeck();
+      renderMakingProcessChapters();
       renderMenuCategoryPills();
       renderExtractedMenu();
-      init3DSlidingStage();
-      animate3DStage();
-    };
+      initCulinaryParticleCanvases();
+      initWebGL3DStage();
+    });
   </script>
 </body>
 </html>
