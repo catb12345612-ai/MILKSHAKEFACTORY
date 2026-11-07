@@ -1,4 +1,4 @@
-<!DOC TYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
@@ -1678,12 +1678,12 @@
       const pillWrap = document.getElementById("menu-category-pills");
       if (!pillWrap) return;
       const categories = ["All", ...COMPLETE_MENU_DATA.map(c => c.category)];
-      pillWrap.innerHTML = categories.map(cat => {
+      pillWrap.innerHTML = categories.map((cat, idx) => {
         const active = cat === selectedMenuCategory;
         return `
           <button
             type="button"
-            onclick="selectMenuCategory('${cat.replace(/'/g, "\\'")}')"
+            onclick="selectMenuCategoryByIndex(${idx})"
             class="px-3.5 py-2 rounded-full text-xs font-extrabold transition cursor-pointer ${
               active
                 ? 'bg-[#2b1912] text-[#fffaf0] shadow-md'
@@ -1694,6 +1694,11 @@
           </button>
         `;
       }).join("");
+    }
+
+    function selectMenuCategoryByIndex(idx) {
+      const categories = ["All", ...COMPLETE_MENU_DATA.map(c => c.category)];
+      selectMenuCategory(categories[idx] || "All");
     }
 
     function selectMenuCategory(cat) {
@@ -2001,8 +2006,8 @@
         eyebrow: "02 / CELEBRATION & BERRY CHOCOLATE CAKES (00:00–00:09 MAKING)",
         title: "3-Layer Berry & Chocolate Fudge Cake",
         desc: "Whisked dark cocoa and flour folded into silky chocolate batter, baked golden, layered with velvety vanilla buttercream, and crowned with fresh raspberries, blackberries, blueberries, and mint.",
-        videoUrl: "making_cake.mp4",
-        fallbackVideo: "",
+        videoUrl: "Making_chocolate_cake_dd810976_1080p.mp4",
+        fallbackVideo: "making_cake.mp4",
         poster: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chocolate-sacher-cake-with-apricot-jam-wooden-table-traditional-austrian-dessert-ai-generative-WW34xw1hHEsecJ57XQDHUgHhbVfTVz.jpg",
         bgGradient: "radial-gradient(circle at 50% 45%, #471c24 0%, #1a0b0e 90%)",
         particleType: "glaze",
@@ -2013,8 +2018,8 @@
         eyebrow: "03 / WOOD-FIRED ARTISAN PIZZAS (00:00–00:09 MAKING)",
         title: "Wood-Fired Molten Cheese Pull Pizza",
         desc: "Hand-kneaded artisan dough proofed under linen, rolled fresh, swirled with tangy tomato sauce, loaded with mozzarella, olives, bell peppers & basil, and baked beside roaring wood flames.",
-        videoUrl: "making_pizza.mp4",
-        fallbackVideo: "",
+        videoUrl: "Making_pizza_process_df276b23_1080p.mp4",
+        fallbackVideo: "making_pizza.mp4",
         poster: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80",
         bgGradient: "radial-gradient(circle at 50% 45%, #4e2212 0%, #1c0c07 90%)",
         particleType: "steam",
@@ -2025,8 +2030,8 @@
         eyebrow: "04 / CAST-IRON GOURMET BURGERS (00:00–00:09 MAKING)",
         title: "Sizzling Double-Cheese Sesame Burger",
         desc: "Freshly seasoned patty hand-pressed and seared with cross-hatch grill marks on a smoking cast-iron flat top, stacked on a butter-toasted sesame brioche bun with crisp lettuce, tomato, melted cheddar, and smoky house sauce.",
-        videoUrl: "making_burger.mp4",
-        fallbackVideo: "",
+        videoUrl: "Making_a_burger_e0cfdbaf_1080p.mp4",
+        fallbackVideo: "making_burger.mp4",
         poster: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1000&q=80",
         bgGradient: "radial-gradient(circle at 50% 45%, #462a11 0%, #1a1007 90%)",
         particleType: "sizzle",
@@ -2037,8 +2042,8 @@
         eyebrow: "05 / HIGH-FLAME INDO-CHINESE WOK (00:00–00:09 MAKING)",
         title: "Fiery Wok-Tossed Schezwan Hakka Noodles",
         desc: "Julienne carrots, crisp cabbage, spring onions, and noodles tossed into a smoking hot wok with fiery Schezwan chili paste, soy glaze, and leaping wok-hei flames before plating steaming hot.",
-        videoUrl: "making_chinese.mp4",
-        fallbackVideo: "",
+        videoUrl: "Chef_tossing_noodles_in_wok_07855ce1_1080p.mp4",
+        fallbackVideo: "making_chinese.mp4",
         poster: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=1000&q=80",
         bgGradient: "radial-gradient(circle at 50% 45%, #4d1914 0%, #190907 90%)",
         particleType: "wokfire",
@@ -2057,7 +2062,7 @@
         badge: "CHAPTER 01 • CAKES MAKING PROCESS (00:00 – 00:09)",
         title: "3-Layer Berry & Dark Chocolate Cake",
         subtitle: "From raw cocoa powder and farm eggs to a 3-layer frosted berry cake slice.",
-        videoSrc: "making_cake.mp4",
+        videoSrc: "Making_chocolate_cake_dd810976_1080p.mp4",
         accent: "#d47732",
         effectType: "glaze",
         steps: [
@@ -2100,7 +2105,7 @@
         badge: "CHAPTER 02 • WOOD-FIRED PIZZA MAKING PROCESS (00:00 – 00:09)",
         title: "Wood-Fired Margherita & Olive Cheese Pull Pizza",
         subtitle: "From hand-kneaded flour dough to a roaring wood-fired oven cheese pull.",
-        videoSrc: "making_pizza.mp4",
+        videoSrc: "Making_pizza_process_df276b23_1080p.mp4",
         accent: "#e45c26",
         effectType: "steam",
         steps: [
@@ -2143,7 +2148,7 @@
         badge: "CHAPTER 03 • GOURMET BURGER MAKING PROCESS (00:00 – 00:09)",
         title: "Cast-Iron Seared Cheddar & Chipotle Burger",
         subtitle: "From cracked-pepper patty seasoning and flat-top sear to the sesame brioche crown.",
-        videoSrc: "making_burger.mp4",
+        videoSrc: "Making_a_burger_e0cfdbaf_1080p.mp4",
         accent: "#e5a466",
         effectType: "sizzle",
         steps: [
@@ -2186,7 +2191,7 @@
         badge: "CHAPTER 04 • HIGH-FLAME INDO-CHINESE WOK PROCESS (00:00 – 00:09)",
         title: "Wok-Hei Flame Tossed Hakka & Schezwan Noodles",
         subtitle: "From crisp julienne vegetables and fiery chili paste to leaping wok flames.",
-        videoSrc: "making_chinese.mp4",
+        videoSrc: "Chef_tossing_noodles_in_wok_07855ce1_1080p.mp4",
         accent: "#ef4444",
         effectType: "wokfire",
         steps: [
@@ -2432,11 +2437,12 @@
               <!-- HTML5 Video Element for 00:00 - 00:09 Making Clip -->
               <video
                 id="chapter-video-${cIdx}"
-                class="absolute inset-0 w-full h-full object-cover hidden"
+                class="absolute inset-0 w-full h-full object-cover"
                 autoplay
                 muted
                 loop
                 playsinline
+                poster="${chap.steps[0].img}"
               >
                 <source src="${chap.videoSrc}" type="video/mp4" />
               </video>
@@ -2529,7 +2535,7 @@
             <div class="pt-3 flex flex-wrap items-center gap-3">
               <button
                 type="button"
-                onclick="selectMenuCategory('${chap.category.replace(/'/g, "\\'")}'); document.getElementById('complete-menu').scrollIntoView({behavior:'smooth'});"
+                onclick="jumpToChapterCategory(${cIdx})"
                 class="button button-caramel"
               >
                 Explore ${chap.category} on Menu
@@ -2548,6 +2554,14 @@
           </div>
         </article>
       `).join("");
+    }
+
+    function jumpToChapterCategory(chapterIdx) {
+      const chap = MAKING_PROCESS_CHAPTERS[chapterIdx];
+      if (!chap) return;
+      selectMenuCategory(chap.category);
+      const menuEl = document.getElementById("complete-menu");
+      if (menuEl) menuEl.scrollIntoView({ behavior: "smooth" });
     }
 
     function selectMakingStep(chapterIdx, stepIdx, manualClick = false) {
