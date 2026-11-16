@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <title>MilkShake Factory Khammam | 3D Logo Intro, Hand-Spun Thickshakes &amp; 3D Experience</title>
-  <meta name="description" content="Visit MilkShake Factory on Mamata Road, Khammam, Telangana. Hosted by Rajesh Bhai. Experience our 1080p HD 3D Logo Pop-Out Intro, Signature Chocolate Milkshake Pour, 5-Dish 3D Video Coverflow, 4-Dish Making Process, and 74-Item Menu Card." />
+  <title>MilkShake Factory Khammam | Hosted by Prop Mr Rajesh | 3D Experience</title>
+  <meta name="description" content="Visit MilkShake Factory on Mamata Road, Khammam, Telangana. Hosted by Prop Mr Rajesh. Experience our unobstructed 3D Logo Pop-Out Intro, Signature Chocolate Milkshake Pour, 5-Dish 3D Video Coverflow, 4-Dish Making Process, and 68-Item Menu Card." />
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -61,41 +61,45 @@
       -webkit-backface-visibility: hidden;
     }
 
+    /* Hide native browser video controls/timestamps completely */
+    video::-webkit-media-controls,
+    video::-webkit-media-controls-enclosure,
+    video::-webkit-media-controls-panel,
+    video::-webkit-media-controls-current-time-display,
+    video::-webkit-media-controls-time-remaining-display,
+    video::-webkit-media-controls-timeline {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
     /* ==========================================================================
        LIGHTWEIGHT GPU-ACCELERATED HEADER (MOBILE + LAPTOP COMPATIBLE)
        ========================================================================== */
     .site-header {
-      position: fixed;
+      position: sticky;
       top: 0;
       left: 0;
       right: 0;
       z-index: 60;
       transform: translate3d(0, 0, 0);
-      will-change: transform, background-color;
-      transition: background-color 0.28s ease, border-color 0.28s ease, opacity 0.28s ease;
-      background: rgba(25, 14, 9, 0.80);
+      background: rgba(20, 11, 7, 0.94);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255, 250, 240, 0.14);
       color: var(--cream);
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    body.scrolled-past-hero .site-header,
-    body.hero-split-mode .site-header {
-      background: rgba(247, 242, 233, 0.96);
+    body.scrolled-past-hero .site-header {
+      background: rgba(247, 242, 233, 0.97);
       color: var(--cocoa);
       border-bottom: 1px solid rgba(56, 35, 25, 0.14);
     }
 
-    body.pure-video-mode .site-header,
-    body.pure-video-mode .hero-ui-hideable {
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-
     .header-inner {
       width: min(1360px, calc(100% - 24px));
-      min-height: 70px;
+      min-height: 66px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -112,8 +116,8 @@
     }
 
     .brand-mark {
-      width: 42px;
-      height: 42px;
+      width: 40px;
+      height: 40px;
       display: grid;
       place-items: center;
       overflow: hidden;
@@ -144,14 +148,13 @@
     }
 
     .brand-name small {
-      margin-top: 4px;
+      margin-top: 3px;
       color: #e5a466;
       font: 700 8px/1 Arial, sans-serif;
       letter-spacing: 0.18em;
     }
 
-    body.scrolled-past-hero .brand-name small,
-    body.hero-split-mode .brand-name small {
+    body.scrolled-past-hero .brand-name small {
       color: #8f5a34;
     }
 
@@ -221,21 +224,41 @@
     }
 
     /* ==========================================================================
-       HERO MODE 1: MOBILE + LAPTOP ADAPTIVE DUAL-LAYER CINEMA STAGE
-       - Ambient blurred video layer fills screen on all aspect ratios
-       - Foreground HD video adapts cleanly to both Mobile Phones & Laptops
+       FRONT-PAGE UNOBSTRUCTED 3D LOGO & MILKSHAKE VIDEO STAGE
+       - ZERO text, ZERO timestamps, and ZERO dark scrims covering the video!
+       - 100% of the 3D Logo Pop-Out Animation and Chocolate Milkshake video is
+         clearly visible on both Mobile Phones and Laptops.
+       - All text and action controls sit cleanly BELOW the video canvas.
        ========================================================================== */
-    .hero-cinema-stage {
+    .front-video-showcase {
       position: relative;
       width: 100%;
-      min-height: 100vh;
-      min-height: 100dvh;
+      background: #0d0705;
       overflow: hidden;
-      background: #120906;
+      border-bottom: 1px solid rgba(212, 119, 50, 0.3);
+    }
+
+    /* Responsive aspect ratio container: full 16:9 widescreen on Laptop & Mobile so 0% of the 3D Logo is cropped */
+    .front-video-viewport {
+      position: relative;
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      max-height: calc(100dvh - 130px);
+      background: #0d0705;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transform: translate3d(0, 0, 0);
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .front-video-viewport {
+        aspect-ratio: 16 / 9;
+        width: 100%;
+        max-height: 62dvh;
+      }
     }
 
     .hero-ambient-backdrop {
@@ -244,140 +267,31 @@
       width: calc(100% + 48px);
       height: calc(100% + 48px);
       object-fit: cover;
-      filter: blur(28px) brightness(0.38) saturate(1.35);
+      filter: blur(28px) brightness(0.42) saturate(1.35);
       z-index: 0;
       pointer-events: none;
     }
 
     .hero-cinema-video {
-      position: absolute;
-      inset: 0;
+      position: relative;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center center;
       z-index: 1;
-      transition: object-fit 0.25s ease, opacity 0.28s ease;
+      display: block;
     }
 
-    /* User-toggleable Fit mode so 100% of any video frame is visible on Laptop or Mobile */
-    body.hero-fit-contain .hero-cinema-video {
-      object-fit: contain !important;
+    body.hero-fill-mode .hero-cinema-video {
+      object-fit: cover;
     }
 
-    /* On Mobile Phones (portrait), keep 16:9 3D Logo Pop-Out Intro 100% uncropped! */
-    @media (max-width: 768px) {
-      body.logo-intro-playing .hero-cinema-video {
-        object-fit: contain;
-        padding: 72px 0 110px;
-      }
-    }
-
-    .hero-cinema-scrim {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        95deg,
-        rgba(20, 11, 7, 0.58) 0%,
-        rgba(20, 11, 7, 0.18) 48%,
-        rgba(20, 11, 7, 0.06) 100%
-      ),
-      linear-gradient(0deg, rgba(18, 10, 6, 0.72) 0%, transparent 32%, rgba(18, 10, 6, 0.34) 100%);
-      z-index: 2;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-
-    body.logo-intro-playing .hero-cinema-scrim {
-      background: linear-gradient(0deg, rgba(18, 10, 6, 0.62) 0%, transparent 25%, rgba(18, 10, 6, 0.28) 100%);
-    }
-
-    body.pure-video-mode .hero-cinema-scrim {
-      opacity: 0;
-    }
-
-    .hero-cinema-content {
-      position: relative;
-      z-index: 10;
-      width: min(1360px, calc(100% - 24px));
-      margin: 0 auto;
-      padding-top: 84px;
-      padding-bottom: 72px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: opacity 0.35s ease;
-    }
-
-    @keyframes floatSticker {
-      0%, 100% { transform: translate3d(0, 0, 0) rotate(9deg); }
-      50% { transform: translate3d(0, -6px, 0) rotate(12deg); }
-    }
-
-    .hero-sticker {
-      display: flex;
-      width: 92px;
-      height: 92px;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      border-radius: 50%;
-      background: var(--caramel);
-      color: #fff8ed;
-      text-align: center;
-      animation: floatSticker 4.5s ease-in-out infinite;
-      will-change: transform;
-      position: relative;
-    }
-
-    .hero-sticker span {
-      font-size: 7px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-    }
-
-    .hero-sticker strong {
-      margin-top: 4px;
-      font: 19px/0.86 Georgia, 'Times New Roman', serif;
-    }
-
-    .hero-sticker i {
-      position: absolute;
-      right: -2px;
-      bottom: 4px;
-      color: #ffe6ad;
-      font-size: 18px;
-      font-style: normal;
-    }
-
-    /* ==========================================================================
-       HERO MODE 2: SPLIT EDITORIAL HERO (MOBILE + LAPTOP RESPONSIVE)
-       ========================================================================== */
-    .hero-split-section {
-      position: relative;
-      display: none;
-      grid-template-columns: minmax(0, 0.91fr) minmax(0, 1.09fr);
-      align-items: stretch;
-      min-height: 640px;
-      padding: 106px max(20px, calc((100vw - 1320px) / 2)) 68px;
-      gap: 4.5%;
-      background: var(--milk);
-    }
-
-    body.hero-split-mode .hero-cinema-stage {
-      display: none;
-    }
-
-    body.hero-split-mode .hero-split-section {
-      display: grid;
-    }
-
-    .hero-copy {
-      align-self: center;
-      max-width: 550px;
-      padding: 5px 0 20px;
+    /* Below-Video Control & Editorial Bar (Never covers a single pixel of the video!) */
+    .below-hero-control-bar {
+      background: #170d09;
+      color: #fff8ee;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 16px 0;
     }
 
     .section-eyebrow {
@@ -401,107 +315,6 @@
       flex-shrink: 0;
     }
 
-    .editorial-h1 {
-      margin: 0;
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(36px, 5vw, 66px);
-      font-weight: 400;
-      line-height: 0.96;
-      letter-spacing: -0.04em;
-    }
-
-    .editorial-h1 em {
-      display: block;
-      color: var(--caramel);
-      font-style: italic;
-    }
-
-    .hero-lead {
-      max-width: 460px;
-      margin: 18px 0 0;
-      color: var(--muted-copy);
-      font-size: 15px;
-      line-height: 1.65;
-    }
-
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .btn-solid,
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      min-height: 48px;
-      padding: 12px 22px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    }
-
-    .btn-solid {
-      border: 1px solid var(--cocoa);
-      background: var(--cocoa);
-      color: var(--cream);
-    }
-
-    .btn-solid:hover {
-      background: var(--caramel);
-      border-color: var(--caramel);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      border: 1px solid rgba(43, 25, 18, 0.28);
-      background: rgba(255, 250, 240, 0.65);
-      color: var(--cocoa);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--caramel);
-      color: var(--caramel);
-      transform: translateY(-2px);
-    }
-
-    .hero-visual {
-      position: relative;
-      min-height: 480px;
-      align-self: stretch;
-    }
-
-    .arch-frame {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 480px;
-      overflow: hidden;
-      border: 1px solid rgba(43, 25, 18, 0.14);
-      border-radius: 220px 220px 28px 28px;
-      background: #140b07;
-      box-shadow: 0 28px 60px rgba(31, 18, 13, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .arch-frame video {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      background: #140b07;
-      display: block;
-    }
-
     /* ==========================================================================
        COCA-STYLE 3D VIDEO COVERFLOW STAGE (9:16 NATIVE REEL CARDS FOR MOBILE + LAPTOP)
        ========================================================================== */
@@ -509,7 +322,7 @@
       position: relative;
       background: radial-gradient(circle at 50% 18%, #341c13 0%, #180d08 62%, #100805 100%);
       color: #fff8ee;
-      padding: 80px 0 86px;
+      padding: 76px 0 84px;
       overflow: hidden;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -563,7 +376,7 @@
     .coca-card-scrim {
       position: absolute;
       inset: 0;
-      background: linear-gradient(0deg, rgba(16, 8, 5, 0.92) 0%, rgba(16, 8, 5, 0.34) 45%, rgba(16, 8, 5, 0.08) 100%);
+      background: linear-gradient(0deg, rgba(16, 8, 5, 0.88) 0%, rgba(16, 8, 5, 0.22) 38%, transparent 100%);
       z-index: 2;
       pointer-events: none;
     }
@@ -576,7 +389,6 @@
 
     /* ==========================================================================
        SCROLL-DOWN MAKING PROCESS (MOBILE + LAPTOP DUAL-LAYER ADAPTIVE VIDEO)
-       - Works with 9:16 vertical process videos on both Laptop & Mobile without cropping!
        ========================================================================== */
     .making-video-shell {
       position: relative;
@@ -585,13 +397,12 @@
       border: 1px solid rgba(212, 119, 50, 0.5);
       background: #100805;
       box-shadow: 0 26px 65px rgba(0, 0, 0, 0.55);
-      height: 580px;
+      height: 560px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    /* Ambient blurred background layer so Laptop widescreen frame has zero black bars */
     .making-ambient-video {
       position: absolute;
       inset: -20px;
@@ -603,7 +414,6 @@
       pointer-events: none;
     }
 
-    /* Crisp foreground video showing 100% of the vertical 9:16 chef preparation on Laptop & Mobile */
     .making-foreground-video {
       position: relative;
       z-index: 2;
@@ -662,22 +472,22 @@
       box-shadow: 0 14px 32px rgba(43, 25, 18, 0.08);
     }
 
-    /* ==========================================================================
-       MOBILE PHONE + TABLET + LAPTOP RESPONSIVE BREAKPOINTS
-       ========================================================================== */
+    /* Single-tap Developer Attribution Link styling (Guaranteed 1-tap responsiveness) */
+    .dev-credit-pill {
+      position: relative;
+      z-index: 70;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(212, 119, 50, 0.25);
+      user-select: none;
+    }
+
     @media (max-width: 1024px) {
       .main-nav {
         display: none;
       }
       .mobile-menu-btn {
         display: inline-flex;
-      }
-      .hero-split-section {
-        grid-template-columns: 1fr;
-        padding-top: 92px;
-      }
-      .hero-visual, .arch-frame {
-        min-height: 380px;
       }
     }
 
@@ -693,9 +503,8 @@
         height: 430px;
       }
       .making-video-shell {
-        height: 470px;
+        height: 460px;
       }
-      /* On mobile phones, 9:16 process videos naturally fit the vertical frame */
       .making-foreground-video {
         object-fit: cover;
       }
@@ -708,7 +517,7 @@
 <body class="logo-intro-playing">
 
   <!-- ==========================================================================
-       FIXED GPU-ACCELERATED HEADER
+       STICKY HEADER (DOES NOT OVERLAP OR BLOCK THE FRONT-PAGE VIDEO)
        ========================================================================== -->
   <header class="site-header" id="top-header">
     <div class="header-inner">
@@ -724,17 +533,17 @@
       </a>
 
       <nav class="main-nav" aria-label="Primary Navigation">
-        <a href="#home">3D Logo &amp; Hero</a>
-        <a href="#coca-3d-stage">3D Stage (5)</a>
-        <a href="#making-process">Making Process (4)</a>
-        <a href="#menu">Full Menu (74)</a>
+        <a href="#home">3D Logo &amp; Shake Video</a>
+        <a href="#coca-3d-stage">3D Stage</a>
+        <a href="#making-process">Making Process</a>
+        <a href="#menu">Full Menu (68)</a>
         <a href="#store">Mamata Road Store</a>
         <a href="#story">Our Story</a>
         <a href="#reviews" class="text-[#e5a466]">5★ Review Engine</a>
       </nav>
 
       <div class="flex items-center gap-2">
-        <a href="tel:+918096787676" class="header-call" title="Call Rajesh Bhai at MilkShake Factory Khammam">
+        <a href="tel:+918096787676" class="header-call" title="Call Prop Mr Rajesh at MilkShake Factory Khammam">
           <i class="fa-solid fa-phone text-[#d47732]"></i>
           <span>080967 87676</span>
         </a>
@@ -751,41 +560,16 @@
     <!-- Mobile Navigation Drawer -->
     <div class="mobile-nav-drawer" id="mobile-nav-drawer">
       <div class="flex flex-col gap-3 text-sm font-bold">
-        <a href="#home" class="mobile-nav-link py-1 hover:text-[#d47732]">01. 3D Logo Intro &amp; Milkshake Hero</a>
-        <a href="#coca-3d-stage" class="mobile-nav-link py-1 hover:text-[#d47732]">02. 5-Dish 3D Video Coverflow</a>
-        <a href="#making-process" class="mobile-nav-link py-1 hover:text-[#d47732]">03. 4-Dish Real Making Process</a>
-        <a href="#menu" class="mobile-nav-link py-1 hover:text-[#d47732]">04. Full 74-Item Menu Card</a>
-        <a href="#store" class="mobile-nav-link py-1 hover:text-[#d47732]">05. Mamata Road Store (Rajesh Bhai)</a>
-        <a href="#story" class="mobile-nav-link py-1 hover:text-[#d47732]">06. Parlor Craft &amp; Story</a>
-        <a href="#reviews" class="mobile-nav-link py-1 text-[#e5a466]">07. 1-Tap 5★ Google Review Engine</a>
+        <a href="#home" class="mobile-nav-link py-1 hover:text-[#d47732]">3D Logo Intro &amp; Milkshake Video</a>
+        <a href="#coca-3d-stage" class="mobile-nav-link py-1 hover:text-[#d47732]">5-Dish 3D Video Coverflow</a>
+        <a href="#making-process" class="mobile-nav-link py-1 hover:text-[#d47732]">4-Dish Real Making Process</a>
+        <a href="#menu" class="mobile-nav-link py-1 hover:text-[#d47732]">Full 68-Item Menu Card</a>
+        <a href="#store" class="mobile-nav-link py-1 hover:text-[#d47732]">Mamata Road Store (Prop Mr Rajesh)</a>
+        <a href="#story" class="mobile-nav-link py-1 hover:text-[#d47732]">Parlor Craft &amp; Story</a>
+        <a href="#reviews" class="mobile-nav-link py-1 text-[#e5a466]">1-Tap 5★ Google Review Engine</a>
       </div>
     </div>
   </header>
-
-  <!-- ==========================================================================
-       FLOATING PURE VIDEO MODE PILL + QUICK 5★ GOOGLE REVIEW PILL
-       ========================================================================== -->
-  <div class="fixed bottom-4 left-4 z-50 flex items-center gap-2">
-    <button
-      type="button"
-      id="floating-pure-video-btn"
-      class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1b0f0a]/90 text-[#fff8ee] border border-[#d47732]/60 text-xs font-bold shadow-xl backdrop-blur-md hover:bg-[#d47732] transition"
-    >
-      <i class="fa-solid fa-film text-[#e5a466]"></i>
-      <span id="pure-video-btn-label">Pure Video Mode</span>
-    </button>
-  </div>
-
-  <div class="fixed bottom-4 right-4 z-50 flex items-center gap-2 hero-ui-hideable">
-    <a
-      href="#reviews"
-      id="floating-review-pill"
-      class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-[#d47732] to-[#b55819] text-white text-xs font-bold shadow-xl hover:scale-105 transition"
-    >
-      <i class="fa-solid fa-star text-yellow-200"></i>
-      <span>Rate 5★ on Google</span>
-    </a>
-  </div>
 
   <!-- ==========================================================================
        MAIN CONTENT
@@ -793,209 +577,134 @@
   <main id="home">
 
     <!-- ========================================================================
-         HERO MODE 1 (DEFAULT): DUAL-LAYER MOBILE + LAPTOP ADAPTIVE CINEMA
+         SECTION 1: UNOBSTRUCTED FRONT-PAGE VIDEO STAGE
+         - ZERO text overlays, ZERO timestamps, ZERO dark scrims on top of the video!
          - Plays 1st: 3D Logo Pop-Out Animation (3D_logo_pop-out_animation_ce4488d2_1080p.mp4)
          - Plays 2nd: Chocolate Milkshake Pour (Making_chocolate_milkshake_e75771e8_1080p.mp4)
          ======================================================================== -->
-    <section class="hero-cinema-stage" aria-label="3D Logo Pop-Out Intro and Signature Chocolate Milkshake Cinema">
-      <!-- Ambient Blurred Backdrop Layer (Eliminates black bars on Mobile & Laptop) -->
-      <video
-        id="cinema-ambient-bg-video"
-        class="hero-ambient-backdrop"
-        poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-      ></video>
+    <section class="front-video-showcase" aria-label="Unobstructed 3D Logo Pop-Out Animation and Chocolate Milkshake Video">
+      <!-- Pure Video Canvas (100% Free of Any Overlapping Text or Timestamps) -->
+      <div class="front-video-viewport">
+        <video
+          id="cinema-ambient-bg-video"
+          class="hero-ambient-backdrop"
+          poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        ></video>
 
-      <!-- Crisp Foreground HD Video Element -->
-      <video
-        id="cinema-video-el"
-        class="hero-cinema-video"
-        poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
-        autoplay
-        muted
-        playsinline
-        preload="auto"
-      ></video>
+        <video
+          id="cinema-video-el"
+          class="hero-cinema-video"
+          poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
+          autoplay
+          muted
+          playsinline
+          preload="auto"
+        ></video>
+      </div>
 
-      <div class="hero-cinema-scrim"></div>
+      <!-- Clean Control & Switcher Strip Placed BELOW the Video (Never blocks the video!) -->
+      <div class="below-hero-control-bar">
+        <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="hero-now-playing-badge" class="text-xs sm:text-sm font-bold text-[#fff8ee]">
+                Playing First Video: 3D Logo Pop-Out Animation
+              </span>
+            </div>
 
-      <div class="hero-cinema-content hero-ui-hideable">
-        <!-- Top Status Bar & Mobile/Laptop Video Controls (Zero Timestamps) -->
-        <div class="flex flex-wrap items-center justify-between gap-2.5">
-          <div class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#1a0e09]/85 border border-[#d47732]/55 backdrop-blur-md text-[#fff8ee] text-[11px] sm:text-xs font-bold tracking-wide">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-            <span id="hero-now-playing-badge">NOW PLAYING · 01. 3D LOGO POP-OUT INTRO (HD)</span>
+            <div class="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                id="replay-logo-btn"
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#d47732] text-white text-xs font-bold shadow-md hover:bg-[#b96222] transition cursor-pointer"
+              >
+                <i class="fa-solid fa-cube"></i>
+                <span>Play 3D Logo Intro</span>
+              </button>
+              <button
+                type="button"
+                id="play-milkshake-btn"
+                class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 text-[#fff8ee] border border-white/20 text-xs font-bold hover:border-[#d47732] transition cursor-pointer"
+              >
+                <i class="fa-solid fa-mug-hot text-[#e5a466]"></i>
+                <span>Play Milkshake Pour</span>
+              </button>
+              <button
+                type="button"
+                id="hero-fit-toggle-btn"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 text-[#fff8ee] border border-white/20 text-xs font-bold hover:border-[#d47732] transition cursor-pointer"
+              >
+                <i class="fa-solid fa-up-right-and-down-left-from-center text-[#e5a466]"></i>
+                <span id="hero-fit-toggle-label">Fill / Fit Screen</span>
+              </button>
+              <button
+                type="button"
+                id="cinema-mute-btn"
+                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-white/10 text-[#fff8ee] border border-white/20 text-xs font-bold hover:border-[#d47732] transition cursor-pointer"
+              >
+                <i class="fa-solid fa-volume-xmark" id="cinema-mute-icon"></i>
+                <span id="cinema-mute-label">Tap for Sound</span>
+              </button>
+            </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            <button
-              type="button"
-              id="replay-logo-btn"
-              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#d47732] text-white text-[11px] sm:text-xs font-bold shadow-md hover:bg-[#b96222] transition"
-            >
-              <i class="fa-solid fa-cube"></i>
-              <span>1st: 3D Logo</span>
+          <!-- Milkshake Stage Jump Buttons (Below Video, Zero Timestamps or Numbers) -->
+          <div class="mt-3 pt-3 border-t border-white/10 flex flex-wrap items-center gap-2" id="hero-stage-pills">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-[#e5a466] mr-1">Jump to Scene:</span>
+            <button type="button" data-hero-stage="logo" class="hero-stage-pill px-3.5 py-1.5 rounded-full border border-[#d47732] bg-[#d47732] text-xs font-bold text-white transition">
+              3D Logo Pop-Out
             </button>
-            <button
-              type="button"
-              id="play-milkshake-btn"
-              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#1f120d]/85 text-[#fff8ee] border border-white/25 text-[11px] sm:text-xs font-bold hover:border-[#d47732] transition"
-            >
-              <i class="fa-solid fa-mug-hot text-[#e5a466]"></i>
-              <span>2nd: Milkshake HD</span>
+            <button type="button" data-hero-stage="milkshake-full" class="hero-stage-pill px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/90 hover:border-[#d47732] transition">
+              Full Milkshake Pour
             </button>
-            <button
-              type="button"
-              id="hero-fit-toggle-btn"
-              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#1f120d]/85 text-[#fff8ee] border border-white/25 text-[11px] sm:text-xs font-bold hover:border-[#d47732] transition"
-              title="Toggle Mobile & Laptop Video Framing (Fit Full Frame vs Fill Screen)"
-            >
-              <i class="fa-solid fa-up-right-and-down-left-from-center text-[#e5a466]"></i>
-              <span id="hero-fit-toggle-label">Fit / Fill</span>
+            <button type="button" data-hero-stage="stage-pour" class="hero-stage-pill px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/90 hover:border-[#d47732] transition">
+              Molten Choco Rim
             </button>
-            <button
-              type="button"
-              id="cinema-mute-btn"
-              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#1f120d]/85 text-[#fff8ee] border border-white/25 text-[11px] sm:text-xs font-bold hover:border-[#d47732] transition"
-            >
-              <i class="fa-solid fa-volume-xmark" id="cinema-mute-icon"></i>
-              <span id="cinema-mute-label">Sound</span>
+            <button type="button" data-hero-stage="stage-scoops" class="hero-stage-pill px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/90 hover:border-[#d47732] transition">
+              Vanilla Scoops &amp; Milk
             </button>
-            <button
-              type="button"
-              id="hero-mode-toggle-btn"
-              class="inline-flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#1f120d]/85 text-[#fff8ee] border border-white/25 text-[11px] sm:text-xs font-bold hover:border-[#d47732] transition"
-            >
-              <i class="fa-solid fa-table-columns text-[#e5a466]"></i>
-              <span class="hidden sm:inline">Split View</span>
+            <button type="button" data-hero-stage="stage-vortex" class="hero-stage-pill px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/90 hover:border-[#d47732] transition">
+              Blender Vortex
+            </button>
+            <button type="button" data-hero-stage="stage-crown" class="hero-stage-pill px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/90 hover:border-[#d47732] transition">
+              Whipped Cream &amp; Curls
             </button>
           </div>
         </div>
+      </div>
 
-        <!-- Middle Editorial Overlay (Mobile & Laptop Responsive) -->
-        <div class="grid lg:grid-cols-12 gap-6 items-end my-auto py-4 sm:py-6">
-          <div class="lg:col-span-6 text-[#fffaf0]">
-            <p class="inline-flex items-center gap-2 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#f0b37e] mb-2.5">
-              <span class="w-6 h-[1px] bg-[#d47732]"></span>
-              MAMATA ROAD, KHAMMAM · HOSTED BY RAJESH BHAI
+      <!-- Welcome Editorial Strip Below Video -->
+      <div class="bg-[#f7f2e9] text-[#2b1912] py-10 border-t border-[#2b1912]/10">
+        <div class="max-w-[1320px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div>
+            <p class="section-eyebrow !mb-2">
+              <span></span>
+              MAMATA ROAD, KHAMMAM · HOSTED BY PROP MR RAJESH
             </p>
-            <h1 class="serif-display text-3xl sm:text-6xl font-normal leading-[0.96] tracking-tight text-white drop-shadow-md">
-              Hand-spun <em class="text-[#f39c56] italic block mt-1">thickshake</em> theater in HD.
+            <h1 class="serif-display text-3xl sm:text-5xl tracking-tight text-[#2b1912]">
+              Hand-spun <em class="text-[#d47732] italic">thickshake</em> parlor &amp; live kitchen craft.
             </h1>
-            <p class="mt-3 sm:mt-4 max-w-md text-xs sm:text-base text-[#f5e7d6]/90 leading-relaxed">
-              Opening with our <strong>3D Logo Pop-Out Animation</strong> before pouring straight into our freshly spun Belgian Chocolate Thickshake, 4 live kitchen process videos, and 74-item menu.
+            <p class="mt-2 text-sm sm:text-base text-[#78675b] max-w-2xl">
+              Welcome to MilkShake Factory on Mamata Road, Khammam—hosted by <strong>Prop Mr Rajesh</strong>. Enjoy our signature Belgian thickshakes, sizzling fudge brownies, wood-fired pizzas, double cheese burgers, and high-flame Indo-Chinese wok dishes.
             </p>
-            <div class="mt-5 sm:mt-6 flex flex-wrap items-center gap-2.5 sm:gap-3">
-              <a href="#menu" class="inline-flex items-center gap-2 px-5 sm:px-6 py-3 rounded-full bg-[#d47732] text-white text-xs sm:text-sm font-bold tracking-wide hover:bg-[#b86122] transition shadow-lg">
-                <span>Explore Full 74-Item Menu</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </a>
-              <a href="#making-process" class="inline-flex items-center gap-2 px-4 sm:px-5 py-3 rounded-full bg-[#1b0f0a]/85 border border-white/30 text-[#fff8ee] text-xs sm:text-sm font-bold hover:border-[#d47732] transition">
-                <i class="fa-solid fa-fire-burner text-[#e5a466]"></i>
-                <span>Watch 4 Process Videos</span>
-              </a>
-            </div>
           </div>
 
-          <div class="lg:col-span-6 hidden sm:flex lg:justify-end items-end">
-            <div class="hero-sticker shadow-2xl">
-              <span>100% FRESH</span>
-              <strong>Hand<br/>Spun</strong>
-              <i>✦</i>
-            </div>
+          <div class="flex flex-wrap items-center gap-3 shrink-0">
+            <a href="#menu" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#2b1912] text-[#fff8ee] text-xs sm:text-sm font-bold hover:bg-[#d47732] transition shadow-md">
+              <span>Browse Full 68-Item Menu</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+            <a href="#making-process" class="inline-flex items-center gap-2 px-5 py-3.5 rounded-full bg-white border border-[#2b1912]/20 text-[#2b1912] text-xs sm:text-sm font-bold hover:border-[#d47732] transition">
+              <i class="fa-solid fa-fire-burner text-[#d47732]"></i>
+              <span>4 Dish Process Videos</span>
+            </a>
           </div>
-        </div>
-
-        <!-- Bottom Sequence & Stage Switcher Pills (Strictly Zero Timestamps) -->
-        <div class="bg-[#160c08]/85 border border-white/15 backdrop-blur-md rounded-2xl p-3 sm:p-4">
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <span class="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#e5a466]">
-              <i class="fa-solid fa-mobile-screen-button mr-1"></i>
-              Mobile &amp; Laptop Adaptive HD · 1st: 3D Logo Intro → 2nd: Chocolate Milkshake
-            </span>
-            <span class="text-[10px] sm:text-[11px] font-bold text-[#f5e7d6]/80" id="hero-sequence-substatus">
-              Zero Timestamps · Seamless Auto-Transition
-            </span>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2" id="hero-stage-pills">
-            <button type="button" data-hero-stage="logo" class="hero-stage-pill px-3 py-2 rounded-xl border border-[#d47732] bg-[#d47732]/30 text-left text-white transition">
-              <span class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">01 · 1ST LANDING</span>
-              <strong class="block text-[11px] sm:text-xs mt-0.5">3D Logo Pop-Out</strong>
-            </button>
-            <button type="button" data-hero-stage="milkshake-full" class="hero-stage-pill px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-left text-white/90 hover:border-[#d47732] transition">
-              <span class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">02 · MAIN HERO</span>
-              <strong class="block text-[11px] sm:text-xs mt-0.5">Chocolate Pour HD</strong>
-            </button>
-            <button type="button" data-hero-stage="stage-pour" class="hero-stage-pill px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-left text-white/90 hover:border-[#d47732] transition">
-              <span class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">03 · GANACHE</span>
-              <strong class="block text-[11px] sm:text-xs mt-0.5">Molten Choco Rim</strong>
-            </button>
-            <button type="button" data-hero-stage="stage-scoops" class="hero-stage-pill px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-left text-white/90 hover:border-[#d47732] transition">
-              <span class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">04 · DAIRY</span>
-              <strong class="block text-[11px] sm:text-xs mt-0.5">Scoops &amp; Chilled Milk</strong>
-            </button>
-            <button type="button" data-hero-stage="stage-vortex" class="hero-stage-pill px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-left text-white/90 hover:border-[#d47732] transition">
-              <span class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">05 · BLEND</span>
-              <strong class="block text-[11px] sm:text-xs mt-0.5">High-Torque Vortex</strong>
-            </button>
-            <button type="button" data-hero-stage="stage-crown" class="hero-stage-pill px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-left text-white/90 hover:border-[#d47732] transition">
-              <span class="block text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">06 · FINISH</span>
-              <strong class="block text-[11px] sm:text-xs mt-0.5">Whip &amp; Cocoa Curls</strong>
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================================
-         HERO MODE 2: SPLIT EDITORIAL HERO (MOBILE & LAPTOP COMPATIBLE)
-         ======================================================================== -->
-    <section class="hero-split-section" aria-label="Split Editorial Hero View">
-      <div class="hero-copy">
-        <p class="section-eyebrow">
-          <span></span>
-          MAMATA ROAD, KHAMMAM · HOSTED BY RAJESH BHAI
-        </p>
-        <h2 class="editorial-h1">
-          Hand-spun <em>happiness</em> in every tall glass.
-        </h2>
-        <p class="hero-lead">
-          Watch our <strong>3D Logo Pop-Out Intro</strong> followed by the signature <strong>Chocolate Milkshake Pour</strong>, then explore our real Cake, Pizza, Burger, and Chinese Wok preparation videos and all 74 freshly crafted menu items.
-        </p>
-        <div class="cta-row">
-          <a href="#menu" class="btn-solid">
-            <span>Browse Full 74-Item Menu</span>
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-          <button type="button" id="split-back-to-cinema-btn" class="btn-outline">
-            <i class="fa-solid fa-expand text-[#d47732]"></i>
-            <span>Full-Screen Cinema Mode</span>
-          </button>
-        </div>
-        <div class="mt-5 flex flex-wrap gap-2">
-          <button type="button" id="split-replay-logo-btn" class="px-4 py-2 rounded-full bg-[#d47732] text-white text-xs font-bold hover:bg-[#b86122] transition">
-            <i class="fa-solid fa-cube mr-1"></i> Play 1st Video: 3D Logo Intro
-          </button>
-          <button type="button" id="split-play-shake-btn" class="px-4 py-2 rounded-full bg-[#2b1912] text-[#fff8ee] text-xs font-bold hover:bg-[#d47732] transition">
-            <i class="fa-solid fa-mug-hot mr-1"></i> Play 2nd Video: Chocolate Shake
-          </button>
-        </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="arch-frame">
-          <video
-            id="split-hero-video-el"
-            poster="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/four-different-cocktail-smoothies-with-milky-cream-top-9gpjkPIX8lg5TmQdwfg8uB2KA33Tm6.jpg"
-            autoplay
-            muted
-            playsinline
-            preload="auto"
-          ></video>
         </div>
       </div>
     </section>
@@ -1012,7 +721,7 @@
               5-DISH 3D VIDEO COVERFLOW · SWIPE ON MOBILE OR CLICK ON LAPTOP
             </p>
             <h2 class="serif-display text-3xl sm:text-5xl text-[#fff8ee] tracking-tight">
-              Spin through our <em class="text-[#d47732] italic">5 real</em> kitchen videos.
+              Spin through our <em class="text-[#d47732] italic">signature</em> kitchen videos.
             </h2>
           </div>
 
@@ -1037,7 +746,7 @@
       <div class="max-w-[920px] mx-auto mt-6 px-4">
         <div class="rounded-2xl bg-white/5 border border-white/15 backdrop-blur-md p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#e5a466]" id="coca-active-badge">01 · SIGNATURE THICKSHAKE</span>
+            <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#e5a466]" id="coca-active-badge">SIGNATURE THICKSHAKE</span>
             <h3 class="serif-display text-xl sm:text-2xl text-white mt-0.5" id="coca-active-title">The Chocolate Pour Thickshake</h3>
             <p class="text-xs sm:text-sm text-[#e8d8c8]/80 mt-1" id="coca-active-desc">Belgian dark ganache ribboned inside chilled glass, spun with double vanilla bean gelato and topped with whipped peak cream.</p>
           </div>
@@ -1051,7 +760,6 @@
 
     <!-- ========================================================================
          SECTION 3: 4-DISH SCROLL-DOWN MAKING PROCESS (REAL CAKE, PIZZA, BURGER, WOK VIDEOS)
-         Compatible with both Mobile Phone (Vertical 9:16) & Laptop (Dual-Layer Studio Frame)
          ======================================================================== -->
     <section id="making-process" class="bg-[#180e09] text-[#fff8ee] py-20 border-b border-white/10">
       <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
@@ -1071,10 +779,9 @@
         </div>
 
         <div class="grid lg:grid-cols-12 gap-8 items-start">
-          <!-- Sticky Left Dual-Layer HD Video Showcase (Uncropped on Laptop & Full Reel on Mobile) -->
+          <!-- Sticky Left Dual-Layer HD Video Showcase -->
           <div class="lg:col-span-6 lg:sticky lg:top-24">
             <div class="making-video-shell" id="making-player-shell">
-              <!-- Ambient Blurred Video Backdrop (Fills Laptop widescreen frame seamlessly) -->
               <video
                 id="making-ambient-video"
                 class="making-ambient-video"
@@ -1085,7 +792,6 @@
                 preload="auto"
               ></video>
 
-              <!-- Crisp Foreground Real Process Video -->
               <video
                 id="making-sticky-video"
                 class="making-foreground-video"
@@ -1097,13 +803,8 @@
                 preload="auto"
               ></video>
 
-              <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 z-[3] pointer-events-none"></div>
-
-              <!-- Top HUD Controls inside Making Process Video -->
-              <div class="absolute top-4 left-4 right-4 z-[4] flex items-center justify-between gap-2">
-                <span id="making-video-stage-pill" class="px-3.5 py-1.5 rounded-full bg-[#1a0e09]/85 border border-[#d47732]/60 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider text-[#f3b178]">
-                  STAGE 01 · HD PROCESS VIDEO
-                </span>
+              <!-- Minimal Corner Fit/Fill Toggle (No text blocking center video) -->
+              <div class="absolute top-3 right-3 z-[4]">
                 <button
                   type="button"
                   id="making-fit-toggle-btn"
@@ -1113,13 +814,16 @@
                   <span id="making-fit-label">Fit / Fill View</span>
                 </button>
               </div>
+            </div>
 
-              <!-- Bottom Caption Overlay -->
-              <div class="absolute bottom-4 left-5 right-5 z-[4] pointer-events-none">
-                <p class="text-[11px] uppercase tracking-[0.16em] text-[#e5a466] font-bold" id="making-video-eyebrow">01. BERRY CHOCOLATE CAKE PROCESS</p>
-                <h3 class="serif-display text-2xl sm:text-3xl text-white mt-0.5" id="making-video-title">Cocoa Whisk &amp; Velvet Batter</h3>
-                <p class="text-xs sm:text-sm text-[#f3e5d7]/85 mt-1" id="making-video-caption">Rich Dutch-process cocoa, farm eggs, and melted butter whisked into a glossy dark chocolate patisserie batter.</p>
+            <!-- Caption Placed Cleanly Below the Process Video Frame so video stays 100% clear -->
+            <div class="mt-3 p-4 rounded-2xl bg-[#22130d] border border-white/10">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] uppercase tracking-[0.16em] text-[#e5a466] font-extrabold" id="making-video-eyebrow">BERRY CHOCOLATE CAKE PROCESS</span>
+                <span id="making-video-stage-pill" class="text-[10px] font-bold text-[#f3b178]">HD PROCESS STREAM</span>
               </div>
+              <h3 class="serif-display text-xl sm:text-2xl text-white mt-1" id="making-video-title">Cocoa Whisk &amp; Velvet Batter</h3>
+              <p class="text-xs sm:text-sm text-[#f3e5d7]/85 mt-1" id="making-video-caption">Rich Dutch-process cocoa, farm eggs, and melted butter whisked into a glossy dark chocolate patisserie batter.</p>
             </div>
           </div>
 
@@ -1130,7 +834,7 @@
     </section>
 
     <!-- ========================================================================
-         SECTION 4: CIRCULAR 4-PILLAR ORBITING HUB & FULL 74-ITEM MENU CARD
+         SECTION 4: CIRCULAR 4-PILLAR ORBITING HUB & FULL 68-ITEM MENU CARD (WAFFLES REMOVED)
          ======================================================================== -->
     <section id="menu" class="py-20 bg-[#f7f2e9] text-[#2b1912]">
       <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
@@ -1147,12 +851,12 @@
                 One parlor, <em class="text-[#d47732] italic">four</em> indulgent worlds.
               </h2>
               <p class="mt-3 text-sm text-[#e7d6c4]/85 leading-relaxed">
-                Tap any pillar on our orbiting wheel to filter the 74-item Mamata Road menu below. Every item is prepared fresh to order under the supervision of <strong>Rajesh Bhai</strong>.
+                Tap any pillar on our orbiting wheel to filter the 68-item Mamata Road menu below. Every item is prepared fresh to order under the supervision of <strong>Prop Mr Rajesh</strong>.
               </p>
               <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="pillar-quick-buttons">
                 <button type="button" data-filter-cat="Hand-Spun Milkshakes & Thickshakes" class="pillar-jump-btn text-left p-3 rounded-2xl bg-white/5 border border-white/15 hover:border-[#d47732] transition">
                   <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#e5a466]">PILLAR 01</span>
-                  <strong class="block text-sm mt-0.5">Thickshakes &amp; Waffles</strong>
+                  <strong class="block text-sm mt-0.5">Thickshakes &amp; Brownies</strong>
                 </button>
                 <button type="button" data-filter-cat="Noodles Items" class="pillar-jump-btn text-left p-3 rounded-2xl bg-white/5 border border-white/15 hover:border-[#d47732] transition">
                   <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#e5a466]">PILLAR 02</span>
@@ -1176,12 +880,12 @@
                 <!-- Center Hub Badge -->
                 <div class="relative z-10 w-32 h-32 rounded-full bg-[#d47732] text-white flex flex-col items-center justify-center text-center p-3 shadow-2xl border-2 border-white/60">
                   <span class="text-[9px] font-extrabold uppercase tracking-widest">MAMATA ROAD</span>
-                  <strong class="serif-display text-2xl leading-none mt-1">74 Items</strong>
+                  <strong class="serif-display text-2xl leading-none mt-1">68 Items</strong>
                   <small class="text-[10px] mt-1 font-bold text-amber-100">Fresh to Order</small>
                 </div>
                 <!-- 4 Orbiting Nodes -->
                 <button type="button" data-filter-cat="Hand-Spun Milkshakes & Thickshakes" class="pillar-jump-btn absolute -top-3 left-1/2 -translate-x-1/2 px-3.5 py-1.5 rounded-full bg-[#160b07] border border-[#d47732] text-xs font-bold shadow-lg hover:bg-[#d47732] transition">
-                  🍫 Shakes &amp; Waffles
+                  🍫 Shakes &amp; Brownies
                 </button>
                 <button type="button" data-filter-cat="Noodles Items" class="pillar-jump-btn absolute top-1/2 -right-4 -translate-y-1/2 px-3.5 py-1.5 rounded-full bg-[#160b07] border border-[#d47732] text-xs font-bold shadow-lg hover:bg-[#d47732] transition">
                   🍜 Wok &amp; Starters
@@ -1202,7 +906,7 @@
           <div>
             <p class="section-eyebrow">
               <span></span>
-              COMPLETE MAMATA ROAD MENU CARD · 8 CATEGORIES · 74 ITEMS
+              COMPLETE MAMATA ROAD MENU CARD · 7 CATEGORIES · 68 ITEMS
             </p>
             <h2 class="serif-display text-3xl sm:text-5xl tracking-tight">
               Explore our <em class="text-[#d47732] italic">full parlor</em> menu.
@@ -1215,13 +919,13 @@
               <input
                 type="search"
                 id="menu-search-input"
-                placeholder="Search 74 dishes (e.g. Nutella, Paneer)..."
+                placeholder="Search 68 dishes (e.g. Nutella, Paneer)..."
                 class="pl-9 pr-4 py-2.5 rounded-full bg-white border border-[#2b1912]/20 text-xs sm:text-sm focus:outline-none focus:border-[#d47732] w-64 sm:w-72"
               />
             </div>
 
             <div class="inline-flex rounded-full bg-white p-1 border border-[#2b1912]/15 text-xs font-bold" id="diet-filter-group">
-              <button type="button" data-diet="all" class="diet-btn px-3 py-1.5 rounded-full bg-[#2b1912] text-white transition">All (74)</button>
+              <button type="button" data-diet="all" class="diet-btn px-3 py-1.5 rounded-full bg-[#2b1912] text-white transition">All (68)</button>
               <button type="button" data-diet="veg" class="diet-btn px-3 py-1.5 rounded-full text-[#2b1912] hover:text-[#d47732] transition">Pure Veg</button>
               <button type="button" data-diet="egg" class="diet-btn px-3 py-1.5 rounded-full text-[#2b1912] hover:text-[#d47732] transition">Egg</button>
               <button type="button" data-diet="nonveg" class="diet-btn px-3 py-1.5 rounded-full text-[#2b1912] hover:text-[#d47732] transition">Chicken / Fish</button>
@@ -1234,8 +938,8 @@
 
         <!-- Menu Results Counter -->
         <div class="flex items-center justify-between text-xs font-bold text-[#78675b] mb-4 px-1">
-          <span id="menu-showing-count">Showing all 74 freshly prepared items across 8 categories</span>
-          <span><i class="fa-brands fa-whatsapp text-emerald-600 mr-1"></i> Tap any item to inquire directly with Rajesh Bhai</span>
+          <span id="menu-showing-count">Showing all 68 freshly prepared items across 7 categories</span>
+          <span><i class="fa-brands fa-whatsapp text-emerald-600 mr-1"></i> Tap any item to inquire directly with Prop Mr Rajesh</span>
         </div>
 
         <!-- Dynamic Menu Categories & Cards Container -->
@@ -1244,7 +948,7 @@
     </section>
 
     <!-- ========================================================================
-         SECTION 5: MAMATA ROAD STORE SHOWCASE (HOSTED BY RAJESH BHAI)
+         SECTION 5: MAMATA ROAD STORE SHOWCASE (HOSTED BY PROP MR RAJESH)
          ======================================================================== -->
     <section id="store" class="py-20 bg-[#23130d] text-[#fff8ee]">
       <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
@@ -1259,7 +963,7 @@
               <div class="absolute bottom-4 left-4 right-4 rounded-2xl bg-[#180c08]/90 backdrop-blur-md border border-white/15 p-4 flex items-center justify-between gap-4">
                 <div>
                   <span class="text-[10px] font-extrabold uppercase tracking-widest text-[#e5a466]">PROPRIETOR &amp; HOST</span>
-                  <strong class="block serif-display text-xl text-white">Rajesh Bhai</strong>
+                  <strong class="block serif-display text-xl text-white">Prop Mr Rajesh</strong>
                   <small class="text-xs text-[#e8d8c8]/80">Mamata Road, Dwaraka Nagar, Khammam</small>
                 </div>
                 <a href="tel:+918096787676" class="px-4 py-2.5 rounded-full bg-[#d47732] text-white text-xs font-bold hover:bg-[#b86122] transition shrink-0">
@@ -1278,7 +982,7 @@
               Your neighborhood <em class="text-[#d47732] italic">thickshake</em> landmark on Mamata Road.
             </h2>
             <p class="mt-4 text-sm sm:text-base text-[#e8d8c8]/85 leading-relaxed">
-              Hosted with warmth by <strong>Rajesh Bhai</strong>, MilkShake Factory brings artisanal Belgian thickshakes, sizzling brownie plates, golden Belgian waffles, and fiery Indo-Chinese wok dishes to families, students, and late-evening food lovers across Khammam.
+              Hosted with warmth by <strong>Prop Mr Rajesh</strong>, MilkShake Factory brings artisanal Belgian thickshakes, sizzling brownie plates, wood-fired pizzas, double cheese burgers, and fiery Indo-Chinese wok dishes to families, students, and food lovers across Khammam.
             </p>
 
             <div class="mt-6 grid sm:grid-cols-2 gap-4">
@@ -1306,13 +1010,13 @@
                 <span>Open in Google Maps</span>
               </a>
               <a
-                href="https://wa.me/918096787676?text=Hi%20Rajesh%20Bhai%2C%20I%20visited%20the%20MilkShake%20Factory%20Khammam%20website%20and%20would%20like%20to%20inquire%20about%20the%20menu!"
+                href="https://wa.me/918096787676?text=Hi%20Prop%20Mr%20Rajesh%2C%20I%20visited%20the%20MilkShake%20Factory%20Khammam%20website%20and%20would%20like%20to%20inquire%20about%20the%20menu!"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-emerald-600 text-white text-xs sm:text-sm font-bold hover:bg-emerald-700 transition"
               >
                 <i class="fa-brands fa-whatsapp text-base"></i>
-                <span>WhatsApp Rajesh Bhai</span>
+                <span>WhatsApp Prop Mr Rajesh</span>
               </a>
             </div>
           </div>
@@ -1335,19 +1039,19 @@
               Spun thick, <em class="text-[#d47732] italic">plated hot</em>, celebrated together.
             </h2>
             <p class="mt-4 text-sm sm:text-base text-[#78675b] leading-relaxed">
-              Every thickshake at MilkShake Factory Khammam starts with chilled whole milk, dense gelato scoops, and rich Belgian cocoa or roasted nut pralines—never icy syrups. Pair your shake with our sizzling fudge brownies, crisp waffles, or high-flame Schezwan noodles.
+              Every thickshake at MilkShake Factory Khammam starts with chilled whole milk, dense gelato scoops, and rich Belgian cocoa or roasted nut pralines—never icy syrups. Pair your shake with our sizzling fudge brownies, molten lava cakes, or high-flame Schezwan noodles.
             </p>
             <div class="mt-6 grid grid-cols-3 gap-3 text-center">
               <div class="p-3.5 rounded-2xl bg-[#f7f2e9] border border-[#2b1912]/10">
-                <strong class="serif-display text-2xl text-[#d47732]">74</strong>
+                <strong class="serif-display text-2xl text-[#d47732]">68</strong>
                 <span class="block text-[10px] font-extrabold uppercase tracking-wider mt-1">Menu Creations</span>
               </div>
               <div class="p-3.5 rounded-2xl bg-[#f7f2e9] border border-[#2b1912]/10">
-                <strong class="serif-display text-2xl text-[#d47732]">8</strong>
+                <strong class="serif-display text-2xl text-[#d47732]">7</strong>
                 <span class="block text-[10px] font-extrabold uppercase tracking-wider mt-1">Kitchen Stations</span>
               </div>
               <div class="p-3.5 rounded-2xl bg-[#f7f2e9] border border-[#2b1912]/10">
-                <strong class="serif-display text-2xl text-[#d47732]">1080p</strong>
+                <strong class="serif-display text-2xl text-[#d47732]">HD</strong>
                 <span class="block text-[10px] font-extrabold uppercase tracking-wider mt-1">3D Visual Experience</span>
               </div>
             </div>
@@ -1406,8 +1110,8 @@
             <button type="button" data-vibe="Belgian Chocolate Thickshakes" class="review-chip is-selected px-4 py-2 rounded-full border border-[#d47732] bg-[#d47732] text-white text-xs font-bold transition">
               🍫 Thickshakes &amp; Choco Pour
             </button>
-            <button type="button" data-vibe="Crispy Belgian Waffles & Brownie Sizzlers" class="review-chip px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/90 text-xs font-bold hover:border-[#d47732] transition">
-              🧇 Waffles &amp; Hot Sizzlers
+            <button type="button" data-vibe="Hot Brownie Sizzlers & Molten Lava Cakes" class="review-chip px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/90 text-xs font-bold hover:border-[#d47732] transition">
+              🍰 Brownie Sizzlers &amp; Lava Cakes
             </button>
             <button type="button" data-vibe="High-Flame Indo-Chinese Noodles & Chilli Paneer" class="review-chip px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/90 text-xs font-bold hover:border-[#d47732] transition">
               🍜 Schezwan Noodles &amp; Starters
@@ -1415,8 +1119,8 @@
             <button type="button" data-vibe="Loaded Cheese Burst Pizzas, Burgers & Sandwiches" class="review-chip px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/90 text-xs font-bold hover:border-[#d47732] transition">
               🍔 Pizzas, Burgers &amp; Wraps
             </button>
-            <button type="button" data-vibe="Warm Hospitality by Rajesh Bhai on Mamata Road" class="review-chip px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/90 text-xs font-bold hover:border-[#d47732] transition">
-              🤝 Rajesh Bhai's Hospitality
+            <button type="button" data-vibe="Warm Hospitality by Prop Mr Rajesh on Mamata Road" class="review-chip px-4 py-2 rounded-full border border-white/20 bg-white/5 text-white/90 text-xs font-bold hover:border-[#d47732] transition">
+              🤝 Prop Mr Rajesh's Hospitality
             </button>
           </div>
 
@@ -1441,9 +1145,9 @@
   </main>
 
   <!-- ==========================================================================
-       FOOTER WITH SINGLE-TAP DEVELOPER ATTRIBUTION (@syedzeeshaanali07)
+       FOOTER WITH GUARANTEED SINGLE-TAP DEVELOPER REDIRECT (@syedzeeshaanali07)
        ========================================================================== -->
-  <footer class="bg-[#150b07] text-[#f5e7d6] pt-14 pb-10 border-t border-white/10">
+  <footer class="bg-[#150b07] text-[#f5e7d6] pt-14 pb-16 border-t border-white/10">
     <div class="max-w-[1320px] mx-auto px-4 sm:px-6">
       <div class="grid md:grid-cols-3 gap-8 pb-10 border-b border-white/10">
         <div>
@@ -1459,13 +1163,13 @@
             </div>
           </div>
           <p class="mt-3 text-xs text-[#e8d8c8]/75 leading-relaxed">
-            Hand-spun thickshakes, Belgian waffles, sizzling brownies, wood-fired pizzas, stacked burgers, grilled sandwiches, and Indo-Chinese wok favorites.
+            Hand-spun thickshakes, sizzling brownies, molten lava cakes, wood-fired pizzas, stacked burgers, grilled sandwiches, and Indo-Chinese wok favorites.
           </p>
         </div>
 
         <div>
-          <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#e5a466]">PARLOR LOCATION &amp; HOST</span>
-          <p class="mt-2 text-xs font-bold text-white">Hosted by Rajesh Bhai</p>
+          <span class="text-[10px] font-extrabold uppercase tracking-[0.18em] text-[#e5a466]">PARLOR LOCATION &amp; PROPRIETOR</span>
+          <p class="mt-2 text-xs font-bold text-white">Hosted by Prop Mr Rajesh</p>
           <p class="mt-1 text-xs text-[#e8d8c8]/80 leading-relaxed">
             mamata road, Dwaraka Nagar, Jalagam Nagar, Khammam, Telangana 507002
           </p>
@@ -1480,7 +1184,7 @@
             <a href="#home" class="hover:text-[#d47732]">3D Logo &amp; Hero</a>
             <a href="#coca-3d-stage" class="hover:text-[#d47732]">3D Stage (5)</a>
             <a href="#making-process" class="hover:text-[#d47732]">Making Process</a>
-            <a href="#menu" class="hover:text-[#d47732]">Full 74-Item Menu</a>
+            <a href="#menu" class="hover:text-[#d47732]">Full 68-Item Menu</a>
             <a href="#store" class="hover:text-[#d47732]">Mamata Road Store</a>
             <a href="#reviews" class="text-[#e5a466] hover:underline">5★ Google Review</a>
           </div>
@@ -1489,21 +1193,23 @@
 
       <!-- Bottom Copyright & Single-Tap Developer Attribution -->
       <div class="pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#e8d8c8]/75">
-        <p>© 2026 MilkShake Factory Khammam · Mamata Road · All Rights Reserved.</p>
+        <p>© 2026 MilkShake Factory Khammam · Hosted by Prop Mr Rajesh · All Rights Reserved.</p>
 
         <a
+          id="dev-portfolio-link"
           href="https://catb12345612-ai.github.io/Syed-Zeeshaan-Ali-High-Fledged-Engineering-And-Digital-Tech-Solutions-Site/"
           target="_blank"
           rel="noopener noreferrer"
-          class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/5 border border-white/15 hover:border-[#d47732] hover:bg-white/10 transition group"
-          title="High-Fledged Engineering And Digital Tech Solutions — Syed Zeeshaan Ali"
+          class="dev-credit-pill inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/10 border border-[#d47732]/60 hover:border-[#d47732] hover:bg-[#d47732]/25 transition group shadow-lg"
+          title="Tap to visit High-Fledged Engineering And Digital Tech Solutions — Syed Zeeshaan Ali"
         >
           <img
             src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/dev-logo.png-RdCDIS8k6ikh5Gmbme1hoU5L90cGsy.png"
             alt="Developer Logo"
-            class="w-6 h-6 rounded-full object-contain bg-white p-0.5"
+            class="w-6 h-6 rounded-full object-contain bg-white p-0.5 pointer-events-none"
           />
-          <span class="font-bold text-white group-hover:text-[#e5a466] transition">designed by @syedzeeshaanali07</span>
+          <span class="font-bold text-white group-hover:text-[#e5a466] transition pointer-events-none">designed by @syedzeeshaanali07</span>
+          <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#e5a466] pointer-events-none"></i>
         </a>
       </div>
     </div>
@@ -1515,11 +1221,8 @@
   <script>
     /* ==========================================================================
        1. REAL UPLOADED VIDEOS (EMBEDDED BLOB STREAMS + GITHUB 1080p FILENAMES)
-          - Immediately plays embedded HD streams of all 5 real uploaded videos
-            with zero network latency or 404s.
-          - When deployed on GitHub Pages alongside the raw .mp4 files in the
-            same repository folder, automatically upgrades to the raw 1080p file!
        ========================================================================== */
+    const DEV_PORTFOLIO_URL = "https://catb12345612-ai.github.io/Syed-Zeeshaan-Ali-High-Fledged-Engineering-And-Digital-Tech-Solutions-Site/";
     const MILKSHAKE_HERO_MP4_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Making_chocolate_milkshake_e75771e8_1080p-wbBZMeZ2xrKJOFKicLZFhYmt005nAt.mp4";
 
     const GITHUB_RAW_VIDEO_FILES = {
@@ -1557,7 +1260,6 @@
       });
     }
 
-    // If hosted on GitHub Pages (*.github.io) where the raw 1080p MP4 files sit in the same folder, upgrade seamlessly
     async function upgradeToGitHubRawVideosIfHosted() {
       const host = (window.location && window.location.hostname) ? window.location.hostname : "";
       if (!host.includes("github.io")) return;
@@ -1574,17 +1276,16 @@
     }
 
     /* ==========================================================================
-       2. OPENING HERO VIDEO SEQUENCER (1ST: 3D LOGO INTRO -> 2ND: MILKSHAKE HD)
-          Mobile + Laptop Dual-Layer Sync · Zero Timestamps
+       2. UNOBSTRUCTED OPENING HERO VIDEO SEQUENCER
+          1st Video: 3D Logo Pop-Out Animation -> 2nd Video: Chocolate Milkshake
+          Zero text or timestamps covering the video!
        ========================================================================== */
     let currentHeroPhase = "logo";
 
     function playHeroVideoPhase(phaseKey, seekRatio = 0) {
       const cinemaVid = document.getElementById("cinema-video-el");
       const ambientVid = document.getElementById("cinema-ambient-bg-video");
-      const splitVid = document.getElementById("split-hero-video-el");
       const badgeEl = document.getElementById("hero-now-playing-badge");
-      const subStatusEl = document.getElementById("hero-sequence-substatus");
 
       const isLogo = (phaseKey === "logo");
       currentHeroPhase = isLogo ? "logo" : "milkshake";
@@ -1593,7 +1294,7 @@
 
       const targetSrc = isLogo ? EMBEDDED_DISH_VIDEOS.logoIntro : MILKSHAKE_HERO_MP4_URL;
 
-      [cinemaVid, ambientVid, splitVid].forEach((vid) => {
+      [cinemaVid, ambientVid].forEach((vid) => {
         if (!vid) return;
         const isAmbient = (vid.id === "cinema-ambient-bg-video");
         const srcChanged = (vid.getAttribute("data-active-src") !== targetSrc);
@@ -1621,34 +1322,28 @@
       });
 
       const stageLabels = {
-        "logo": "NOW PLAYING · 01. 3D LOGO POP-OUT INTRO (HD)",
-        "milkshake-full": "NOW PLAYING · 02. SIGNATURE CHOCOLATE MILKSHAKE POUR (HD)",
-        "stage-pour": "NOW PLAYING · 03. MOLTEN BELGIAN CHOCOLATE GANACHE RIM (HD)",
-        "stage-scoops": "NOW PLAYING · 04. VANILLA BEAN GELATO & CHILLED MILK (HD)",
-        "stage-vortex": "NOW PLAYING · 05. HIGH-TORQUE PARLOR BLENDER VORTEX (HD)",
-        "stage-crown": "NOW PLAYING · 06. WHIPPED CREAM PEAK & DARK COCOA SHAVINGS (HD)"
+        "logo": "Now Playing: 3D Logo Pop-Out Animation (Auto-switches to Milkshake)",
+        "milkshake-full": "Now Playing: Signature Chocolate Milkshake Pour (HD)",
+        "stage-pour": "Now Playing: Molten Belgian Chocolate Ganache Rim",
+        "stage-scoops": "Now Playing: Vanilla Bean Gelato & Chilled Milk",
+        "stage-vortex": "Now Playing: High-Torque Parlor Blender Vortex",
+        "stage-crown": "Now Playing: Whipped Cream Peak & Dark Cocoa Shavings"
       };
 
       if (badgeEl) {
         badgeEl.textContent = stageLabels[phaseKey] || stageLabels["milkshake-full"];
       }
-      if (subStatusEl) {
-        subStatusEl.textContent = isLogo
-          ? "1st Video (3D Logo Intro) → Auto-Transitions to Chocolate Milkshake"
-          : "2nd Video (Signature Chocolate Milkshake HD Loop)";
-      }
 
       document.querySelectorAll(".hero-stage-pill").forEach((btn) => {
         const active = btn.getAttribute("data-hero-stage") === phaseKey;
         btn.className = active
-          ? "hero-stage-pill px-3 py-2 rounded-xl border border-[#d47732] bg-[#d47732]/30 text-left text-white transition"
-          : "hero-stage-pill px-3 py-2 rounded-xl border border-white/15 bg-white/5 text-left text-white/90 hover:border-[#d47732] transition";
+          ? "hero-stage-pill px-3.5 py-1.5 rounded-full border border-[#d47732] bg-[#d47732] text-xs font-bold text-white transition"
+          : "hero-stage-pill px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-xs font-bold text-white/90 hover:border-[#d47732] transition";
       });
     }
 
     function initHeroSequencer() {
       const cinemaVid = document.getElementById("cinema-video-el");
-      const splitVid = document.getElementById("split-hero-video-el");
 
       if (cinemaVid) {
         cinemaVid.addEventListener("ended", () => {
@@ -1663,15 +1358,7 @@
         });
       }
 
-      if (splitVid) {
-        splitVid.addEventListener("ended", () => {
-          if (currentHeroPhase === "logo") {
-            playHeroVideoPhase("milkshake-full", 0);
-          }
-        });
-      }
-
-      // Start with the 3D Logo Pop-Out Animation as the 1st Landing Video
+      // Start immediately with the 3D Logo Pop-Out Animation
       playHeroVideoPhase("logo", 0);
 
       const stageRatios = {
@@ -1696,19 +1383,13 @@
       const playShakeBtn = document.getElementById("play-milkshake-btn");
       if (playShakeBtn) playShakeBtn.addEventListener("click", () => playHeroVideoPhase("milkshake-full", 0));
 
-      const splitReplayLogo = document.getElementById("split-replay-logo-btn");
-      if (splitReplayLogo) splitReplayLogo.addEventListener("click", () => playHeroVideoPhase("logo", 0));
-
-      const splitPlayShake = document.getElementById("split-play-shake-btn");
-      if (splitPlayShake) splitPlayShake.addEventListener("click", () => playHeroVideoPhase("milkshake-full", 0));
-
-      // Fit / Fill Framing Toggle for Mobile & Laptop
+      // Fill / Fit Screen Toggle
       const fitBtn = document.getElementById("hero-fit-toggle-btn");
       const fitLabel = document.getElementById("hero-fit-toggle-label");
       if (fitBtn) {
         fitBtn.addEventListener("click", () => {
-          const isContain = document.body.classList.toggle("hero-fit-contain");
-          if (fitLabel) fitLabel.textContent = isContain ? "Fill Screen" : "Fit Frame";
+          const isFill = document.body.classList.toggle("hero-fill-mode");
+          if (fitLabel) fitLabel.textContent = isFill ? "Fit Full Frame" : "Fill Screen";
         });
       }
 
@@ -1719,39 +1400,12 @@
       if (muteBtn && cinemaVid) {
         muteBtn.addEventListener("click", () => {
           cinemaVid.muted = !cinemaVid.muted;
-          if (splitVid) splitVid.muted = cinemaVid.muted;
           if (cinemaVid.muted) {
             muteIcon.className = "fa-solid fa-volume-xmark";
-            muteLabel.textContent = "Sound";
+            muteLabel.textContent = "Tap for Sound";
           } else {
             muteIcon.className = "fa-solid fa-volume-high text-[#e5a466]";
             muteLabel.textContent = "Sound On";
-          }
-        });
-      }
-
-      // Split View / Full Cinema Switcher
-      const modeToggleBtn = document.getElementById("hero-mode-toggle-btn");
-      const backToCinemaBtn = document.getElementById("split-back-to-cinema-btn");
-      if (modeToggleBtn) {
-        modeToggleBtn.addEventListener("click", () => {
-          document.body.classList.toggle("hero-split-mode");
-        });
-      }
-      if (backToCinemaBtn) {
-        backToCinemaBtn.addEventListener("click", () => {
-          document.body.classList.remove("hero-split-mode");
-        });
-      }
-
-      // Floating Pure Video Mode Toggle
-      const pureBtn = document.getElementById("floating-pure-video-btn");
-      const pureLabel = document.getElementById("pure-video-btn-label");
-      if (pureBtn) {
-        pureBtn.addEventListener("click", () => {
-          const active = document.body.classList.toggle("pure-video-mode");
-          if (pureLabel) {
-            pureLabel.textContent = active ? "Exit Pure Video" : "Pure Video Mode";
           }
         });
       }
@@ -1764,7 +1418,7 @@
       return [
         {
           id: "milkshake",
-          badge: "01 · SIGNATURE THICKSHAKE",
+          badge: "SIGNATURE THICKSHAKE",
           title: "The Chocolate Pour Thickshake",
           subtitle: "Hand-Spun Belgian Ganache & Vanilla Bean Gelato",
           desc: "Molten dark chocolate ribboned around a chilled parlor glass, blended thick and crowned with whipped cream.",
@@ -1773,7 +1427,7 @@
         },
         {
           id: "cake",
-          badge: "02 · PATISSERIE GATEAU",
+          badge: "PATISSERIE GATEAU",
           title: "Belgian Berry Chocolate Cake",
           subtitle: "Whisked Cocoa Sponge, Cream & Fresh Berries",
           desc: "Three-tier dark chocolate sponge frosted with whipped cream and crowned with fresh raspberries, blackberries, and blueberries.",
@@ -1782,7 +1436,7 @@
         },
         {
           id: "pizza",
-          badge: "03 · WOOD-FIRED OVEN PIZZA",
+          badge: "WOOD-FIRED OVEN PIZZA",
           title: "Loaded Cheese Burst Pizza",
           subtitle: "Hand-Kneaded Dough, Herb Sauce & Mozzarella Pull",
           desc: "Freshly rolled artisan dough ladled with rich tomato herb sauce, mozzarella cheese, olives, and baked in a blazing wood-fired oven.",
@@ -1791,7 +1445,7 @@
         },
         {
           id: "burger",
-          badge: "04 · DOUBLE GRILL STACK",
+          badge: "DOUBLE GRILL STACK",
           title: "Jumbo Double Cheese Burger",
           subtitle: "Seared Patties, Melted Cheddar & Sesame Brioche",
           desc: "Juicy seasoned patties seared on a hot flattop grill, layered with melted cheddar, crisp lettuce, tomatoes, and house chipotle sauce.",
@@ -1800,7 +1454,7 @@
         },
         {
           id: "noodles",
-          badge: "05 · HIGH-FLAME CHINESE WOK",
+          badge: "HIGH-FLAME CHINESE WOK",
           title: "Fiery Schezwan Wok Noodles",
           subtitle: "Roaring Wok Flames, Crisp Veggies & Schezwan Glaze",
           desc: "Springy noodles and julienned vegetables tossed by our chef over roaring carbon-steel wok flames with spicy Schezwan sauce.",
@@ -1830,7 +1484,7 @@
               : "bg-white/5 border-white/15 text-[#f5e7d6]/85 hover:border-[#d47732]"
           }"
         >
-          ${item.badge.split("·")[0].trim()} · ${item.title.split(" ").slice(0, 2).join(" ")}
+          ${item.title.split(" ").slice(0, 2).join(" ")}
         </button>
       `).join("");
 
@@ -1871,7 +1525,6 @@
         });
       });
 
-      // Touch swipe support for mobile phones
       let touchStartX = 0;
       viewport.addEventListener("touchstart", (e) => {
         if (e.changedTouches && e.changedTouches[0]) {
@@ -1946,54 +1599,54 @@
       return [
         {
           key: "cake",
-          tabLabel: "01. Berry Cake",
-          eyebrow: "01. BERRY CHOCOLATE CAKE PROCESS",
+          tabLabel: "Berry Cake",
+          eyebrow: "BERRY CHOCOLATE CAKE PROCESS",
           video: EMBEDDED_DISH_VIDEOS.cake,
           poster: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/chocolate-sacher-cake-with-apricot-jam-wooden-table-traditional-austrian-dessert-ai-generative-WW34xw1hHEsecJ57XQDHUgHhbVfTVz.jpg",
           chapters: [
-            { stage: "STAGE 01 · HD", title: "Cocoa Whisk & Velvet Batter", desc: "Rich Dutch-process cocoa powder, flour, farm eggs, and butter whisked into a glossy dark chocolate ribbon batter." },
-            { stage: "STAGE 02 · HD", title: "Springform Pour & Oven Rise", desc: "Silky chocolate batter poured into a parchment-lined pan and baked until golden-domed and fragrant." },
-            { stage: "STAGE 03 · HD", title: "Whipped Mascarpone Palette Frosting", desc: "Chilled cream smoothed across warm cocoa sponge tiers with an offset patisserie palette knife." },
-            { stage: "STAGE 04 · HD", title: "Fresh Berries & Layered Slice", desc: "Crowned with fresh raspberries, blackberries, blueberries, dark chocolate curls, and sliced to reveal four rich tiers." }
+            { stage: "STEP ONE · HD", title: "Cocoa Whisk & Velvet Batter", desc: "Rich Dutch-process cocoa powder, flour, farm eggs, and butter whisked into a glossy dark chocolate ribbon batter." },
+            { stage: "STEP TWO · HD", title: "Springform Pour & Oven Rise", desc: "Silky chocolate batter poured into a parchment-lined pan and baked until golden-domed and fragrant." },
+            { stage: "STEP THREE · HD", title: "Whipped Mascarpone Palette Frosting", desc: "Chilled cream smoothed across warm cocoa sponge tiers with an offset patisserie palette knife." },
+            { stage: "STEP FOUR · HD", title: "Fresh Berries & Layered Slice", desc: "Crowned with fresh raspberries, blackberries, blueberries, dark chocolate curls, and sliced to reveal four rich tiers." }
           ]
         },
         {
           key: "pizza",
-          tabLabel: "02. Wood-Fired Pizza",
-          eyebrow: "02. WOOD-FIRED ARTISAN PIZZA PROCESS",
+          tabLabel: "Wood-Fired Pizza",
+          eyebrow: "WOOD-FIRED ARTISAN PIZZA PROCESS",
           video: EMBEDDED_DISH_VIDEOS.pizza,
           poster: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80",
           chapters: [
-            { stage: "STAGE 01 · HD", title: "Flour Dusting & Hand-Kneaded Dough", desc: "Artisan flour dusted over the board, hand-kneaded until supple, and proofed until airy and pillowy." },
-            { stage: "STAGE 02 · HD", title: "Rolling & Rich Tomato Herb Swirl", desc: "Rolled into a classic round base and ladled with slow-simmered crushed tomato and basil sauce." },
-            { stage: "STAGE 03 · HD", title: "Mozzarella Shreds & Blazing Wood Oven", desc: "Generously topped with shredded mozzarella, olives, and peppers, then baked beside roaring wood flames." },
-            { stage: "STAGE 04 · HD", title: "Wheel Slice & Molten Cheese Pull", desc: "Sliced crisp out of the oven and lifted hot with a signature golden mozzarella cheese pull." }
+            { stage: "STEP ONE · HD", title: "Flour Dusting & Hand-Kneaded Dough", desc: "Artisan flour dusted over the board, hand-kneaded until supple, and proofed until airy and pillowy." },
+            { stage: "STEP TWO · HD", title: "Rolling & Rich Tomato Herb Swirl", desc: "Rolled into a classic round base and ladled with slow-simmered crushed tomato and basil sauce." },
+            { stage: "STEP THREE · HD", title: "Mozzarella Shreds & Blazing Wood Oven", desc: "Generously topped with shredded mozzarella, olives, and peppers, then baked beside roaring wood flames." },
+            { stage: "STEP FOUR · HD", title: "Wheel Slice & Molten Cheese Pull", desc: "Sliced crisp out of the oven and lifted hot with a signature golden mozzarella cheese pull." }
           ]
         },
         {
           key: "burger",
-          tabLabel: "03. Double Burger",
-          eyebrow: "03. DOUBLE GRILL BURGER PROCESS",
+          tabLabel: "Double Burger",
+          eyebrow: "DOUBLE GRILL BURGER PROCESS",
           video: EMBEDDED_DISH_VIDEOS.burger,
           poster: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1000&q=80",
           chapters: [
-            { stage: "STAGE 01 · HD", title: "Cracked Pepper Seasoning & Patty Press", desc: "Coarse sea salt, cracked black pepper, and herbs folded in and hand-pressed into thick gourmet patties." },
-            { stage: "STAGE 02 · HD", title: "Sizzling Flattop Sear & Brioche Toast", desc: "Patties seared with crosshatch grill marks while sesame brioche buns toast golden in butter." },
-            { stage: "STAGE 03 · HD", title: "Garden Lettuce, Tomato & Cheddar Melt", desc: "Crisp green lettuce and vine-ripened tomatoes topped with a sizzling patty and melted aged cheddar." },
-            { stage: "STAGE 04 · HD", title: "Chipotle Swirl & Crown Assembly", desc: "Drizzled with creamy house chipotle dressing and crowned with a toasted sesame bun." }
+            { stage: "STEP ONE · HD", title: "Cracked Pepper Seasoning & Patty Press", desc: "Coarse sea salt, cracked black pepper, and herbs folded in and hand-pressed into thick gourmet patties." },
+            { stage: "STEP TWO · HD", title: "Sizzling Flattop Sear & Brioche Toast", desc: "Patties seared with crosshatch grill marks while sesame brioche buns toast golden in butter." },
+            { stage: "STEP THREE · HD", title: "Garden Lettuce, Tomato & Cheddar Melt", desc: "Crisp green lettuce and vine-ripened tomatoes topped with a sizzling patty and melted aged cheddar." },
+            { stage: "STEP FOUR · HD", title: "Chipotle Swirl & Crown Assembly", desc: "Drizzled with creamy house chipotle dressing and crowned with a toasted sesame bun." }
           ]
         },
         {
           key: "noodles",
-          tabLabel: "04. Chinese Wok",
-          eyebrow: "04. HIGH-FLAME INDO-CHINESE WOK PROCESS",
+          tabLabel: "Chinese Wok",
+          eyebrow: "HIGH-FLAME INDO-CHINESE WOK PROCESS",
           video: EMBEDDED_DISH_VIDEOS.noodles,
           poster: "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=1000&q=80",
           chapters: [
-            { stage: "STAGE 01 · HD", title: "Fresh Julienne Veggies & Wok Flash", desc: "Crisp carrots, cabbage, scallions, and chilies tossed into a smoking carbon-steel wok over blue flame." },
-            { stage: "STAGE 02 · HD", title: "Springy Noodles & Fiery Schezwan Ladle", desc: "Al-dente noodles added to the sizzling vegetables with a generous ladle of house Schezwan chili sauce." },
-            { stage: "STAGE 03 · HD", title: "Roaring Wok-Hei Flame Toss", desc: "Tossed high through roaring wok flames by our chef to lock in authentic smoky wok-hei aroma." },
-            { stage: "STAGE 04 · HD", title: "Steaming Bowl Plating & Scallion Crown", desc: "Plated steaming hot into a deep ceramic bowl with crisp spring onions and glazed vegetables." }
+            { stage: "STEP ONE · HD", title: "Fresh Julienne Veggies & Wok Flash", desc: "Crisp carrots, cabbage, scallions, and chilies tossed into a smoking carbon-steel wok over blue flame." },
+            { stage: "STEP TWO · HD", title: "Springy Noodles & Fiery Schezwan Ladle", desc: "Al-dente noodles added to the sizzling vegetables with a generous ladle of house Schezwan chili sauce." },
+            { stage: "STEP THREE · HD", title: "Roaring Wok-Hei Flame Toss", desc: "Tossed high through roaring wok flames by our chef to lock in authentic smoky wok-hei aroma." },
+            { stage: "STEP FOUR · HD", title: "Steaming Bowl Plating & Scallion Crown", desc: "Plated steaming hot into a deep ceramic bowl with crisp spring onions and glazed vegetables." }
           ]
         }
       ];
@@ -2035,7 +1688,7 @@
             <span class="px-3 py-1 rounded-full bg-[#d47732]/25 border border-[#d47732]/60 text-[10px] font-extrabold uppercase tracking-wider text-[#f3b178]">
               ${ch.stage}
             </span>
-            <span class="text-[11px] font-bold text-[#e5a466]">Tap to Seek Stage</span>
+            <span class="text-[11px] font-bold text-[#e5a466]">Tap to Preview Step</span>
           </div>
           <h3 class="serif-display text-xl sm:text-2xl text-white">${ch.title}</h3>
           <p class="text-xs sm:text-sm text-[#e8d8c8]/85 mt-1.5 leading-relaxed">${ch.desc}</p>
@@ -2091,14 +1744,14 @@
       const eye = document.getElementById("making-video-eyebrow");
       const title = document.getElementById("making-video-title");
       const cap = document.getElementById("making-video-caption");
-      if (pill) pill.textContent = `${ch.stage} · HD PROCESS VIDEO`;
+      if (pill) pill.textContent = `${ch.stage}`;
       if (eye) eye.textContent = dish.eyebrow;
       if (title) title.textContent = ch.title;
       if (cap) cap.textContent = ch.desc;
     }
 
     /* ==========================================================================
-       5. COMPLETE 74-ITEM MENU CARD ACROSS 8 CATEGORIES (ZERO PRICES)
+       5. COMPLETE 68-ITEM MENU CARD ACROSS 7 CATEGORIES (ZERO PRICES)
        ========================================================================== */
     const MENU_CATEGORIES = [
       {
@@ -2155,19 +1808,6 @@
           { name: "Schezwan Paneer", diet: "veg", badge: "Fiery" },
           { name: "Paneer Manchurian", diet: "veg", badge: "Saucy" },
           { name: "Paneer 65", diet: "veg", badge: "Crispy" }
-        ]
-      },
-      {
-        category: "Waffles",
-        icon: "🧇",
-        tagline: "Crisp golden Belgian waffles baked fresh to order",
-        items: [
-          { name: "Loaded Waffle", diet: "veg", badge: "Fully Loaded" },
-          { name: "Classic Waffle", diet: "veg", badge: "Golden Crisp" },
-          { name: "Nutella Waffle", diet: "veg", badge: "Hazelnut Cocoa" },
-          { name: "Fruit Cream Waffle", diet: "veg", badge: "Fresh & Creamy" },
-          { name: "Cookies and Cream Waffle", diet: "veg", badge: "Oreo Crunch" },
-          { name: "Loaded Brownie Waffle", diet: "veg", badge: "Fudge Overload" }
         ]
       },
       {
@@ -2248,7 +1888,7 @@
       if (!wrap) return;
 
       const pills = [
-        { key: "all", label: "All 8 Categories (74)" },
+        { key: "all", label: "All 7 Categories (68)" },
         ...MENU_CATEGORIES.map((c) => ({
           key: c.category,
           label: `${c.icon} ${c.category} (${c.items.length})`
@@ -2311,7 +1951,7 @@
         totalShown += filtered.length;
 
         const cardsHtml = filtered.map((item) => {
-          const waText = encodeURIComponent(`Hi Rajesh Bhai, I'd like to inquire about "${item.name}" (${cat.category}) at MilkShake Factory Mamata Road, Khammam!`);
+          const waText = encodeURIComponent(`Hi Prop Mr Rajesh, I'd like to inquire about "${item.name}" (${cat.category}) at MilkShake Factory Mamata Road, Khammam!`);
           return `
             <article class="menu-item-card">
               <div>
@@ -2360,13 +2000,13 @@
         <div class="p-10 rounded-3xl bg-white border border-[#2b1912]/10 text-center">
           <p class="serif-display text-2xl text-[#2b1912]">No dishes matched your filter.</p>
           <button type="button" id="reset-menu-filters-btn" class="mt-4 px-5 py-2.5 rounded-full bg-[#d47732] text-white text-xs font-bold">
-            Reset All Filters (Show 74 Items)
+            Reset All Filters (Show 68 Items)
           </button>
         </div>
       `;
 
       if (countEl) {
-        countEl.textContent = `Showing ${totalShown} of 74 freshly prepared items`;
+        countEl.textContent = `Showing ${totalShown} of 68 freshly prepared items`;
       }
 
       const resetBtn = document.getElementById("reset-menu-filters-btn");
@@ -2403,9 +2043,9 @@
         `Especially loved the ${vibe} — prepared fresh to order with top-notch ingredients.`
       ];
       const closers = [
-        "Rajesh Bhai is a very welcoming host and makes sure every guest is happy. Highly recommended!",
-        "Great ambiance, quick service by Rajesh Bhai and team, and a huge 74-item menu to explore!",
-        "Definitely our go-to hangout parlor in Khammam. Thank you Rajesh Bhai!"
+        "Prop Mr Rajesh is a very welcoming host and makes sure every guest is happy. Highly recommended!",
+        "Great ambiance, quick service by Prop Mr Rajesh and team, and a huge 68-item menu to explore!",
+        "Definitely our go-to hangout parlor in Khammam. Thank you Prop Mr Rajesh!"
       ];
       const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
       return `${pick(openers)} ${pick(middles)} ${pick(closers)}`;
@@ -2444,16 +2084,32 @@
     }
 
     /* ==========================================================================
-       7. INITIALIZE ALL INTERACTIVE SYSTEMS ON DOM READY
+       7. GUARANTEED 1-TAP DEVELOPER PORTFOLIO REDIRECT HANDLER
+       ========================================================================== */
+    function initDeveloperLink() {
+      const devLink = document.getElementById("dev-portfolio-link");
+      if (!devLink) return;
+      devLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        const win = window.open(DEV_PORTFOLIO_URL, "_blank", "noopener,noreferrer");
+        if (!win) {
+          try {
+            window.top.location.href = DEV_PORTFOLIO_URL;
+          } catch (_) {
+            window.location.href = DEV_PORTFOLIO_URL;
+          }
+        }
+      });
+    }
+
+    /* ==========================================================================
+       8. INITIALIZE ALL INTERACTIVE SYSTEMS ON DOM READY
        ========================================================================== */
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Hydrate embedded real HD MP4 streams into fast Blob URLs
       hydrateEmbeddedVideoUrls();
-
-      // 2. Initialize 1st Landing Video (3D Logo Intro) -> 2nd Video (Chocolate Milkshake HD)
       initHeroSequencer();
+      initDeveloperLink();
 
-      // 3. Initialize 5-Dish 3D Coverflow Stage
       render3DCoverflow();
       const prevBtn = document.getElementById("coca-prev-btn");
       const nextBtn = document.getElementById("coca-next-btn");
@@ -2471,7 +2127,6 @@
       }
       window.addEventListener("resize", () => update3DCoverflowPositions(), { passive: true });
 
-      // 4. Initialize 4-Dish Real Scroll-Down Making Process + Fit/Fill Toggle
       renderMakingProcess();
       const makingFitBtn = document.getElementById("making-fit-toggle-btn");
       const makingShell = document.getElementById("making-player-shell");
@@ -2486,13 +2141,11 @@
         });
       }
 
-      // Optional GitHub Pages raw 1080p upgrade when hosted on *.github.io
       upgradeToGitHubRawVideosIfHosted().then(() => {
         render3DCoverflow();
         renderMakingProcess();
       });
 
-      // 5. Initialize Full 74-Item Menu & Filters
       renderMenuCategoryPills();
       renderMenuItems();
 
@@ -2530,10 +2183,8 @@
         });
       });
 
-      // 6. Initialize Smart 5★ Google Review Engine
       initReviewEngine();
 
-      // 7. Mobile Menu Drawer & Header Scroll State
       const mobBtn = document.getElementById("mobile-menu-toggle");
       const mobDrawer = document.getElementById("mobile-nav-drawer");
       if (mobBtn && mobDrawer) {
